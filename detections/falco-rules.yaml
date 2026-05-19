@@ -1,0 +1,11 @@
+- rule: Container Shell Detection
+  desc: Detect shell spawned inside container
+
+  condition: >
+    container and shell_procs
+
+  output: >
+    Shell execution detected inside container
+    (user=%user.name container=%container.id)
+
+  priority: WARNING
