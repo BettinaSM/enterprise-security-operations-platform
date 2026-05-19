@@ -76,3 +76,19 @@ Policy as Code and infrastructure governance principles.
 - Threat intelligence enrichment
 - Advanced cloud detections
 - Compliance automation
+
+---
+
+## Security Operations Workflow
+
+The platform simulates a modern enterprise Security Operations workflow:
+
+1. Runtime activity detection
+2. SIEM event ingestion
+3. MITRE ATT&CK classification
+4. Threat intelligence enrichment
+5. SOC triage and escalation
+6. Incident response execution
+7. Continuous monitoring and governance
+
+The project demonstrates detection engineering and cloud-native security operations concepts.
