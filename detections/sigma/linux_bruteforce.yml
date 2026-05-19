@@ -1,0 +1,21 @@
+title: Linux SSH Brute Force
+
+id: DET-1001
+
+description: Detects multiple failed SSH logins
+
+logsource:
+  product: linux
+  service: ssh
+
+detection:
+  keywords:
+    - "Failed password"
+    - "authentication failure"
+
+condition: keywords
+
+level: high
+
+mitre:
+  - T1110
