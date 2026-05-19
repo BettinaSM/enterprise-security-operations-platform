@@ -11,8 +11,14 @@ def load_json_log(file_path):
     if not full_path.exists():
         return None
 
+try:
+
     with open(full_path, "r") as file:
         return json.load(file)
+
+except Exception:
+
+    return None
 
 
 def detect_failed_cloud_login(event):
