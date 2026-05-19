@@ -19,13 +19,6 @@ from parsers.yaml_detection_engine import (
 )
 
 from parsers.rule_engine import load_rule
-rule = load_rule(
-    "../detections/sigma/linux_bruteforce.yml"
-)
-
-st.subheader("Detection-as-Code Rule")
-
-st.json(rule)
 
 from parsers.log_parser import (
     read_log,
@@ -483,6 +476,10 @@ else:
         "No active detections identified"
     )
 
+# ---------------------------
+# YAML Detection Rules
+# ---------------------------
+
 st.subheader("YAML Detection Rules")
 
 if yaml_detections:
@@ -501,6 +498,18 @@ else:
     st.success(
         "No YAML detections identified"
     )
+
+# ---------------------------
+# DETECTION-AS-CODE
+# ---------------------------
+
+st.subheader("Detection-as-Code Rule")
+
+rule = load_rule(
+    "../detections/sigma/linux_bruteforce.yml"
+)
+
+st.json(rule)
 
 # ---------------------------
 # COMPLIANCE DASHBOARD
@@ -549,6 +558,26 @@ if cloud_findings:
 else:
 
     st.info("No cloud findings detected")
+
+# ---------------------------
+# Kubernetes Runtime Security
+# ---------------------------
+
+st.subheader("Kubernetes Runtime Security")
+
+with open(
+    "simulations/k8s-runtime.json",
+    "r"
+) as file:
+
+    k8s_alerts = json.load(file)
+
+k8s_df = pd.DataFrame(k8s_alerts)
+
+st.dataframe(
+    k8s_df,
+    use_container_width=True
+)
 
 # ---------------------------
 # INCIDENT TIMELINE
@@ -845,5 +874,101 @@ attack_df = pd.DataFrame(attack_data)
 
 st.dataframe(
     attack_df,
+    use_container_width=True
+)
+
+# ---------------------------
+# COMPLIANCE Executive Risk Overview
+# ---------------------------
+
+st.subheader("Executive Risk Overview")
+
+executive_df = pd.DataFrame({
+    "Area": [
+        "Cloud Security",
+        "Endpoint Security",
+        "IAM",
+        "Kubernetes",
+        "Threat Detection"
+    ],
+    "Risk Level": [
+        "Medium",
+        "High",
+        "Low",
+        "Critical",
+        "Medium"
+    ]
+})
+
+st.dataframe(
+    executive_df,
+    use_container_width=True
+)
+
+
+# ---------------------------
+# COMPLIANCE Heatmap
+# ---------------------------
+
+st.subheader("Compliance Heatmap")
+
+compliance_chart = pd.DataFrame({
+    "Framework": [
+        "ISO27001",
+        "NIST",
+        "PCI-DSS",
+        "CIS"
+    ],
+    "Coverage": [
+        92,
+        81,
+        74,
+        89
+    ]
+})
+
+heatmap = px.bar(
+    compliance_chart,
+    x="Framework",
+    y="Coverage",
+    title="Compliance Coverage"
+)
+
+st.plotly_chart(
+    heatmap,
+    use_container_width=True
+)
+
+# ---------------------------
+# SOC Analyst Queue
+# ---------------------------
+
+st.subheader("SOC Analyst Queue")
+
+soc_queue = pd.DataFrame({
+    "Ticket": [
+        "SOC-1001",
+        "SOC-1002",
+        "SOC-1003"
+    ],
+    "Priority": [
+        "Critical",
+        "High",
+        "Medium"
+    ],
+    "Owner": [
+        "Tier 2",
+        "Tier 1",
+        "Threat Hunting"
+    ],
+    "Status": [
+        "Investigating",
+        "Open",
+        "Escalated"
+    ]
+})
+
+st.dataframe(
+    soc_queue,
     use_container_width=True
 )
