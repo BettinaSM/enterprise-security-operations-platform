@@ -1,0 +1,22 @@
+[
+  {
+    "event": "SSH Brute Force",
+    "severity": "High",
+    "environment": "Linux"
+  },
+  {
+    "event": "Privileged Container",
+    "severity": "Critical",
+    "environment": "Kubernetes"
+  },
+  {
+    "event": "Unauthorized API Call",
+    "severity": "High",
+    "environment": "AWS"
+  },
+  {
+    "event": "Suspicious PowerShell",
+    "severity": "Medium",
+    "environment": "Windows"
+  }
+]
