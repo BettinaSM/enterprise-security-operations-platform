@@ -1,0 +1,7 @@
+{
+  "kind": "Event",
+  "level": "Warning",
+  "message": "Privileged container created",
+  "namespace": "production",
+  "user": "system:admin"
+}
