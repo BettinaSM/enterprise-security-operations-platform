@@ -1,0 +1,14 @@
+[
+    {
+        "namespace": "production",
+        "pod": "payment-api",
+        "alert": "Container privilege escalation attempt",
+        "severity": "Critical"
+    },
+    {
+        "namespace": "dev",
+        "pod": "internal-api",
+        "alert": "Unexpected shell execution",
+        "severity": "High"
+    }
+]
