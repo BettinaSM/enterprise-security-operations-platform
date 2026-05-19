@@ -58,6 +58,16 @@ runtime_events = len(falco_logs)
 incidents = 2
 
 # ---------------------------
+# AUTOMATED DETECTIONS
+# ---------------------------
+
+from parsers.log_parser import detect_bruteforce
+
+if detect_bruteforce(linux_logs):
+
+    st.error("Potential SSH brute force attack detected")
+
+# ---------------------------
 # DASHBOARD METRICS
 # ---------------------------
 
