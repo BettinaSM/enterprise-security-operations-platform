@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 from parsers.ioc_matcher import match_ioc
+from parsers.threat_scoring import calculate_threat_score
 
 from parsers.log_parser import (
     read_log,
@@ -30,11 +31,19 @@ st.set_page_config(
 st.sidebar.title("SOC Navigation")
 
 st.sidebar.markdown("""
+### Monitoring
 - Dashboard
-- Threat Detection
+- Runtime Security
 - Cloud Security
+
+### Detection Engineering
 - MITRE ATT&CK
-- Incident Response
+- IOC Matching
+- Threat Scoring
+
+### Incident Response
+- Incident Timeline
+- Drilldown
 - SOAR
 """)
 
@@ -88,6 +97,40 @@ runtime_events = len(falco_logs)
 incidents = len(cloud_findings)
 
 # ---------------------------
+# THREAT PRIORITY
+# ---------------------------
+
+st.subheader("Threat Priority Assessment")
+
+score_col1, score_col2 = st.columns(2)
+
+score_col1.metric(
+    "Threat Score",
+    threat_score
+)
+
+score_col2.metric(
+    "Threat Severity",
+    threat_severity
+)
+
+if threat_severity == "Critical":
+
+    st.error("Critical threat level detected")
+
+elif threat_severity == "High":
+
+    st.warning("High threat activity identified")
+
+elif threat_severity == "Medium":
+
+    st.info("Medium threat activity")
+
+else:
+
+    st.success("Low threat activity")
+
+# ---------------------------
 # CLOUD DETECTIONS
 # ---------------------------
 
@@ -133,6 +176,17 @@ if ioc_matches:
     st.warning(
         f"Known malicious IOC detected: {', '.join(ioc_matches)}"
     )
+
+# ---------------------------
+# THREAT SCORE
+# ---------------------------
+
+threat_score, threat_severity = calculate_threat_score(
+    critical_alerts,
+    failed_auth,
+    len(cloud_findings),
+    len(ioc_matches)
+)
 
 # ---------------------------
 # AUTOMATED DETECTIONS
@@ -305,6 +359,49 @@ st.table(timeline_df)
 st.divider()
 
 # ---------------------------
+# INCIDENT DRILLDOWN
+# ---------------------------
+
+st.subheader("Incident Drilldown")
+
+incident_df = pd.DataFrame({
+    "Incident ID": [
+        "INC-1001",
+        "INC-1002",
+        "INC-1003"
+    ],
+    "Severity": [
+        "Critical",
+        "High",
+        "Medium"
+    ],
+    "Environment": [
+        "Kubernetes",
+        "Linux",
+        "AWS"
+    ],
+    "Status": [
+        "Open",
+        "Investigating",
+        "Contained"
+    ]
+})
+
+selected_incident = st.selectbox(
+    "Select Incident",
+    incident_df["Incident ID"]
+)
+
+filtered_incident = incident_df[
+    incident_df["Incident ID"] == selected_incident
+]
+
+st.dataframe(
+    filtered_incident,
+    use_container_width=True
+)
+
+# ---------------------------
 # LIVE EVENTS
 # ---------------------------
 
@@ -314,6 +411,40 @@ for event in falco_logs[-10:]:
     st.code(event)
 
 st.divider()
+
+# ---------------------------
+# SIEM SEARCH
+# ---------------------------
+
+st.subheader("SIEM Event Search")
+
+search_term = st.text_input(
+    "Search security events"
+)
+
+if search_term:
+
+    matching_events = []
+
+    for event in falco_logs[-10:]:
+
+        if search_term.lower() in event.lower():
+
+            matching_events.append(event)
+
+    if matching_events:
+
+        st.success(
+            f"{len(matching_events)} matching events found"
+        )
+
+        for match in matching_events:
+
+            st.code(match)
+
+    else:
+
+        st.warning("No matching events found")
 
 # ---------------------------
 # SECURITY ARCHITECTURE
