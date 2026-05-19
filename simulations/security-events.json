@@ -1,22 +1,37 @@
 [
-  {
-    "event": "SSH Brute Force",
-    "severity": "High",
-    "environment": "Linux"
-  },
-  {
-    "event": "Privileged Container",
-    "severity": "Critical",
-    "environment": "Kubernetes"
-  },
-  {
-    "event": "Unauthorized API Call",
-    "severity": "High",
-    "environment": "AWS"
-  },
-  {
-    "event": "Suspicious PowerShell",
-    "severity": "Medium",
-    "environment": "Windows"
-  }
+    {
+        "timestamp": "2026-03-30 10:15:22",
+        "severity": "Critical",
+        "source": "Falco",
+        "event": "Container privilege escalation detected",
+        "environment": "Kubernetes"
+    },
+    {
+        "timestamp": "2026-03-30 10:17:01",
+        "severity": "High",
+        "source": "AWS CloudTrail",
+        "event": "Unauthorized IAM policy modification",
+        "environment": "AWS"
+    },
+    {
+        "timestamp": "2026-03-30 10:20:11",
+        "severity": "Medium",
+        "source": "Linux Auth",
+        "event": "Multiple failed SSH logins",
+        "environment": "Linux"
+    },
+    {
+        "timestamp": "2026-03-30 10:22:54",
+        "severity": "Critical",
+        "source": "Azure Entra ID",
+        "event": "Suspicious admin login",
+        "environment": "Azure"
+    },
+    {
+        "timestamp": "2026-03-30 10:25:33",
+        "severity": "High",
+        "source": "AIX Audit",
+        "event": "Unauthorized sudo execution",
+        "environment": "AIX"
+    }
 ]
