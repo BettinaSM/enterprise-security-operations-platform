@@ -47,3 +47,15 @@ def detect_privileged_activity(event):
         keyword.lower() in event_str.lower()
         for keyword in keywords
     )
+
+def calculate_severity(event):
+
+    event_str = str(event).lower()
+
+    if "createuser" in event_str:
+        return "Critical"
+
+    if "failed" in event_str:
+        return "High"
+
+    return "Medium"
