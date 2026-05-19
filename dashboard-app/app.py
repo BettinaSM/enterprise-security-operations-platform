@@ -32,6 +32,10 @@ from parsers.threat_intelligence import (
 
 from parsers.attack_chain import build_attack_chain
 
+from parsers.threat_intelligence import (
+    enrich_iocs
+)
+
 from parsers.incident_manager import (
     generate_incidents
 )
@@ -202,6 +206,10 @@ for provider, event in cloud_events:
 # ---------------------------
 
 ioc_matches = match_ioc(linux_logs)
+
+enriched_iocs = enrich_iocs(
+    ioc_matches
+)
 
 mitre_events = map_to_mitre(
     linux_logs + aix_logs + falco_logs
@@ -645,6 +653,29 @@ else:
 
     st.success(
         "No enriched threat intelligence findings"
+    )
+
+# ---------------------------
+# THREAT INTELLIGENCE
+# ---------------------------
+
+st.subheader("Threat Intelligence Enrichment")
+
+if enriched_iocs:
+
+    threat_df = pd.DataFrame(
+        enriched_iocs
+    )
+
+    st.dataframe(
+        threat_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.success(
+        "No malicious IOC enrichment identified"
     )
 
 # ---------------------------
