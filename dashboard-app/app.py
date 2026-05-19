@@ -8,6 +8,12 @@ from parsers.log_parser import (
     count_critical
 )
 
+from parsers.cloud_parser import (
+    load_json_log,
+    detect_failed_cloud_login,
+    detect_privileged_activity
+)
+
 st.set_page_config(
     page_title="Enterprise Security Operations Platform",
     page_icon="🛡️",
@@ -43,6 +49,16 @@ aix_logs = read_log("agents/aix/sudo.log")
 falco_logs = read_log("logs/falco-events.log")
 
 # ---------------------------
+# CLOUD LOGS
+# ---------------------------
+
+aws_log = load_json_log("agents/aws/cloudtrail.json")
+azure_log = load_json_log("agents/azure/entra-signins.json")
+gcp_log = load_json_log("agents/gcp/audit-logs.json")
+oci_log = load_json_log("agents/oracle-cloud/oci-audit.json")
+ibm_log = load_json_log("agents/ibm-cloud/activity-tracker.json")
+
+# ---------------------------
 # METRICS
 # ---------------------------
 
@@ -56,6 +72,41 @@ critical_alerts = count_critical(falco_logs)
 runtime_events = len(falco_logs)
 
 incidents = 2
+
+# ---------------------------
+# CLOUD DETECTIONS
+# ---------------------------
+
+cloud_findings = []
+
+cloud_events = [
+    ("AWS", aws_log),
+    ("Azure", azure_log),
+    ("GCP", gcp_log),
+    ("OCI", oci_log),
+    ("IBM Cloud", ibm_log)
+]
+
+for provider, event in cloud_events:
+
+    if not event:
+        continue
+
+    if detect_failed_cloud_login(event):
+
+        cloud_findings.append({
+            "Cloud": provider,
+            "Finding": "Failed Authentication",
+            "Severity": "High"
+        })
+
+    if detect_privileged_activity(event):
+
+        cloud_findings.append({
+            "Cloud": provider,
+            "Finding": "Privileged Activity",
+            "Severity": "Critical"
+        })
 
 # ---------------------------
 # AUTOMATED DETECTIONS
@@ -159,6 +210,50 @@ mitre_df = pd.DataFrame({
 st.dataframe(mitre_df, use_container_width=True)
 
 st.divider()
+
+# ---------------------------
+# MITRE DISTRIBUTION
+# ---------------------------
+
+mitre_chart = pd.DataFrame({
+    "Technique": [
+        "T1059",
+        "T1110",
+        "T1611",
+        "T1078"
+    ],
+    "Events": [
+        7,
+        12,
+        4,
+        6
+    ]
+})
+
+mitre_fig = px.bar(
+    mitre_chart,
+    x="Technique",
+    y="Events",
+    title="MITRE ATT&CK Techniques"
+)
+
+st.plotly_chart(mitre_fig, use_container_width=True)
+
+# ---------------------------
+# CLOUD SECURITY EVENTS
+# ---------------------------
+
+st.subheader("Cloud Security Findings")
+
+if cloud_findings:
+
+    cloud_df = pd.DataFrame(cloud_findings)
+
+    st.dataframe(cloud_df, use_container_width=True)
+
+else:
+
+    st.info("No cloud findings detected")
 
 # ---------------------------
 # INCIDENT TIMELINE
