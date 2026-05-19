@@ -1,0 +1,12 @@
+title: Linux SSH Bruteforce
+severity: High
+
+patterns:
+  - "Failed password"
+  - "authentication failure"
+
+mitre:
+  - "T1110"
+
+description: >
+  Detects repeated failed SSH authentication attempts
