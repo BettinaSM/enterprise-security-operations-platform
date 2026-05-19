@@ -20,6 +20,8 @@ from parsers.yaml_detection_engine import (
 
 from parsers.rule_engine import load_rule
 
+from parsers.attack_chain import build_attack_chain
+
 from parsers.log_parser import (
     read_log,
     count_failed_auth,
@@ -251,6 +253,17 @@ runtime_events = len(falco_logs)
 incidents = len(cloud_findings)
 
 # ---------------------------
+# ATTACK CHAIN
+# ---------------------------
+
+attack_chain = build_attack_chain(
+    failed_auth,
+    cloud_findings,
+    ioc_matches,
+    critical_alerts
+)
+
+# ---------------------------
 # THREAT SCORE
 # ---------------------------
 
@@ -260,6 +273,24 @@ threat_score, threat_severity = calculate_threat_score(
     len(cloud_findings),
     len(ioc_matches)
 )
+
+# ---------------------------
+# ATTACK CHAIN VISUALIZATION
+# ---------------------------
+
+st.subheader("Attack Chain Progression")
+
+if attack_chain:
+
+    for step in attack_chain:
+
+        st.warning(step)
+
+else:
+
+    st.success(
+        "No active attack chain identified"
+    )
 
 # ---------------------------
 # THREAT PRIORITY
