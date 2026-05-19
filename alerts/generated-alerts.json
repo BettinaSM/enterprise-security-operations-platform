@@ -1,0 +1,14 @@
+[
+  {
+    "severity": "critical",
+    "title": "Potential Container Compromise",
+    "source": "Falco",
+    "mitre": "T1611"
+  },
+  {
+    "severity": "high",
+    "title": "SSH Brute Force Attempt",
+    "source": "Linux Auth",
+    "mitre": "T1110"
+  }
+]
