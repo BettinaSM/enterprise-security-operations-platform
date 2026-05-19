@@ -97,6 +97,29 @@ runtime_events = len(falco_logs)
 incidents = len(cloud_findings)
 
 # ---------------------------
+# SECURITY KPIs
+# ---------------------------
+
+st.subheader("Security Operations KPIs")
+
+kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
+
+kpi_col1.metric(
+    "Mean Time To Detect",
+    "4 min"
+)
+
+kpi_col2.metric(
+    "Mean Time To Respond",
+    "11 min"
+)
+
+kpi_col3.metric(
+    "Detection Coverage",
+    "91%"
+)
+
+# ---------------------------
 # THREAT PRIORITY
 # ---------------------------
 
@@ -318,6 +341,38 @@ mitre_fig = px.bar(
 st.plotly_chart(mitre_fig, use_container_width=True)
 
 # ---------------------------
+# COMPLIANCE DASHBOARD
+# ---------------------------
+
+st.subheader("Compliance Overview")
+
+compliance_df = pd.DataFrame({
+    "Framework": [
+        "ISO 27001",
+        "NIST",
+        "CIS Controls",
+        "PCI-DSS"
+    ],
+    "Status": [
+        "Compliant",
+        "Partial",
+        "Compliant",
+        "In Review"
+    ],
+    "Coverage": [
+        "92%",
+        "81%",
+        "89%",
+        "74%"
+    ]
+})
+
+st.dataframe(
+    compliance_df,
+    use_container_width=True
+)
+
+# ---------------------------
 # CLOUD SECURITY EVENTS
 # ---------------------------
 
@@ -402,6 +457,32 @@ st.dataframe(
 )
 
 # ---------------------------
+# SOAR ACTIONS
+# ---------------------------
+
+st.subheader("SOAR Automated Actions")
+
+soar_df = pd.DataFrame({
+    "Action": [
+        "Block IOC",
+        "Disable User",
+        "Isolate Container",
+        "Create Incident Ticket"
+    ],
+    "Status": [
+        "Executed",
+        "Pending",
+        "Executed",
+        "Executed"
+    ]
+})
+
+st.dataframe(
+    soar_df,
+    use_container_width=True
+)
+
+# ---------------------------
 # LIVE EVENTS
 # ---------------------------
 
@@ -445,6 +526,33 @@ if search_term:
     else:
 
         st.warning("No matching events found")
+
+# ---------------------------
+# EXECUTIVE SUMMARY
+# ---------------------------
+
+st.subheader("Executive Security Summary")
+
+st.success("""
+Enterprise monitoring coverage active across:
+
+- Linux / Unix / AIX
+- Windows
+- Kubernetes
+- AWS
+- Azure
+- GCP
+- OCI
+- IBM Cloud
+
+Threat detection pipelines operational.
+
+MITRE ATT&CK coverage enabled.
+
+IOC monitoring active.
+
+SOAR integrations simulated successfully.
+""")
 
 # ---------------------------
 # SECURITY ARCHITECTURE
