@@ -1,0 +1,12 @@
+[
+    {
+        "ioc": "185.220.101.1",
+        "threat": "TOR Exit Node",
+        "severity": "High"
+    },
+    {
+        "ioc": "malicious-domain.com",
+        "threat": "Known C2 Domain",
+        "severity": "Critical"
+    }
+]
