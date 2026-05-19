@@ -11,14 +11,13 @@ def load_json_log(file_path):
     if not full_path.exists():
         return None
 
-try:
+    try:
 
-    with open(full_path, "r") as file:
-        return json.load(file)
+        with open(full_path, "r") as file:
+            return json.load(file)
 
-except Exception:
-
-    return None
+    except Exception:
+        return None
 
 
 def detect_failed_cloud_login(event):
@@ -53,6 +52,7 @@ def detect_privileged_activity(event):
         keyword.lower() in event_str.lower()
         for keyword in keywords
     )
+
 
 def calculate_severity(event):
 
