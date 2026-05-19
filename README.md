@@ -132,3 +132,20 @@ The project includes Python-based automation examples for:
 - Security event categorization
 
 This simulates foundational SOC automation concepts.
+
+---
+
+## Platform Simulation
+
+The platform simulates a modern enterprise Security Operations environment including:
+
+- SIEM ingestion
+- Runtime detections
+- Threat correlation
+- IOC enrichment
+- MITRE ATT&CK mapping
+- SOC triage workflows
+- SOAR automation concepts
+- Kubernetes runtime security
+
+The project combines documentation, detection rules, simulated logs, Python automation and security workflows to model enterprise security operations.
