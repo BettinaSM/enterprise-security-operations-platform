@@ -1,0 +1,3 @@
+May 19 10:15:22 server01 sshd[2241]: Failed password for invalid user admin from 185.220.101.1 port 44221 ssh2
+May 19 10:15:30 server01 sshd[2245]: Failed password for root from 185.220.101.1 port 44225 ssh2
+May 19 10:16:10 server01 sshd[2250]: Accepted password for analyst from 10.0.0.15 port 55221 ssh2
