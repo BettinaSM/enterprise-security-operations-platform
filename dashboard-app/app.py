@@ -18,7 +18,7 @@ from parsers.cloud_parser import (
 )
 
 st.set_page_config(
-    page_title="Enterprise Security Operations Platform",
+    page_title="Unified Enterprise Security Operations Platform",
     page_icon="🛡️",
     layout="wide"
 )
@@ -27,7 +27,18 @@ st.set_page_config(
 # HEADER
 # ---------------------------
 
-st.title("🛡️ Enterprise Security Operations Platform")
+st.sidebar.title("SOC Navigation")
+
+st.sidebar.markdown("""
+- Dashboard
+- Threat Detection
+- Cloud Security
+- MITRE ATT&CK
+- Incident Response
+- SOAR
+""")
+
+st.title("🛡️ Unified Enterprise Security Operations Platform")
 
 st.markdown("""
 Unified Security Operations monitoring platform covering:
