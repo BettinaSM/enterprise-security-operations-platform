@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import json
 
 from parsers.ioc_matcher import match_ioc
 from parsers.threat_scoring import calculate_threat_score
@@ -31,20 +32,26 @@ st.set_page_config(
 st.sidebar.title("SOC Navigation")
 
 st.sidebar.markdown("""
-### Monitoring
+## Security Monitoring
 - Dashboard
 - Runtime Security
 - Cloud Security
+- Threat Intelligence
 
-### Detection Engineering
+## Detection Engineering
 - MITRE ATT&CK
 - IOC Matching
 - Threat Scoring
+- Attack Simulation
 
-### Incident Response
+## Incident Response
 - Incident Timeline
-- Drilldown
-- SOAR
+- Incident Drilldown
+- SOAR Automation
+
+## Governance
+- Compliance Dashboard
+- Executive Summary
 """)
 
 st.title("🛡️ Unified Enterprise Security Operations Platform")
@@ -579,3 +586,23 @@ Incident Response
         ↓
 SOAR Automation
 """)
+
+# ---------------------------
+# ATTACK SIMULATION
+# ---------------------------
+
+st.subheader("Attack Simulation")
+
+with open(
+    "simulations/attack-simulation.json",
+    "r"
+) as file:
+
+    attack_data = json.load(file)
+
+attack_df = pd.DataFrame(attack_data)
+
+st.dataframe(
+    attack_df,
+    use_container_width=True
+)
