@@ -120,3 +120,15 @@ The platform includes simulated:
 - Detection engineering workflows
 
 These artifacts simulate enterprise Security Operations monitoring and investigation processes.
+
+---
+
+## Security Automation
+
+The project includes Python-based automation examples for:
+
+- Alert severity classification
+- Detection parsing
+- Security event categorization
+
+This simulates foundational SOC automation concepts.
