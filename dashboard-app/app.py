@@ -100,7 +100,7 @@ for provider, event in cloud_events:
         cloud_findings.append({
             "Cloud": provider,
             "Finding": "Failed Authentication",
-            "Severity": "High"
+            "Severity": calculate_severity(event)
         })
 
     if detect_privileged_activity(event):
@@ -299,7 +299,7 @@ st.divider()
 
 st.subheader("Live Runtime Events")
 
-for event in falco_logs:
+for event in falco_logs[-10:]:
     st.code(event)
 
 st.divider()
