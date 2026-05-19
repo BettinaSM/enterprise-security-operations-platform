@@ -6,6 +6,7 @@ import time
 
 from parsers.ioc_matcher import match_ioc
 from parsers.threat_scoring import calculate_threat_score
+from parsers.mitre_mapper import map_to_mitre
 
 from parsers.log_parser import (
     read_log,
@@ -178,6 +179,10 @@ for provider, event in cloud_events:
 
 ioc_matches = match_ioc(linux_logs)
 
+mitre_events = map_to_mitre(
+    linux_logs + aix_logs + falco_logs
+)
+
 if ioc_matches:
 
     st.warning(
@@ -313,20 +318,12 @@ st.divider()
 
 st.subheader("MITRE ATT&CK Coverage")
 
-mitre_df = pd.DataFrame({
-    "Technique": [
-        "T1059",
-        "T1110",
-        "T1611"
-    ],
-    "Description": [
-        "Command Execution",
-        "Brute Force",
-        "Privilege Escalation"
-    ]
-})
+mitre_df = pd.DataFrame(mitre_events)
 
-st.dataframe(mitre_df, use_container_width=True)
+st.dataframe(
+    mitre_df,
+    use_container_width=True
+)
 
 st.divider()
 
