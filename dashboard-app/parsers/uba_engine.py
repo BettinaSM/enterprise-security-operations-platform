@@ -1,21 +1,80 @@
-def detect_suspicious_user_activity(logs):
+def analyze_user_behavior(events):
 
-    suspicious = []
+    findings = []
 
-    for log in logs:
+    failed_logins = 0
 
-        log_lower = log.lower()
+    privileged_actions = 0
 
-        if "root" in log_lower:
-            suspicious.append({
-                "user": "root",
-                "reason": "Privileged account activity"
-            })
+    suspicious_commands = 0
 
-        if "failed password" in log_lower:
-            suspicious.append({
-                "user": "unknown",
-                "reason": "Multiple failed authentications"
-            })
+    for event in events:
 
-    return suspicious
+        log = event.lower()
+
+        # ---------------------------
+        # FAILED AUTHENTICATIONS
+        # ---------------------------
+
+        if "failed" in log:
+
+            failed_logins += 1
+
+        # ---------------------------
+        # PRIVILEGED ACTIONS
+        # ---------------------------
+
+        if (
+            "sudo" in log
+            or "root" in log
+            or "admin" in log
+        ):
+
+            privileged_actions += 1
+
+        # ---------------------------
+        # SUSPICIOUS COMMANDS
+        # ---------------------------
+
+        if (
+            "curl" in log
+            or "wget" in log
+            or "nc " in log
+            or "nmap" in log
+        ):
+
+            suspicious_commands += 1
+
+    # ---------------------------
+    # UEBA LOGIC
+    # ---------------------------
+
+    if failed_logins >= 5:
+
+        findings.append({
+            "type": "Brute Force Behavior",
+            "severity": "High"
+        })
+
+    if privileged_actions >= 3:
+
+        findings.append({
+            "type": "Suspicious Admin Activity",
+            "severity": "Critical"
+        })
+
+    if suspicious_commands >= 2:
+
+        findings.append({
+            "type": "Potential Insider Threat",
+            "severity": "Critical"
+        })
+
+    if not findings:
+
+        findings.append({
+            "type": "Normal User Behavior",
+            "severity": "Low"
+        })
+
+    return findings
