@@ -104,20 +104,6 @@ gcp_log = load_json_log("agents/gcp/audit-logs.json")
 oci_log = load_json_log("agents/oracle-cloud/oci-audit.json")
 ibm_log = load_json_log("agents/ibm-cloud/activity-tracker.json")
 
-# ---------------------------
-# METRICS
-# ---------------------------
-
-failed_auth = (
-    count_failed_auth(linux_logs)
-    + count_failed_auth(aix_logs)
-)
-
-critical_alerts = count_critical(falco_logs)
-
-runtime_events = len(falco_logs)
-
-incidents = len(cloud_findings)
 
 # ---------------------------
 # SECURITY KPIs
@@ -187,11 +173,55 @@ mitre_events = map_to_mitre(
     linux_logs + aix_logs + falco_logs
 )
 
+detections = run_detections(
+    linux_logs +
+    aix_logs +
+    falco_logs
+)
+
 if ioc_matches:
 
     st.warning(
         f"Known malicious IOC detected: {', '.join(ioc_matches)}"
     )
+
+# ---------------------------
+# SECURITY EVENTS
+# ---------------------------
+
+with open(
+    "simulations/security-events.json",
+    "r"
+) as file:
+
+    security_events = json.load(file)
+
+filtered_events = []
+
+for event in security_events:
+
+    if severity_filter == "All":
+
+        filtered_events.append(event)
+
+    elif event["severity"] == severity_filter:
+
+        filtered_events.append(event)
+
+# ---------------------------
+# METRICS
+# ---------------------------
+
+failed_auth = (
+    count_failed_auth(linux_logs)
+    + count_failed_auth(aix_logs)
+)
+
+critical_alerts = count_critical(falco_logs)
+
+runtime_events = len(falco_logs)
+
+incidents = len(cloud_findings)
 
 # ---------------------------
 # THREAT SCORE
@@ -237,6 +267,7 @@ elif threat_severity == "Medium":
 else:
 
     st.success("Low threat activity")
+
 
 # ---------------------------
 # AUTOMATED DETECTIONS
@@ -358,6 +389,27 @@ mitre_fig = px.bar(
 )
 
 st.plotly_chart(mitre_fig, use_container_width=True)
+
+# ---------------------------
+# DETECTION ENGINE
+# ---------------------------
+
+st.subheader("Detection Engine Findings")
+
+if detections:
+
+    detection_df = pd.DataFrame(detections)
+
+    st.dataframe(
+        detection_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.success(
+        "No active detections identified"
+    )
 
 # ---------------------------
 # COMPLIANCE DASHBOARD
@@ -576,29 +628,6 @@ if search_term:
     else:
 
         st.warning("No matching events found")
-
-# ---------------------------
-# SECURITY EVENTS
-# ---------------------------
-
-with open(
-    "simulations/security-events.json",
-    "r"
-) as file:
-
-    security_events = json.load(file)
-
-filtered_events = []
-
-for event in security_events:
-
-    if severity_filter == "All":
-
-        filtered_events.append(event)
-
-    elif event["severity"] == severity_filter:
-
-        filtered_events.append(event)
 
 # ---------------------------
 # SIEM EVENTS
