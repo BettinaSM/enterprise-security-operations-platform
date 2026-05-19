@@ -92,3 +92,16 @@ The platform simulates a modern enterprise Security Operations workflow:
 7. Continuous monitoring and governance
 
 The project demonstrates detection engineering and cloud-native security operations concepts.
+
+---
+
+## Platform Capabilities
+
+- Runtime threat detection
+- SIEM integration concepts
+- Threat correlation workflows
+- MITRE ATT&CK mapping
+- SOC operational workflows
+- Incident response concepts
+- Cloud-native security monitoring
+- Governance and observability
