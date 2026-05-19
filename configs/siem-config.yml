@@ -1,0 +1,17 @@
+siem:
+
+  ingestion:
+    - auth.log
+    - falco-events.log
+    - kubernetes-audit.log
+
+  correlation:
+    enabled: true
+
+  mitre_mapping:
+    enabled: true
+
+  severity:
+    critical: privileged
+    high: shell
+    medium: failed_password
