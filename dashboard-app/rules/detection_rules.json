@@ -1,1 +1,30 @@
 
+[
+  {
+    "name": "SSH Brute Force",
+    "keyword": "failed password",
+    "severity": "High",
+    "mitre": "T1110"
+  },
+
+  {
+    "name": "Privilege Escalation",
+    "keyword": "sudo",
+    "severity": "Critical",
+    "mitre": "T1548"
+  },
+
+  {
+    "name": "Kubernetes Privileged Container",
+    "keyword": "privileged",
+    "severity": "Critical",
+    "mitre": "T1611"
+  },
+
+  {
+    "name": "Cloud Unauthorized Access",
+    "keyword": "unauthorized",
+    "severity": "High",
+    "mitre": "T1078"
+  }
+]
