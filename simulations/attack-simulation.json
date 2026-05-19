@@ -1,0 +1,17 @@
+[
+  {
+    "attack": "SSH Brute Force",
+    "mitre": "T1110",
+    "status": "Detected"
+  },
+  {
+    "attack": "Container Privilege Escalation",
+    "mitre": "T1611",
+    "status": "Blocked"
+  },
+  {
+    "attack": "Suspicious PowerShell Execution",
+    "mitre": "T1059",
+    "status": "Investigating"
+  }
+]
