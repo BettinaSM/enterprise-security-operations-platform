@@ -1,0 +1,17 @@
+[
+  {
+    "asset": "prod-k8s-cluster",
+    "criticality": "Critical",
+    "owner": "Platform Team"
+  },
+  {
+    "asset": "finance-linux-server",
+    "criticality": "High",
+    "owner": "Finance"
+  },
+  {
+    "asset": "aws-iam-admin",
+    "criticality": "Critical",
+    "owner": "Cloud Team"
+  }
+]
