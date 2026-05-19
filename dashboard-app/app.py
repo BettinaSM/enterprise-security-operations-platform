@@ -34,6 +34,15 @@ st.set_page_config(
     layout="wide"
 )
 
+from pathlib import Path
+# ---------------------------
+# BASE PATHS
+# ---------------------------
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SIMULATIONS_DIR = BASE_DIR / "simulations"
+
 # ---------------------------
 # HEADER
 # ---------------------------
@@ -195,7 +204,7 @@ if ioc_matches:
 # ---------------------------
 
 with open(
-    "simulations/security-events.json",
+    SIMULATIONS_DIR / "security-events.json",
     "r"
 ) as file:
 
@@ -614,7 +623,7 @@ st.divider()
 st.subheader("Real-Time Security Events")
 
 with open(
-    "simulations/realtime-events.json",
+    SIMULATIONS_DIR / "realtime-events.json",
     "r"
 ) as file:
 
@@ -787,7 +796,7 @@ SOAR Automation
 st.subheader("Attack Simulation")
 
 with open(
-    "simulations/attack-simulation.json",
+    SIMULATIONS_DIR / "attack-simulation.json",
     "r"
 ) as file:
 
