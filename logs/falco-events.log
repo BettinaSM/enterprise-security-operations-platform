@@ -1,0 +1,3 @@
+10:20:11 Warning Shell spawned inside container container=nginx-secure user=root
+10:21:45 Critical Privileged container execution detected container=security-test
+10:23:01 Warning Suspicious process execution process=/bin/bash container=web-app
