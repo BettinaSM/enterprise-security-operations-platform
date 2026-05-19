@@ -1,0 +1,16 @@
+[
+  {
+    "id": "DET-001",
+    "name": "Container Shell Execution",
+    "severity": "high",
+    "mitre": "T1059",
+    "source": "Falco"
+  },
+  {
+    "id": "DET-002",
+    "name": "Privilege Escalation Attempt",
+    "severity": "critical",
+    "mitre": "T1611",
+    "source": "Kubernetes"
+  }
+]
