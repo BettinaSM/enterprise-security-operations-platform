@@ -14,6 +14,10 @@ from parsers.detection_engine import run_detections
 
 from parsers.risk_engine import calculate_risk_score
 
+from parsers.yaml_detection_engine import (
+    run_yaml_detections
+)
+
 from parsers.log_parser import (
     read_log,
     count_failed_auth,
@@ -189,6 +193,13 @@ detections = run_detections(
     aix_logs +
     falco_logs
 )
+
+yaml_detections = run_yaml_detections(
+    linux_logs +
+    aix_logs +
+    falco_logs
+)
+
 risk_score, risk_level = calculate_risk_score(
     detections
 )
@@ -461,6 +472,25 @@ else:
 
     st.success(
         "No active detections identified"
+    )
+
+st.subheader("YAML Detection Rules")
+
+if yaml_detections:
+
+    yaml_df = pd.DataFrame(
+        yaml_detections
+    )
+
+    st.dataframe(
+        yaml_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.success(
+        "No YAML detections identified"
     )
 
 # ---------------------------
