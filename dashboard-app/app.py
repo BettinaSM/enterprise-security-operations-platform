@@ -613,6 +613,26 @@ st.dataframe(
 )
 
 # ---------------------------
+# ASSET CRITICALITY
+# ---------------------------
+
+st.subheader("Enterprise Asset Criticality")
+
+with open(
+    SIMULATIONS_DIR / "assets.json",
+    "r"
+) as file:
+
+    asset_data = json.load(file)
+
+asset_df = pd.DataFrame(asset_data)
+
+st.dataframe(
+    asset_df,
+    use_container_width=True
+)
+
+# ---------------------------
 # INCIDENT TIMELINE
 # ---------------------------
 
