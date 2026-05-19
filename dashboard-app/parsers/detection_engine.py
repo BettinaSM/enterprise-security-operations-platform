@@ -1,35 +1,41 @@
 import json
 
+from pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+RULES_DIR = BASE_DIR / "rules"
+
 
 def load_rules():
 
     with open(
-        "rules/detection_rules.json",
+        RULES_DIR / "detection_rules.json",
         "r"
     ) as file:
 
         return json.load(file)
 
 
-def run_detections(events):
-
-    rules = load_rules()
+def run_detections(logs):
 
     detections = []
 
-    for event in events:
+    rules = load_rules()
 
-        event_str = str(event).lower()
+    for log in logs:
 
         for rule in rules:
 
-            if rule["keyword"] in event_str:
+            keyword = rule["keyword"]
+
+            if keyword.lower() in log.lower():
 
                 detections.append({
                     "rule": rule["name"],
                     "severity": rule["severity"],
-                    "mitre": rule["mitre"],
-                    "event": event
+                    "log": log
                 })
 
     return detections
