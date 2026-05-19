@@ -1,39 +1,38 @@
-THREAT_FEED = {
-
-    "185.220.101.1": {
-        "type": "TOR Exit Node",
-        "severity": "Critical",
-        "confidence": "High"
-    },
-
-    "45.155.205.233": {
-        "type": "C2 Infrastructure",
-        "severity": "Critical",
-        "confidence": "High"
-    },
-
-    "103.245.228.12": {
-        "type": "Botnet",
-        "severity": "High",
-        "confidence": "Medium"
-    }
-}
-
 def enrich_iocs(iocs):
 
     enriched = []
 
+    malicious_iocs = {
+        "185.220.101.1": {
+            "type": "TOR Exit Node",
+            "risk": "Critical",
+            "country": "Unknown"
+        },
+
+        "192.168.1.200": {
+            "type": "Internal Recon",
+            "risk": "Medium",
+            "country": "Internal"
+        },
+
+        "evil-admin.com": {
+            "type": "Malicious Domain",
+            "risk": "High",
+            "country": "RU"
+        }
+    }
+
     for ioc in iocs:
 
-        if ioc in THREAT_FEED:
+        if ioc in malicious_iocs:
 
-            entry = THREAT_FEED[ioc]
+            data = malicious_iocs[ioc]
 
             enriched.append({
-                "IOC": ioc,
-                "Threat Type": entry["type"],
-                "Severity": entry["severity"],
-                "Confidence": entry["confidence"]
+                "ioc": ioc,
+                "type": data["type"],
+                "risk": data["risk"],
+                "country": data["country"]
             })
 
     return enriched
