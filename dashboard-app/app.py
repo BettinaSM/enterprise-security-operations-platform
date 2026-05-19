@@ -596,6 +596,48 @@ for event in realtime_events:
     time.sleep(0.3)
 
 # ---------------------------
+# THREAT HUNTING CONSOLE
+# ---------------------------
+
+st.subheader("Threat Hunting Console")
+
+hunt_term = st.text_input(
+    "Hunt for indicators, users, IPs or commands"
+)
+
+hunt_results = []
+
+all_hunt_data = (
+    linux_logs
+    + aix_logs
+    + falco_logs
+)
+
+if hunt_term:
+
+    for log in all_hunt_data:
+
+        if hunt_term.lower() in log.lower():
+
+            hunt_results.append(log)
+
+    if hunt_results:
+
+        st.success(
+            f"{len(hunt_results)} hunting matches identified"
+        )
+
+        for result in hunt_results:
+
+            st.code(result)
+
+    else:
+
+        st.warning(
+            "No matching threat hunting results"
+        )
+
+# ---------------------------
 # SIEM SEARCH
 # ---------------------------
 
