@@ -51,6 +51,7 @@ st.set_page_config(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SIMULATIONS_DIR = BASE_DIR / "simulations"
+
 RULES_DIR = BASE_DIR / "detections" / "sigma"
 
 # ---------------------------
@@ -766,7 +767,7 @@ for event in realtime_events:
 
         st.info(event)
 
-    time.sleep(0.3)
+    time.sleep(0.1)
 
 # ---------------------------
 # THREAT HUNTING CONSOLE
