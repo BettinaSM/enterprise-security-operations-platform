@@ -4,6 +4,8 @@ import plotly.express as px
 import json
 import time
 
+from pathlib import Path
+
 from parsers.ioc_matcher import match_ioc
 
 from parsers.threat_scoring import calculate_threat_score
@@ -42,7 +44,6 @@ st.set_page_config(
     layout="wide"
 )
 
-from pathlib import Path
 # ---------------------------
 # BASE PATHS
 # ---------------------------
@@ -50,6 +51,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SIMULATIONS_DIR = BASE_DIR / "simulations"
+RULES_DIR = BASE_DIR / "detections" / "sigma"
 
 # ---------------------------
 # HEADER
@@ -537,7 +539,7 @@ else:
 st.subheader("Detection-as-Code Rule")
 
 rule = load_rule(
-    "../detections/sigma/linux_bruteforce.yml"
+    RULES_DIR / "linux_bruteforce.yml"
 )
 
 st.json(rule)
@@ -597,7 +599,7 @@ else:
 st.subheader("Kubernetes Runtime Security")
 
 with open(
-    "simulations/k8s-runtime.json",
+    SIMULATIONS_DIR / "k8s-runtime.json",
     "r"
 ) as file:
 
