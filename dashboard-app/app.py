@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import json
+import time
 
 from parsers.ioc_matcher import match_ioc
 from parsers.threat_scoring import calculate_threat_score
@@ -499,6 +500,37 @@ for event in falco_logs[-10:]:
     st.code(event)
 
 st.divider()
+
+# ---------------------------
+# LIVE EVENT STREAM
+# ---------------------------
+
+st.subheader("Real-Time Security Events")
+
+with open(
+    "simulations/realtime-events.json",
+    "r"
+) as file:
+
+    realtime_events = json.load(file)
+
+for event in realtime_events:
+
+    severity = event["severity"]
+
+    if severity == "Critical":
+
+        st.error(event)
+
+    elif severity == "High":
+
+        st.warning(event)
+
+    else:
+
+        st.info(event)
+
+    time.sleep(0.3)
 
 # ---------------------------
 # SIEM SEARCH
