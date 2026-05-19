@@ -14,6 +14,10 @@ from parsers.ueba_engine import (
 
 from parsers.threat_scoring import calculate_threat_score
 
+from parsers.threat_intelligence import (
+    enrich_iocs
+)
+
 from parsers.mitre_mapper import map_to_mitre
 
 from parsers.detection_engine import run_detections
