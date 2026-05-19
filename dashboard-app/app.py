@@ -1,13 +1,14 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from parsers.log_parser import detect_bruteforce
+
 from parsers.ioc_matcher import match_ioc
 
 from parsers.log_parser import (
     read_log,
     count_failed_auth,
-    count_critical
+    count_critical,
+    detect_bruteforce
 )
 
 from parsers.cloud_parser import (
