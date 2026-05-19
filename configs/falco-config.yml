@@ -1,0 +1,11 @@
+falco:
+
+  runtime_detection: enabled
+
+  monitored_events:
+    - shell_execution
+    - privileged_container
+    - suspicious_process
+
+  output:
+    format: json
