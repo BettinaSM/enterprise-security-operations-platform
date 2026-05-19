@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from parsers.ioc_matcher import match_ioc
 
 from parsers.log_parser import (
     read_log,
@@ -107,6 +108,18 @@ for provider, event in cloud_events:
             "Finding": "Privileged Activity",
             "Severity": "Critical"
         })
+
+# ---------------------------
+# IOC MATCHING
+# ---------------------------
+
+ioc_matches = match_ioc(linux_logs)
+
+if ioc_matches:
+
+    st.warning(
+        f"Known malicious IOC detected: {', '.join(ioc_matches)}"
+    )
 
 # ---------------------------
 # AUTOMATED DETECTIONS
