@@ -1,0 +1,20 @@
+[
+  {
+    "cloud": "AWS",
+    "event": "Failed Console Login",
+    "severity": "High",
+    "mitre": "T1110"
+  },
+  {
+    "cloud": "Azure",
+    "event": "Suspicious Sign-In",
+    "severity": "Medium",
+    "mitre": "T1078"
+  },
+  {
+    "cloud": "GCP",
+    "event": "Privileged Compute Creation",
+    "severity": "Critical",
+    "mitre": "T1611"
+  }
+]
