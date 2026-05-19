@@ -1,17 +1,14 @@
 [
-  {
-    "timestamp": "2026-05-19 00:01:22",
-    "event": "SSH Failed Login",
-    "severity": "High"
-  },
-  {
-    "timestamp": "2026-05-19 00:02:10",
-    "event": "Falco Privileged Container",
-    "severity": "Critical"
-  },
-  {
-    "timestamp": "2026-05-19 00:03:44",
-    "event": "AWS Unauthorized API Call",
-    "severity": "High"
-  }
+    {
+        "severity": "Critical",
+        "event": "Runtime container escape attempt detected"
+    },
+    {
+        "severity": "High",
+        "event": "Excessive failed cloud authentications"
+    },
+    {
+        "severity": "Medium",
+        "event": "Suspicious outbound network activity"
+    }
 ]
