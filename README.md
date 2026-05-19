@@ -105,3 +105,18 @@ The project demonstrates detection engineering and cloud-native security operati
 - Incident response concepts
 - Cloud-native security monitoring
 - Governance and observability
+
+---
+
+## Simulated Enterprise Security Data
+
+The platform includes simulated:
+
+- Authentication logs
+- Kubernetes audit events
+- Runtime security alerts
+- SIEM detections
+- Incident timelines
+- Detection engineering workflows
+
+These artifacts simulate enterprise Security Operations monitoring and investigation processes.
