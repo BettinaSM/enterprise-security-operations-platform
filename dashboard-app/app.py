@@ -74,7 +74,7 @@ critical_alerts = count_critical(falco_logs)
 
 runtime_events = len(falco_logs)
 
-incidents = 2
+incidents = len(cloud_findings)
 
 # ---------------------------
 # CLOUD DETECTIONS
