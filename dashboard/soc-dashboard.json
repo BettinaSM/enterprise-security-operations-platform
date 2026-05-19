@@ -1,0 +1,8 @@
+{
+  "critical_alerts": 4,
+  "high_alerts": 12,
+  "runtime_events": 7,
+  "cloud_alerts": 9,
+  "failed_authentications": 23,
+  "incident_cases": 2
+}
