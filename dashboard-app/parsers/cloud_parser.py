@@ -14,7 +14,9 @@ def load_json_log(file_path):
     try:
 
         with open(full_path, "r") as file:
-            return json.load(file)
+            data = json.load(file)
+
+        return data
 
     except Exception:
         return None
