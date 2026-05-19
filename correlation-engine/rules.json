@@ -1,0 +1,17 @@
+[
+  {
+    "rule": "SSH Brute Force",
+    "conditions": [
+      "multiple_failed_passwords"
+    ],
+    "severity": "high"
+  },
+  {
+    "rule": "Container Compromise",
+    "conditions": [
+      "shell_execution",
+      "privileged_container"
+    ],
+    "severity": "critical"
+  }
+]
