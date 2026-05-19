@@ -24,6 +24,10 @@ from parsers.rule_engine import load_rule
 
 from parsers.attack_chain import build_attack_chain
 
+from parsers.incident_manager import (
+    generate_incidents
+)
+
 from parsers.log_parser import (
     read_log,
     count_failed_auth,
@@ -258,6 +262,8 @@ incidents = len(cloud_findings)
 # ---------------------------
 # ATTACK CHAIN
 # ---------------------------
+
+incidents_data = generate_incidents()
 
 attack_chain = build_attack_chain(
     failed_auth,
@@ -657,6 +663,44 @@ timeline_df = pd.DataFrame({
 st.table(timeline_df)
 
 st.divider()
+
+# ---------------------------
+# SOC CASE MANAGEMENT
+# ---------------------------
+
+st.subheader("SOC Case Management")
+
+incident_cases_df = pd.DataFrame(
+    incidents_data
+)
+
+st.dataframe(
+    incident_cases_df,
+    use_container_width=True
+)
+
+# ---------------------------
+# INCIDENT RESPONSE METRICS
+# ---------------------------
+
+st.subheader("Incident Response Metrics")
+
+metric_col1, metric_col2, metric_col3 = st.columns(3)
+
+metric_col1.metric(
+    "Open Incidents",
+    "12"
+)
+
+metric_col2.metric(
+    "Escalated Cases",
+    "4"
+)
+
+metric_col3.metric(
+    "SLA Compliance",
+    "94%"
+)
 
 # ---------------------------
 # INCIDENT DRILLDOWN
