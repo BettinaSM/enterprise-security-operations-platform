@@ -1,0 +1,13 @@
+title: Privileged Access Activity
+severity: Critical
+
+patterns:
+  - "sudo su"
+  - "root access"
+  - "admin login"
+
+mitre:
+  - "T1078"
+
+description: >
+  Detects privileged access attempts
