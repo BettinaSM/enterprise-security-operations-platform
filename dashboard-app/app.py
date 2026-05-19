@@ -22,6 +22,10 @@ from parsers.yaml_detection_engine import (
 
 from parsers.rule_engine import load_rule
 
+from parsers.threat_intelligence import (
+    enrich_iocs
+)
+
 from parsers.attack_chain import build_attack_chain
 
 from parsers.incident_manager import (
@@ -213,6 +217,10 @@ yaml_detections = run_yaml_detections(
 
 risk_score, risk_level = calculate_risk_score(
     detections
+)
+
+threat_intel = enrich_iocs(
+    ioc_matches
 )
 
 if ioc_matches:
@@ -582,6 +590,29 @@ st.dataframe(
     compliance_df,
     use_container_width=True
 )
+
+# ---------------------------
+# THREAT INTELLIGENCE
+# ---------------------------
+
+st.subheader("Threat Intelligence Enrichment")
+
+if threat_intel:
+
+    threat_df = pd.DataFrame(
+        threat_intel
+    )
+
+    st.dataframe(
+        threat_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.success(
+        "No enriched threat intelligence findings"
+    )
 
 # ---------------------------
 # CLOUD SECURITY EVENTS
