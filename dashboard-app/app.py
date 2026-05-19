@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 from parsers.log_parser import (
     read_log,
@@ -9,32 +10,41 @@ from parsers.log_parser import (
 
 st.set_page_config(
     page_title="Enterprise Security Operations Platform",
+    page_icon="🛡️",
     layout="wide"
 )
 
-st.title("Enterprise Security Operations Platform")
+# ---------------------------
+# HEADER
+# ---------------------------
+
+st.title("🛡️ Enterprise Security Operations Platform")
 
 st.markdown("""
-Unified Security Operations platform covering:
+Unified Security Operations monitoring platform covering:
 
 - Linux
 - AIX
 - Windows
-- Kubernetes
 - AWS
 - Azure
 - GCP
 - OCI
 - IBM Cloud
+- Kubernetes
 """)
 
-# Read logs
+# ---------------------------
+# READ LOGS
+# ---------------------------
 
 linux_logs = read_log("agents/linux/auth.log")
-falco_logs = read_log("logs/falco-events.log")
 aix_logs = read_log("agents/aix/sudo.log")
+falco_logs = read_log("logs/falco-events.log")
 
-# Metrics
+# ---------------------------
+# METRICS
+# ---------------------------
 
 failed_auth = (
     count_failed_auth(linux_logs)
@@ -47,7 +57,9 @@ runtime_events = len(falco_logs)
 
 incidents = 2
 
-# Dashboard metrics
+# ---------------------------
+# DASHBOARD METRICS
+# ---------------------------
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -58,11 +70,35 @@ col4.metric("Incidents", incidents)
 
 st.divider()
 
-# Environment Coverage
+# ---------------------------
+# ALERT SEVERITY CHART
+# ---------------------------
+
+st.subheader("Alert Severity Distribution")
+
+severity_df = pd.DataFrame({
+    "Severity": ["Critical", "High", "Medium"],
+    "Count": [4, 7, 12]
+})
+
+fig = px.bar(
+    severity_df,
+    x="Severity",
+    y="Count",
+    title="Security Alerts"
+)
+
+st.plotly_chart(fig, use_container_width=True)
+
+st.divider()
+
+# ---------------------------
+# ENVIRONMENT COVERAGE
+# ---------------------------
 
 st.subheader("Environment Coverage")
 
-env_data = pd.DataFrame({
+env_df = pd.DataFrame({
     "Environment": [
         "Linux",
         "AIX",
@@ -87,63 +123,91 @@ env_data = pd.DataFrame({
     ]
 })
 
-st.dataframe(env_data, use_container_width=True)
+st.dataframe(env_df, use_container_width=True)
 
 st.divider()
 
-# Runtime Alerts
+# ---------------------------
+# MITRE MAPPING
+# ---------------------------
 
-st.subheader("Runtime Security Alerts")
+st.subheader("MITRE ATT&CK Coverage")
 
-alerts_df = pd.DataFrame({
-    "Severity": [
-        "Critical",
-        "High",
-        "Medium"
-    ],
-    "Event": [
-        "Privileged Container Execution",
-        "SSH Brute Force Attempt",
-        "Suspicious Runtime Activity"
-    ],
-    "MITRE": [
-        "T1611",
+mitre_df = pd.DataFrame({
+    "Technique": [
+        "T1059",
         "T1110",
-        "T1059"
+        "T1611"
+    ],
+    "Description": [
+        "Command Execution",
+        "Brute Force",
+        "Privilege Escalation"
     ]
 })
 
-st.dataframe(alerts_df, use_container_width=True)
+st.dataframe(mitre_df, use_container_width=True)
 
 st.divider()
 
-# Raw Events
+# ---------------------------
+# INCIDENT TIMELINE
+# ---------------------------
 
-st.subheader("Recent Runtime Events")
+st.subheader("Incident Timeline")
+
+timeline_df = pd.DataFrame({
+    "Time": [
+        "10:15",
+        "10:20",
+        "10:22",
+        "10:30"
+    ],
+    "Event": [
+        "Failed SSH attempts detected",
+        "Falco runtime alert",
+        "SIEM correlation",
+        "Container isolated"
+    ]
+})
+
+st.table(timeline_df)
+
+st.divider()
+
+# ---------------------------
+# LIVE EVENTS
+# ---------------------------
+
+st.subheader("Live Runtime Events")
 
 for event in falco_logs:
     st.code(event)
 
 st.divider()
 
-# Architecture
+# ---------------------------
+# SECURITY ARCHITECTURE
+# ---------------------------
 
-st.subheader("Security Workflow")
+st.subheader("Enterprise Security Workflow")
 
 st.code("""
 Linux / AIX / Windows
         ↓
-Cloud Providers
+AWS / Azure / GCP / OCI / IBM Cloud
         ↓
-Kubernetes Runtime
+Kubernetes Runtime Monitoring
         ↓
-SIEM Correlation
+SIEM Correlation Engine
         ↓
-Threat Intelligence
+Threat Intelligence Enrichment
         ↓
 MITRE ATT&CK Mapping
         ↓
 SOC Dashboard
         ↓
 Incident Response
+        ↓
+SOAR Automation
 """)
