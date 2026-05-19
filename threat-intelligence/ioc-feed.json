@@ -1,0 +1,12 @@
+[
+  {
+    "type": "ip",
+    "value": "185.220.101.1",
+    "reputation": "malicious"
+  },
+  {
+    "type": "domain",
+    "value": "suspicious-runtime.example",
+    "reputation": "suspicious"
+  }
+]
