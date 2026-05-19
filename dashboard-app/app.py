@@ -8,6 +8,10 @@ from pathlib import Path
 
 from parsers.ioc_matcher import match_ioc
 
+from parsers.ueba_engine import (
+    analyze_user_behavior
+)
+
 from parsers.threat_scoring import calculate_threat_score
 
 from parsers.mitre_mapper import map_to_mitre
@@ -217,6 +221,12 @@ yaml_detections = run_yaml_detections(
 
 risk_score, risk_level = calculate_risk_score(
     detections
+)
+
+ueba_findings = analyze_user_behavior(
+    linux_logs +
+    aix_logs +
+    falco_logs
 )
 
 threat_intel = enrich_iocs(
@@ -558,6 +568,29 @@ rule = load_rule(
 )
 
 st.json(rule)
+
+# ---------------------------
+# UEBA ANALYTICS
+# ---------------------------
+
+st.subheader("User & Entity Behavior Analytics")
+
+if ueba_findings:
+
+    ueba_df = pd.DataFrame(
+        ueba_findings
+    )
+
+    st.dataframe(
+        ueba_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.success(
+        "No anomalous behavior identified"
+    )
 
 # ---------------------------
 # COMPLIANCE DASHBOARD
