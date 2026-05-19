@@ -1,0 +1,10 @@
+workflow:
+
+  trigger:
+    - critical_alert
+
+  actions:
+    - isolate_container
+    - notify_soc
+    - collect_logs
+    - enrich_iocs
