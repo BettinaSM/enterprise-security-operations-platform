@@ -72,6 +72,15 @@ Unified Security Operations monitoring platform covering:
 """)
 
 # ---------------------------
+# FILTERS
+# ---------------------------
+
+severity_filter = st.sidebar.selectbox(
+    "Filter Severity",
+    ["All", "Critical", "High", "Medium"]
+)
+
+# ---------------------------
 # READ LOGS
 # ---------------------------
 
