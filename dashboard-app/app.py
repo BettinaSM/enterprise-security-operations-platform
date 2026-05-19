@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from parsers.log_parser import detect_bruteforce
 from parsers.ioc_matcher import match_ioc
 
 from parsers.log_parser import (
@@ -124,8 +125,6 @@ if ioc_matches:
 # ---------------------------
 # AUTOMATED DETECTIONS
 # ---------------------------
-
-from parsers.log_parser import detect_bruteforce
 
 if detect_bruteforce(linux_logs):
 
