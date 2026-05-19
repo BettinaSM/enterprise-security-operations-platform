@@ -17,7 +17,8 @@ from parsers.log_parser import (
 from parsers.cloud_parser import (
     load_json_log,
     detect_failed_cloud_login,
-    detect_privileged_activity
+    detect_privileged_activity,
+    calculate_severity
 )
 
 st.set_page_config(
@@ -137,53 +138,6 @@ kpi_col3.metric(
 )
 
 # ---------------------------
-# THREAT PRIORITY
-# ---------------------------
-
-st.subheader("Threat Priority Assessment")
-
-score_col1, score_col2 = st.columns(2)
-
-score_col1.metric(
-    "Threat Score",
-    threat_score
-)
-
-score_col2.metric(
-    "Threat Severity",
-    threat_severity
-)
-
-if threat_severity == "Critical":
-
-    st.error("Critical threat level detected")
-
-elif threat_severity == "High":
-
-    st.warning("High threat activity identified")
-
-elif threat_severity == "Medium":
-
-    st.info("Medium threat activity")
-
-else:
-
-    st.success("Low threat activity")
-
-# ---------------------------
-# SIEM EVENTS
-# ---------------------------
-
-st.subheader("SIEM Event Correlation")
-
-events_df = pd.DataFrame(filtered_events)
-
-st.dataframe(
-    events_df,
-    use_container_width=True
-)
-
-# ---------------------------
 # CLOUD DETECTIONS
 # ---------------------------
 
@@ -240,6 +194,40 @@ threat_score, threat_severity = calculate_threat_score(
     len(cloud_findings),
     len(ioc_matches)
 )
+
+# ---------------------------
+# THREAT PRIORITY
+# ---------------------------
+
+st.subheader("Threat Priority Assessment")
+
+score_col1, score_col2 = st.columns(2)
+
+score_col1.metric(
+    "Threat Score",
+    threat_score
+)
+
+score_col2.metric(
+    "Threat Severity",
+    threat_severity
+)
+
+if threat_severity == "Critical":
+
+    st.error("Critical threat level detected")
+
+elif threat_severity == "High":
+
+    st.warning("High threat activity identified")
+
+elif threat_severity == "Medium":
+
+    st.info("Medium threat activity")
+
+else:
+
+    st.success("Low threat activity")
 
 # ---------------------------
 # AUTOMATED DETECTIONS
@@ -610,6 +598,19 @@ for event in security_events:
     elif event["severity"] == severity_filter:
 
         filtered_events.append(event)
+
+# ---------------------------
+# SIEM EVENTS
+# ---------------------------
+
+st.subheader("SIEM Event Correlation")
+
+events_df = pd.DataFrame(filtered_events)
+
+st.dataframe(
+    events_df,
+    use_container_width=True
+)
 
 # ---------------------------
 # EXECUTIVE SUMMARY
