@@ -5,8 +5,12 @@ import json
 import time
 
 from parsers.ioc_matcher import match_ioc
+
 from parsers.threat_scoring import calculate_threat_score
+
 from parsers.mitre_mapper import map_to_mitre
+
+from parsers.detection_engine import run_detections
 
 from parsers.log_parser import (
     read_log,
