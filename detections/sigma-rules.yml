@@ -1,0 +1,13 @@
+title: Suspicious SSH Authentication Failures
+
+logsource:
+  product: linux
+
+detection:
+  selection:
+    message|contains:
+      - "Failed password"
+
+condition: selection
+
+level: high
