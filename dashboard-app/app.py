@@ -171,6 +171,19 @@ else:
     st.success("Low threat activity")
 
 # ---------------------------
+# SIEM EVENTS
+# ---------------------------
+
+st.subheader("SIEM Event Correlation")
+
+events_df = pd.DataFrame(filtered_events)
+
+st.dataframe(
+    events_df,
+    use_container_width=True
+)
+
+# ---------------------------
 # CLOUD DETECTIONS
 # ---------------------------
 
@@ -574,6 +587,29 @@ if search_term:
     else:
 
         st.warning("No matching events found")
+
+# ---------------------------
+# SECURITY EVENTS
+# ---------------------------
+
+with open(
+    "simulations/security-events.json",
+    "r"
+) as file:
+
+    security_events = json.load(file)
+
+filtered_events = []
+
+for event in security_events:
+
+    if severity_filter == "All":
+
+        filtered_events.append(event)
+
+    elif event["severity"] == severity_filter:
+
+        filtered_events.append(event)
 
 # ---------------------------
 # EXECUTIVE SUMMARY
