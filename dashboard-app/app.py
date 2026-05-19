@@ -12,6 +12,8 @@ from parsers.mitre_mapper import map_to_mitre
 
 from parsers.detection_engine import run_detections
 
+from parsers.risk_engine import calculate_risk_score
+
 from parsers.log_parser import (
     read_log,
     count_failed_auth,
@@ -178,6 +180,9 @@ detections = run_detections(
     aix_logs +
     falco_logs
 )
+risk_score, risk_level = calculate_risk_score(
+    detections
+)
 
 if ioc_matches:
 
@@ -290,6 +295,44 @@ col4.metric("Incidents", incidents)
 
 st.divider()
 
+st.subheader("Enterprise Risk Assessment")
+
+risk_col1, risk_col2 = st.columns(2)
+
+risk_col1.metric(
+    "Enterprise Risk Score",
+    risk_score
+)
+
+risk_col2.metric(
+    "Enterprise Risk Level",
+    risk_level
+)
+
+if risk_level == "Critical":
+
+    st.error(
+        "Critical enterprise-wide security exposure"
+    )
+
+elif risk_level == "High":
+
+    st.warning(
+        "High enterprise security risk identified"
+    )
+
+elif risk_level == "Medium":
+
+    st.info(
+        "Moderate enterprise security risk"
+    )
+
+else:
+
+    st.success(
+        "Enterprise environment operating normally"
+    )
+    
 # ---------------------------
 # ALERT SEVERITY CHART
 # ---------------------------
