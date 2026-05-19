@@ -1,0 +1,9 @@
+{
+  "verb": "create",
+  "objectRef": {
+    "resource": "pods"
+  },
+  "user": {
+    "username": "system:admin"
+  }
+}
