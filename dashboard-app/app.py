@@ -18,6 +18,15 @@ from parsers.yaml_detection_engine import (
     run_yaml_detections
 )
 
+from parsers.rule_engine import load_rule
+rule = load_rule(
+    "../detections/sigma/linux_bruteforce.yml"
+)
+
+st.subheader("Detection-as-Code Rule")
+
+st.json(rule)
+
 from parsers.log_parser import (
     read_log,
     count_failed_auth,
