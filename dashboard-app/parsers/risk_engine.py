@@ -1,30 +1,44 @@
-def calculate_risk(event):
+def calculate_risk_score(detections):
 
     score = 0
 
-    severity = event.get("severity", "")
+    for detection in detections:
 
-    if severity == "Critical":
-        score += 50
+        severity = detection.get(
+            "severity",
+            "Low"
+        )
 
-    elif severity == "High":
-        score += 30
+        if severity == "Critical":
 
-    elif severity == "Medium":
-        score += 15
+            score += 40
 
-    source = event.get("source", "").lower()
+        elif severity == "High":
 
-    if "azure" in source:
-        score += 10
+            score += 25
 
-    if "aws" in source:
-        score += 10
+        elif severity == "Medium":
 
-    if "falco" in source:
-        score += 20
+            score += 10
 
-    if "privilege" in event.get("event", "").lower():
-        score += 25
+        else:
 
-    return score
+            score += 5
+
+    if score >= 80:
+
+        level = "Critical"
+
+    elif score >= 50:
+
+        level = "High"
+
+    elif score >= 20:
+
+        level = "Medium"
+
+    else:
+
+        level = "Low"
+
+    return score, level
