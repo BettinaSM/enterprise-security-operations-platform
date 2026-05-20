@@ -11,6 +11,10 @@ from parsers.cve_mapper import (
 
 from parsers.auth_engine import authenticate
 
+from parsers.realtime_engine import (
+    generate_realtime_event
+)
+
 from parsers.threat_feed import (
     load_threat_feed,
     correlate_threat_feed
@@ -1046,30 +1050,33 @@ st.divider()
 
 st.subheader("Real-Time Security Events")
 
-with open(
-    SIMULATIONS_DIR / "realtime-events.json",
-    "r"
-) as file:
+live_placeholder = st.empty()
 
-    realtime_events = json.load(file)
+for _ in range(10):
 
-for event in realtime_events:
+    realtime_event = generate_realtime_event()
 
-    severity = event["severity"]
+    with live_placeholder.container():
 
-    if severity == "Critical":
+        severity = realtime_event["severity"]
 
-        st.error(event)
+        if severity == "Critical":
 
-    elif severity == "High":
+            st.error(realtime_event)
 
-        st.warning(event)
+        elif severity == "High":
 
-    else:
+            st.warning(realtime_event)
 
-        st.info(event)
+        elif severity == "Medium":
 
-    time.sleep(0.1)
+            st.info(realtime_event)
+
+        else:
+
+            st.success(realtime_event)
+
+    time.sleep(1)
 
 # ---------------------------
 # THREAT HUNTING CONSOLE
