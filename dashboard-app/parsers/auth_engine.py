@@ -1,32 +1,40 @@
-def authenticate(username, password):
+USERS = {
 
-    users = {
+    "admin": {
+        "password": "admin123",
+        "role": "admin"
+    },
 
-        "admin": {
-            "password": "admin123",
-            "role": "Administrator"
-        },
+    "analyst": {
+        "password": "soc123",
+        "role": "analyst"
+    },
 
-        "analyst": {
-            "password": "soc123",
-            "role": "SOC Analyst"
-        },
+    "manager": {
+        "password": "manager123",
+        "role": "manager"
+    },
 
-        "hunter": {
-            "password": "hunt123",
-            "role": "Threat Hunter"
-        },
-
-        "executive": {
-            "password": "exec123",
-            "role": "Executive"
-        }
+    "readonly": {
+        "password": "view123",
+        "role": "readonly"
     }
+}
 
-    user = users.get(username)
 
-    if user and user["password"] == password:
+def authenticate(
+    username,
+    password
+):
 
-        return user["role"]
+    user = USERS.get(username)
 
-    return None
+    if not user:
+
+        return None
+
+    if user["password"] != password:
+
+        return None
+
+    return user["role"]
