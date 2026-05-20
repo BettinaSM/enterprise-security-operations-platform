@@ -9,7 +9,8 @@ from parsers.database_engine import (
     create_tables,
     save_incident,
     load_incidents,
-    save_detection
+    save_detection,
+    load_detections
 )
 
 from parsers.cve_mapper import (
@@ -1262,6 +1263,39 @@ with open(
         data=pdf_file,
         file_name="executive_security_report.pdf",
         mime="application/pdf"
+    )
+
+# ---------------------------
+# HISTORICAL DETECTIONS
+# ---------------------------
+
+st.subheader(
+    "Historical Detection Repository"
+)
+
+historical_detections = load_detections()
+
+if historical_detections:
+
+    historical_df = pd.DataFrame(
+        historical_detections,
+        columns=[
+            "ID",
+            "Detection Type",
+            "Severity",
+            "Details"
+        ]
+    )
+
+    st.dataframe(
+        historical_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.info(
+        "No historical detections stored"
     )
 
 # ---------------------------
