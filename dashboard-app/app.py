@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import json
 import time
+import requests
 
 from parsers.cve_mapper import (
     enrich_cves
