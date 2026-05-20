@@ -118,13 +118,6 @@ if not role:
 
 create_tables()
 
-save_incident(
-    "Critical",
-    "AWS",
-    "Test database incident",
-    "Open"
-)
-
 st.sidebar.success(
     f"Authenticated as: {role}"
 )
