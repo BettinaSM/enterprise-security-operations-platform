@@ -779,33 +779,40 @@ else:
 # COMPLIANCE DASHBOARD
 # ---------------------------
 
-st.subheader("Compliance Overview")
+if has_permission(
+    role,
+    "compliance"
+):
 
-compliance_df = pd.DataFrame({
-    "Framework": [
-        "ISO 27001",
-        "NIST",
-        "CIS Controls",
-        "PCI-DSS"
-    ],
-    "Status": [
-        "Compliant",
-        "Partial",
-        "Compliant",
-        "In Review"
-    ],
-    "Coverage": [
-        "92%",
-        "81%",
-        "89%",
-        "74%"
-    ]
-})
+    st.subheader(
+        "Compliance Overview"
+    )
 
-st.dataframe(
-    compliance_df,
-    use_container_width=True
-)
+    compliance_df = pd.DataFrame({
+        "Framework": [
+            "ISO 27001",
+            "NIST",
+            "CIS Controls",
+            "PCI-DSS"
+        ],
+        "Status": [
+            "Compliant",
+            "Partial",
+            "Compliant",
+            "In Review"
+        ],
+        "Coverage": [
+            "92%",
+            "81%",
+            "89%",
+            "74%"
+        ]
+    })
+
+    st.dataframe(
+        compliance_df,
+        use_container_width=True
+    )
 
 # ---------------------------
 # API THREAT FEED
@@ -1100,27 +1107,34 @@ st.dataframe(
 # SOAR ACTIONS
 # ---------------------------
 
-st.subheader("SOAR Automated Actions")
+if has_permission(
+    role,
+    "soar"
+):
 
-soar_df = pd.DataFrame({
-    "Action": [
-        "Block IOC",
-        "Disable User",
-        "Isolate Container",
-        "Create Incident Ticket"
-    ],
-    "Status": [
-        "Executed",
-        "Pending",
-        "Executed",
-        "Executed"
-    ]
-})
+    st.subheader(
+        "SOAR Automated Actions"
+    )
 
-st.dataframe(
-    soar_df,
-    use_container_width=True
-)
+    soar_df = pd.DataFrame({
+        "Action": [
+            "Block IOC",
+            "Disable User",
+            "Isolate Container",
+            "Create Incident Ticket"
+        ],
+        "Status": [
+            "Executed",
+            "Pending",
+            "Executed",
+            "Executed"
+        ]
+    })
+
+    st.dataframe(
+        soar_df,
+        use_container_width=True
+    )
 
 # ---------------------------
 # LIVE EVENTS
@@ -1351,10 +1365,17 @@ if not incident_stats.empty:
 # EXECUTIVE SUMMARY
 # ---------------------------
 
-st.subheader("Executive Security Summary")
+if has_permission(
+    role,
+    "executive"
+):
 
-st.success("""
-Enterprise monitoring coverage active across:
+    st.subheader(
+        "Executive Security Summary"
+    )
+
+    st.success("""
+    Enterprise monitoring coverage active across:
 
 - Linux / Unix / AIX
 - Windows
@@ -1372,7 +1393,7 @@ MITRE ATT&CK coverage enabled.
 IOC monitoring active.
 
 SOAR integrations simulated successfully.
-""")
+    """)
 
 # ---------------------------
 # SECURITY ARCHITECTURE
