@@ -5,6 +5,10 @@ import json
 import time
 import requests
 
+from parsers.rbac_engine import (
+    has_permission
+)
+
 from parsers.analytics_engine import (
     detection_analytics,
     incident_analytics
