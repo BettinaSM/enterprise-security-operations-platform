@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+
+  soc-dashboard:
+
+    build:
+      context: ./dashboard-app
+
+    container_name: soc-dashboard
+
+    ports:
+      - "8501:8501"
+
+    volumes:
+      - ./dashboard-app:/app
+
+    restart: always
+
+  soc-api:
+
+    build:
+      context: ./dashboard-app
+
+    container_name: soc-api
+
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./dashboard-app:/app
+
+    restart: always
