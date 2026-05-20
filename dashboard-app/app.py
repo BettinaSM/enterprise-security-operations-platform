@@ -4,6 +4,10 @@ import plotly.express as px
 import json
 import time
 
+from parsers.cve_mapper import (
+    enrich_cves
+)
+
 from parsers.ioc_matcher import match_ioc
 
 from parsers.ueba_engine import (
@@ -202,6 +206,10 @@ for provider, event in cloud_events:
 ioc_matches = match_ioc(linux_logs)
 
 enriched_iocs = enrich_iocs(
+    ioc_matches
+)
+
+cve_findings = enrich_cves(
     ioc_matches
 )
 
@@ -644,6 +652,29 @@ else:
 
     st.success(
         "No malicious IOC enrichment identified"
+    )
+
+# ---------------------------
+# CVE ENRICHMENT
+# ---------------------------
+
+st.subheader("Threat Intelligence CVE Correlation")
+
+if cve_findings:
+
+    cve_df = pd.DataFrame(
+        cve_findings
+    )
+
+    st.dataframe(
+        cve_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.success(
+        "No CVE correlations identified"
     )
 
 # ---------------------------
