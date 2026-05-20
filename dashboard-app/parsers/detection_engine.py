@@ -2,22 +2,45 @@ import json
 
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# ---------------------------
+# BASE PATHS
+# ---------------------------
+
+CURRENT_FILE = Path(__file__).resolve()
+
+PARSERS_DIR = CURRENT_FILE.parent
+
+DASHBOARD_DIR = PARSERS_DIR.parent
+
+PROJECT_ROOT = DASHBOARD_DIR.parent
 
 RULE_FILE = (
-    BASE_DIR
+    PROJECT_ROOT
     / "rules"
     / "detection_rules.json"
 )
 
+# ---------------------------
+# LOAD RULES
+# ---------------------------
+
 def load_rules():
+
+    if not RULE_FILE.exists():
+
+        return []
 
     with open(
         RULE_FILE,
-        "r"
+        "r",
+        encoding="utf-8"
     ) as file:
 
         return json.load(file)
+
+# ---------------------------
+# DETECTION ENGINE
+# ---------------------------
 
 def run_detections(logs):
 
@@ -29,7 +52,10 @@ def run_detections(logs):
 
         for rule in rules:
 
-            keyword = rule.get("keyword")
+            keyword = rule.get(
+                "keyword",
+                ""
+            )
 
             if keyword.lower() in log.lower():
 
