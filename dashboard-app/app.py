@@ -8,7 +8,8 @@ import requests
 from parsers.database_engine import (
     create_tables,
     save_incident,
-    load_incidents
+    load_incidents,
+    save_detection
 )
 
 from parsers.cve_mapper import (
@@ -303,6 +304,20 @@ detections = run_detections(
     falco_logs
 )
 
+for detection in detections:
+
+    save_detection(
+        detection.get(
+            "Detection",
+            "Unknown"
+        ),
+        detection.get(
+            "Severity",
+            "Medium"
+        ),
+        str(detection)
+    )
+
 yaml_detections = run_yaml_detections(
     linux_logs +
     aix_logs +
@@ -325,6 +340,14 @@ if ioc_matches:
         f"Known malicious IOC detected: {', '.join(ioc_matches)}"
     )
 
+for ioc in ioc_matches:
+
+    save_detection(
+        "IOC Match",
+        "High",
+        ioc
+    )
+    
 # ---------------------------
 # SECURITY EVENTS
 # ---------------------------
