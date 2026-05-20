@@ -724,6 +724,53 @@ st.dataframe(
     use_container_width=True
 )
 
+# ---------------------------
+# API THREAT FEED
+# ---------------------------
+
+api_threats = []
+
+try:
+
+    response = requests.get(
+        "http://127.0.0.1:8000/threat-feed"
+    )
+
+    if response.status_code == 200:
+
+        api_data = response.json()
+
+        api_threats = api_data.get(
+            "threats",
+            []
+        )
+
+except Exception:
+
+    api_threats = []
+
+# ---------------------------
+# LIVE API THREAT FEED
+# ---------------------------
+
+st.subheader("Live API Threat Feed")
+
+if api_threats:
+
+    api_df = pd.DataFrame(
+        api_threats
+    )
+
+    st.dataframe(
+        api_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.warning(
+        "Threat feed API unavailable"
+    )
 
 # ---------------------------
 # THREAT INTELLIGENCE
