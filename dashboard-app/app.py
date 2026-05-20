@@ -8,6 +8,8 @@ from parsers.cve_mapper import (
     enrich_cves
 )
 
+from parsers.auth_engine import authenticate
+
 from parsers.threat_feed import (
     load_threat_feed,
     correlate_threat_feed
@@ -69,6 +71,38 @@ st.set_page_config(
     page_title="Unified Enterprise Security Operations Platform",
     page_icon="🛡️",
     layout="wide"
+)
+
+# ---------------------------
+# AUTHENTICATION
+# ---------------------------
+
+st.sidebar.subheader("Authentication")
+
+username = st.sidebar.text_input(
+    "Username"
+)
+
+password = st.sidebar.text_input(
+    "Password",
+    type="password"
+)
+
+role = authenticate(
+    username,
+    password
+)
+
+if not role:
+
+    st.warning(
+        "Please authenticate to access the platform"
+    )
+
+    st.stop()
+
+st.sidebar.success(
+    f"Authenticated as: {role}"
 )
 
 # ---------------------------
