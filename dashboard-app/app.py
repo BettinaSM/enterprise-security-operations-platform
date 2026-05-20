@@ -5,6 +5,12 @@ import json
 import time
 import requests
 
+from parsers.database_engine import (
+    create_tables,
+    save_incident,
+    load_incidents
+)
+
 from parsers.cve_mapper import (
     enrich_cves
 )
