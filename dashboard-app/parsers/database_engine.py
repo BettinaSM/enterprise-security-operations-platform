@@ -146,3 +146,23 @@ def save_detection(
     connection.commit()
 
     connection.close()
+
+# ---------------------------
+# LOAD DETECTIONS
+# ---------------------------
+
+def load_detections():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM detections
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows
