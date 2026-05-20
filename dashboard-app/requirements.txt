@@ -3,3 +3,5 @@ pandas
 plotly
 pyyaml
 fpdf
+fastapi
+uvicorn
