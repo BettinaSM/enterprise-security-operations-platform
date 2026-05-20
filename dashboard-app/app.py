@@ -153,7 +153,7 @@ st.sidebar.markdown("""
 - Executive Summary
 """)
 
-st.title("🛡️ Unified Enterprise Security Operations Platform")
+st.title(APP_NAME)
 
 st.markdown("""
 Unified Security Operations monitoring platform covering:
@@ -506,7 +506,7 @@ for _ in range(5):
             metrics["incidents"]
         )
 
-    time.sleep(1)
+    time.sleep(0.5)
 
 st.divider()
 
@@ -768,7 +768,8 @@ api_threats = []
 try:
 
     response = requests.get(
-        "http://127.0.0.1:8000/threat-feed"
+        "http://127.0.0.1:8000/threat-feed",
+        timeout=5
     )
 
     if response.status_code == 200:
@@ -1083,7 +1084,7 @@ st.subheader("Real-Time Security Events")
 
 live_placeholder = st.empty()
 
-for _ in range(10):
+for _ in range(3):
 
     realtime_event = generate_realtime_event()
 
@@ -1107,7 +1108,7 @@ for _ in range(10):
 
             st.success(realtime_event)
 
-    time.sleep(1)
+    time.sleep(0.5)
 
 # ---------------------------
 # THREAT HUNTING CONSOLE
