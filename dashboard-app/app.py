@@ -4,8 +4,6 @@ import plotly.express as px
 import json
 import time
 
-from pathlib import Path
-
 from parsers.ioc_matcher import match_ioc
 
 from parsers.ueba_engine import (
@@ -60,11 +58,11 @@ st.set_page_config(
 # BASE PATHS
 # ---------------------------
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-SIMULATIONS_DIR = BASE_DIR / "simulations"
-
-RULES_DIR = BASE_DIR / "detections" / "sigma"
+from configs.settings import (
+    APP_NAME,
+    SIMULATIONS_DIR,
+    RULES_DIR
+)
 
 # ---------------------------
 # HEADER
