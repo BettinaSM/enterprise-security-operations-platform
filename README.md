@@ -1,151 +1,157 @@
-# Enterprise Security Operations Platform
+# 🛡️ Enterprise Security Operations Platform
 
-## Overview
-
-This project simulates an enterprise-grade Security Operations and Cloud Security platform.
-
-The platform integrates:
-
-- SIEM concepts
-- Threat detection workflows
-- MITRE ATT&CK mapping
-- Incident response processes
-- Kubernetes runtime security
-- Cloud security governance
-- Observability concepts
-- DevSecOps automation
-- Security operations workflows
-
----
-
-## Technologies & Concepts
+Unified Enterprise Security Operations Platform focused on:
 
 - SIEM
-- Kubernetes Security
-- Falco
+- Detection Engineering
+- Threat Intelligence
+- UEBA
 - MITRE ATT&CK
-- DevSecOps
-- Terraform concepts
 - Cloud Security
-- GitHub Actions
-- Observability
-- Detection Engineering
-
----
-
-## Platform Areas
-
-### Threat Detection
-Runtime detection, suspicious activity monitoring and detection engineering concepts.
-
-### SIEM Integration
-Centralized security event monitoring and alert correlation concepts.
-
-### Incident Response
-Incident handling, escalation and response workflow simulations.
-
-### Kubernetes Security
-Cloud-native runtime security and governance concepts.
-
-### Observability
-Monitoring, metrics and log visibility concepts.
-
-### Governance
-Policy as Code and infrastructure governance principles.
-
----
-
-## Skills Demonstrated
-
-- Security Operations
-- Cloud Security
-- Kubernetes Security
-- Detection Engineering
-- SIEM Concepts
-- DevSecOps
-- Threat Monitoring
-- Governance
+- Kubernetes Runtime Security
+- SOC Operations
 - Incident Response
+- SOAR Automation
+
+Built with Python + Streamlit for enterprise security monitoring simulations.
 
 ---
 
-## Future Improvements
+# 🚀 Features
 
-- SOAR integration
-- Automated response workflows
-- Threat intelligence enrichment
-- Advanced cloud detections
-- Compliance automation
+## Security Monitoring
+- Linux monitoring
+- AIX monitoring
+- Windows monitoring
+- Kubernetes runtime visibility
+- Cloud security visibility
 
----
-
-## Security Operations Workflow
-
-The platform simulates a modern enterprise Security Operations workflow:
-
-1. Runtime activity detection
-2. SIEM event ingestion
-3. MITRE ATT&CK classification
-4. Threat intelligence enrichment
-5. SOC triage and escalation
-6. Incident response execution
-7. Continuous monitoring and governance
-
-The project demonstrates detection engineering and cloud-native security operations concepts.
-
----
-
-## Platform Capabilities
-
-- Runtime threat detection
-- SIEM integration concepts
-- Threat correlation workflows
+## Detection Engineering
+- Sigma-like detections
+- IOC matching
 - MITRE ATT&CK mapping
-- SOC operational workflows
-- Incident response concepts
-- Cloud-native security monitoring
-- Governance and observability
+- YAML detection rules
+- Threat scoring engine
 
----
-
-## Simulated Enterprise Security Data
-
-The platform includes simulated:
-
-- Authentication logs
-- Kubernetes audit events
-- Runtime security alerts
-- SIEM detections
-- Incident timelines
-- Detection engineering workflows
-
-These artifacts simulate enterprise Security Operations monitoring and investigation processes.
-
----
-
-## Security Automation
-
-The project includes Python-based automation examples for:
-
-- Alert severity classification
-- Detection parsing
-- Security event categorization
-
-This simulates foundational SOC automation concepts.
-
----
-
-## Platform Simulation
-
-The platform simulates a modern enterprise Security Operations environment including:
-
-- SIEM ingestion
-- Runtime detections
-- Threat correlation
+## Threat Intelligence
 - IOC enrichment
-- MITRE ATT&CK mapping
-- SOC triage workflows
-- SOAR automation concepts
-- Kubernetes runtime security
+- Threat severity analysis
+- Attack chain simulation
 
-The project combines documentation, detection rules, simulated logs, Python automation and security workflows to model enterprise security operations.
+## SOC Operations
+- SIEM correlation
+- Incident management
+- SOC analyst queue
+- Threat hunting console
+
+## Governance & Compliance
+- ISO27001
+- NIST
+- CIS Controls
+- PCI-DSS
+
+---
+
+# 🏗️ Architecture
+
+```text
+Linux / AIX / Windows
+        ↓
+Cloud Providers
+(AWS / Azure / GCP / OCI / IBM)
+        ↓
+Kubernetes Runtime Monitoring
+        ↓
+Detection Engine
+        ↓
+Threat Intelligence
+        ↓
+MITRE ATT&CK Mapping
+        ↓
+SIEM Correlation
+        ↓
+SOC Dashboard
+        ↓
+Incident Response
+        ↓
+SOAR Automation
+```
+
+---
+
+# ⚙️ Technologies
+
+- Python
+- Streamlit
+- Pandas
+- Plotly
+- YAML
+- JSON
+- Docker
+
+---
+
+# 📂 Project Structure
+
+```text
+dashboard-app/
+├── agents/
+├── configs/
+├── detections/
+├── logs/
+├── parsers/
+├── simulations/
+├── app.py
+```
+
+---
+
+# 🐳 Docker Deployment
+
+```bash
+docker compose up --build
+```
+
+---
+
+# ▶️ Local Execution
+
+```bash
+pip install -r requirements.txt
+
+streamlit run dashboard-app/app.py
+```
+
+---
+
+# 🎯 MITRE ATT&CK Coverage
+
+- Initial Access
+- Execution
+- Persistence
+- Privilege Escalation
+- Defense Evasion
+- Credential Access
+- Discovery
+- Lateral Movement
+
+---
+
+# 🛣️ Roadmap
+
+- [ ] AI SOC Analyst
+- [ ] Real-time IOC feeds
+- [ ] YARA integration
+- [ ] Sigma correlation engine
+- [ ] Elastic/Splunk integrations
+- [ ] Multi-tenant SOC
+- [ ] RBAC support
+- [ ] API integrations
+
+---
+
+# 👩‍💻 Author
+
+Developed by Bettina Meirelles
+
+Cybersecurity | Detection Engineering | Cloud Security | SIEM | DevSecOps
