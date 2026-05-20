@@ -1,5 +1,26 @@
 import streamlit as st
 
+role = st.sidebar.selectbox(
+    "Role Validation",
+    [
+        "Executive",
+        "SOC Analyst",
+        "Threat Hunter",
+        "Administrator"
+    ]
+)
+
+if role not in [
+    "Executive",
+    "Administrator"
+]:
+
+    st.error(
+        "Access denied"
+    )
+
+    st.stop()
+
 st.set_page_config(
     page_title="Executive Reports",
     page_icon="📄",
