@@ -116,6 +116,8 @@ if not role:
 
     st.stop()
 
+create_tables()
+
 st.sidebar.success(
     f"Authenticated as: {role}"
 )
@@ -260,6 +262,13 @@ for provider, event in cloud_events:
             "Finding": "Privileged Activity",
             "Severity": "Critical"
         })
+
+save_incident(
+    "Critical",
+    provider,
+    "Privileged cloud activity detected",
+    "Open"
+)
 
 # ---------------------------
 # IOC MATCHING
@@ -970,8 +979,17 @@ st.divider()
 
 st.subheader("SOC Case Management")
 
+db_incidents = load_incidents()
+
 incident_cases_df = pd.DataFrame(
-    incidents_data
+    db_incidents,
+    columns=[
+        "ID",
+        "Severity",
+        "Source",
+        "Description",
+        "Status"
+    ]
 )
 
 st.dataframe(
