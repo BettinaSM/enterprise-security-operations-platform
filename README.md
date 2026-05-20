@@ -150,6 +150,20 @@ streamlit run dashboard-app/app.py
 
 ---
 
+Authentication currently uses a simulated RBAC model with hardcoded credentials for demonstration and portfolio purposes.
+
+Future improvements planned:
+
+* LDAP / Active Directory integration
+* Azure Entra ID SSO
+* OAuth2 / OpenID Connect
+* JWT authentication
+* Password hashing
+* Streamlit Secrets / Vault integration
+* Role-based session management
+
+---
+
 # 👩‍💻 Author
 
 Developed by Bettina Meirelles
