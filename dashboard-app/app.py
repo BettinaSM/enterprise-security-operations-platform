@@ -8,6 +8,11 @@ from parsers.cve_mapper import (
     enrich_cves
 )
 
+from parsers.threat_feed import (
+    load_threat_feed,
+    correlate_threat_feed
+)
+
 from parsers.correlation_engine import (
     correlate_security_events
 )
@@ -212,6 +217,15 @@ for provider, event in cloud_events:
 # ---------------------------
 
 ioc_matches = match_ioc(linux_logs)
+
+threat_feed = load_threat_feed(
+    SIMULATIONS_DIR / "threat-feed.json"
+)
+
+feed_correlations = correlate_threat_feed(
+    ioc_matches,
+    threat_feed
+)
 
 enriched_iocs = enrich_iocs(
     ioc_matches
@@ -697,6 +711,29 @@ else:
 
     st.success(
         "No malicious IOC enrichment identified"
+    )
+
+# ---------------------------
+# THREAT FEED CORRELATION
+# ---------------------------
+
+st.subheader("External Threat Feed Correlation")
+
+if feed_correlations:
+
+    feed_df = pd.DataFrame(
+        feed_correlations
+    )
+
+    st.dataframe(
+        feed_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.success(
+        "No external threat feed matches identified"
     )
 
 # ---------------------------
