@@ -8,6 +8,10 @@ from parsers.cve_mapper import (
     enrich_cves
 )
 
+from parsers.correlation_engine import (
+    correlate_security_events
+)
+
 from parsers.ioc_matcher import match_ioc
 
 from parsers.ueba_engine import (
@@ -296,6 +300,13 @@ attack_chain = build_attack_chain(
     critical_alerts
 )
 
+correlations = correlate_security_events(
+    failed_auth,
+    critical_alerts,
+    cloud_findings,
+    ioc_matches
+)
+
 # ---------------------------
 # THREAT SCORE
 # ---------------------------
@@ -323,6 +334,29 @@ else:
 
     st.success(
         "No active attack chain identified"
+    )
+
+# ---------------------------
+# EVENT CORRELATION ENGINE
+# ---------------------------
+
+st.subheader("SIEM Correlation Engine")
+
+if correlations:
+
+    correlation_df = pd.DataFrame(
+        correlations
+    )
+
+    st.dataframe(
+        correlation_df,
+        use_container_width=True
+    )
+
+else:
+
+    st.success(
+        "No correlated attack patterns identified"
     )
 
 # ---------------------------
