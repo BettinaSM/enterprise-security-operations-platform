@@ -12,6 +12,10 @@ from parsers.correlation_engine import (
     correlate_security_events
 )
 
+from parsers.reporting_engine import (
+    generate_executive_report
+)
+
 from parsers.ioc_matcher import match_ioc
 
 from parsers.ueba_engine import (
@@ -316,6 +320,13 @@ threat_score, threat_severity = calculate_threat_score(
     failed_auth,
     len(cloud_findings),
     len(ioc_matches)
+)
+
+report_file = generate_executive_report(
+    threat_score,
+    risk_level,
+    incidents,
+    critical_alerts
 )
 
 # ---------------------------
@@ -1029,6 +1040,24 @@ st.dataframe(
     events_df,
     use_container_width=True
 )
+
+# ---------------------------
+# EXECUTIVE PDF REPORT
+# ---------------------------
+
+st.subheader("Executive Security Report")
+
+with open(
+    report_file,
+    "rb"
+) as pdf_file:
+
+    st.download_button(
+        label="Download Executive PDF Report",
+        data=pdf_file,
+        file_name="executive_security_report.pdf",
+        mime="application/pdf"
+    )
 
 # ---------------------------
 # EXECUTIVE SUMMARY
