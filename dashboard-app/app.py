@@ -30,15 +30,7 @@ from parsers.yaml_detection_engine import (
 
 from parsers.rule_engine import load_rule
 
-from parsers.threat_intelligence import (
-    enrich_iocs
-)
-
 from parsers.attack_chain import build_attack_chain
-
-from parsers.threat_intelligence import (
-    enrich_iocs
-)
 
 from parsers.incident_manager import (
     generate_incidents
@@ -239,10 +231,6 @@ ueba_findings = analyze_user_behavior(
     linux_logs +
     aix_logs +
     falco_logs
-)
-
-threat_intel = enrich_iocs(
-    ioc_matches
 )
 
 if ioc_matches:
@@ -636,28 +624,6 @@ st.dataframe(
     use_container_width=True
 )
 
-# ---------------------------
-# THREAT INTELLIGENCE
-# ---------------------------
-
-st.subheader("Threat Intelligence Enrichment")
-
-if threat_intel:
-
-    threat_df = pd.DataFrame(
-        threat_intel
-    )
-
-    st.dataframe(
-        threat_df,
-        use_container_width=True
-    )
-
-else:
-
-    st.success(
-        "No enriched threat intelligence findings"
-    )
 
 # ---------------------------
 # THREAT INTELLIGENCE
