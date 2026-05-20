@@ -9,6 +9,10 @@ from parsers.cve_mapper import (
     enrich_cves
 )
 
+from parsers.live_metrics import (
+    generate_live_metrics
+)
+
 from parsers.auth_engine import authenticate
 
 from parsers.realtime_engine import (
@@ -467,15 +471,42 @@ if detect_bruteforce(linux_logs):
     st.error("Potential SSH brute force attack detected")
 
 # ---------------------------
-# DASHBOARD METRICS
+# LIVE DASHBOARD METRICS
 # ---------------------------
 
-col1, col2, col3, col4 = st.columns(4)
+st.subheader("Live SOC Metrics")
 
-col1.metric("Critical Alerts", critical_alerts)
-col2.metric("Runtime Threats", runtime_events)
-col3.metric("Failed Auth", failed_auth)
-col4.metric("Incidents", incidents)
+metrics_placeholder = st.empty()
+
+for _ in range(5):
+
+    metrics = generate_live_metrics()
+
+    with metrics_placeholder.container():
+
+        col1, col2, col3, col4 = st.columns(4)
+
+        col1.metric(
+            "Critical Alerts",
+            metrics["critical_alerts"]
+        )
+
+        col2.metric(
+            "Runtime Threats",
+            metrics["runtime_threats"]
+        )
+
+        col3.metric(
+            "Failed Auth",
+            metrics["failed_auth"]
+        )
+
+        col4.metric(
+            "Incidents",
+            metrics["incidents"]
+        )
+
+    time.sleep(1)
 
 st.divider()
 
