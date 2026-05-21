@@ -1,10 +1,25 @@
 import sqlite3
+
 from pathlib import Path
+
+# ---------------------------
+# BASE PATHS
+# ---------------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DB_PATH = BASE_DIR / "database" / "security.db"
+DATABASE_DIR = BASE_DIR / "database"
 
+DB_PATH = DATABASE_DIR / "security.db"
+
+# ---------------------------
+# CREATE DATABASE DIRECTORY
+# ---------------------------
+
+DATABASE_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
 
 # ---------------------------
 # CONNECT
@@ -27,6 +42,10 @@ def create_tables():
 
     cursor = connection.cursor()
 
+    # ---------------------------
+    # INCIDENTS
+    # ---------------------------
+    
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS incidents (
 
@@ -38,10 +57,16 @@ def create_tables():
 
         description TEXT,
 
-        status TEXT
+        status TEXT,
+        
+        created_at TEXT
     )
     """)
 
+    # ---------------------------
+    # DETECTIONS
+    # ---------------------------
+    
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS detections (
 
@@ -51,10 +76,48 @@ def create_tables():
 
         severity TEXT,
 
-        details TEXT
+        details TEXT,
+
+        created_at TEXT
     )
     """)
 
+    # ---------------------------
+    # IOC MATCHES
+    # ---------------------------
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS ioc_matches (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        indicator TEXT,
+
+        source TEXT,
+
+        severity TEXT,
+
+        created_at TEXT
+    )
+    """)
+
+    # ---------------------------
+    # THREAT HUNTING
+    # ---------------------------
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS hunting_queries (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        query TEXT,
+
+        analyst TEXT,
+
+        created_at TEXT
+    )
+    """)
+    
     connection.commit()
 
     connection.close()
@@ -80,14 +143,16 @@ def save_incident(
         severity,
         source,
         description,
-        status
+        status,
+        created_at
     )
-    VALUES (?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?)
     """, (
         severity,
         source,
         description,
-        status
+        status,
+        datetime.utcnow().isoformat()
     ))
 
     connection.commit()
@@ -107,6 +172,7 @@ def load_incidents():
 
     cursor.execute("""
     SELECT * FROM incidents
+    ORDER BY id DESC
     """)
 
     rows = cursor.fetchall()
@@ -114,7 +180,6 @@ def load_incidents():
     connection.close()
 
     return rows
-
 
 # ---------------------------
 # SAVE DETECTION
@@ -134,13 +199,15 @@ def save_detection(
     INSERT INTO detections (
         detection_type,
         severity,
-        details
+        details,
+        created_at
     )
     VALUES (?, ?, ?)
     """, (
         detection_type,
         severity,
-        details
+        details,
+        datetime.utcnow().isoformat()
     ))
 
     connection.commit()
@@ -159,6 +226,120 @@ def load_detections():
 
     cursor.execute("""
     SELECT * FROM detections
+    ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows
+
+# ---------------------------
+# SAVE IOC MATCH
+# ---------------------------
+
+def save_ioc_match(
+    indicator,
+    source,
+    severity
+):
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    INSERT INTO ioc_matches (
+
+        indicator,
+        source,
+        severity,
+        created_at
+
+    )
+    VALUES (?, ?, ?, ?)
+    """, (
+
+        indicator,
+        source,
+        severity,
+        datetime.utcnow().isoformat()
+
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+# ---------------------------
+# LOAD IOC MATCHES
+# ---------------------------
+
+def load_ioc_matches():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM ioc_matches
+    ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows
+
+# ---------------------------
+# SAVE HUNT QUERY
+# ---------------------------
+
+def save_hunting_query(
+    query,
+    analyst="SOC Analyst"
+):
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    INSERT INTO hunting_queries (
+
+        query,
+        analyst,
+        created_at
+
+    )
+    VALUES (?, ?, ?)
+    """, (
+
+        query,
+        analyst,
+        datetime.utcnow().isoformat()
+
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+# ---------------------------
+# LOAD HUNT QUERIES
+# ---------------------------
+
+def load_hunting_queries():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM hunting_queries
+    ORDER BY id DESC
     """)
 
     rows = cursor.fetchall()
