@@ -9,7 +9,7 @@ from parsers.session_auth import (
 )
 
 from configs.settings import (
-    SIMULATIONS_DIR
+    THREAT_INTEL_DIR
 )
 
 require_auth()
@@ -23,7 +23,7 @@ st.set_page_config(
 st.title("🧠 Threat Intelligence")
 
 with open(
-    SIMULATIONS_DIR / "threat-feed.json",
+    THREAT_INTEL_DIR / "threat-feed.json",
     "r"
 ) as file:
 
