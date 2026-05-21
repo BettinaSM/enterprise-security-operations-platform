@@ -1,5 +1,10 @@
 from fpdf import FPDF
+from configs.settings import REPORTS_DIR
 
+report_path = (
+    REPORTS_DIR /
+    "executive_security_report.pdf"
+)
 
 def generate_executive_report(
     threat_score,
