@@ -43,6 +43,23 @@ def create_tables():
 
     cursor = connection.cursor()
 
+    cursor.execute("""
+CREATE TABLE IF NOT EXISTS security_events (
+
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    event_type TEXT,
+
+    severity TEXT,
+
+    source TEXT,
+
+    details TEXT,
+
+    created_at TEXT
+)
+""")
+
     # ---------------------------
     # INCIDENTS
     # ---------------------------
