@@ -1,5 +1,8 @@
 from fpdf import FPDF
-from configs.settings import REPORTS_DIR
+
+from configs.settings import (
+    REPORTS_DIR
+)
 
 report_path = (
     REPORTS_DIR /
@@ -12,6 +15,11 @@ def generate_executive_report(
     incidents,
     critical_alerts
 ):
+
+    REPORTS_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
 
     pdf = FPDF()
 
@@ -92,8 +100,8 @@ SOAR workflows simulated successfully.
 """
     )
 
-    output_path = "executive_security_report.pdf"
+    pdf.output(
+        str(report_path)
+    )
 
-    pdf.output(output_path)
-
-    return output_path
+    return str(report_path)
