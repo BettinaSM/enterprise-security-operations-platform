@@ -1,6 +1,12 @@
 import streamlit as st
 import pandas as pd
 
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
 st.set_page_config(
     page_title="Cloud Security",
     page_icon="☁️",
