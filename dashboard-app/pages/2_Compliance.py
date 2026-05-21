@@ -8,6 +8,12 @@ st.set_page_config(
     layout="wide"
 )
 
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
 st.title("📋 Compliance Dashboard")
 
 # ---------------------------
