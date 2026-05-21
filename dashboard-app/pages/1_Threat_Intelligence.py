@@ -4,6 +4,12 @@ import json
 
 from pathlib import Path
 
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
 st.set_page_config(
     page_title="Threat Intelligence",
     page_icon="🧠",
