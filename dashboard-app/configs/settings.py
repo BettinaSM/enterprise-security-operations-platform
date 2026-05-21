@@ -8,6 +8,18 @@ SIMULATIONS_DIR = BASE_DIR / "simulations"
 
 RULES_DIR = BASE_DIR / "detections" / "sigma"
 
+THREAT_FEED_DIR = (
+    BASE_DIR / "threat-intelligence"
+)
+
+DATABASE_DIR = (
+    BASE_DIR / "database"
+)
+
+REPORTS_DIR = (
+    BASE_DIR / "reports"
+)
+
 SUPPORTED_ENVIRONMENTS = [
     "Linux",
     "AIX",
