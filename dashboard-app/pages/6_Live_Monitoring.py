@@ -2,6 +2,12 @@ import streamlit as st
 import sqlite3
 import pandas as pd
 
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
 st.title(
     "Live Security Monitoring"
 )
