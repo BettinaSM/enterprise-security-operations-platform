@@ -133,6 +133,9 @@ st.sidebar.success(
     f"Authenticated as: {role}"
 )
 
+st.session_state["authenticated"] = True
+st.session_state["role"] = role
+
 # ---------------------------
 # BASE PATHS
 # ---------------------------
