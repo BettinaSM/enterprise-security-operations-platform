@@ -8,5 +8,26 @@
         "ioc": "malicious-domain.com",
         "threat": "Known C2 Domain",
         "severity": "Critical"
+    },
+    {
+        "ioc": "185.220.101.1",
+        "type": "Malicious IP",
+        "threat_actor": "APT29",
+        "reputation": "Critical",
+        "campaign": "Credential Harvesting"
+    },
+    {
+        "ioc": "malicious-domain.com",
+        "type": "Malicious Domain",
+        "threat_actor": "LockBit",
+        "reputation": "High",
+        "campaign": "Ransomware Delivery"
+    },
+    {
+        "ioc": "evil-hash-123",
+        "type": "Malware Hash",
+        "threat_actor": "UNC5221",
+        "reputation": "Critical",
+        "campaign": "XZ Backdoor"
     }
 ]
