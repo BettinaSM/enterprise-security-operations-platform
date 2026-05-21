@@ -1,5 +1,8 @@
 import json
 
+from configs.settings import (
+    THREAT_INTEL_DIR
+)
 
 def load_threat_feed(path):
 
