@@ -8,6 +8,10 @@ from parsers.session_auth import (
     require_auth
 )
 
+from configs.settings import (
+    SIMULATIONS_DIR
+)
+
 require_auth()
 
 st.set_page_config(
@@ -16,10 +20,6 @@ st.set_page_config(
     layout="wide"
 )
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
-SIMULATIONS_DIR = BASE_DIR / "simulations"
-
 st.title("🧠 Threat Intelligence")
 
 with open(
@@ -27,7 +27,7 @@ with open(
     "r"
 ) as file:
 
-    feed = json.load(file)
+    threat_feed = json.load(file)
 
 feed_df = pd.DataFrame(feed)
 
