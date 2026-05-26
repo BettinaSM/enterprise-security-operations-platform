@@ -9,6 +9,10 @@ from parsers.rbac_engine import (
     has_permission
 )
 
+from parsers.normalization_engine import (
+    normalize_event
+)
+
 from parsers.analytics_engine import (
     detection_analytics,
     incident_analytics
