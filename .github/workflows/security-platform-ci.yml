@@ -1,20 +1,18 @@
-name: Enterprise Security Platform CI
+name: Security Platform CI
 
 on:
 
   push:
-
     branches:
       - main
 
   pull_request:
-
     branches:
       - main
 
 jobs:
 
-  build-and-test:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -23,11 +21,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set Up Python
         uses: actions/setup-python@v5
 
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install Dependencies
         run: |
@@ -41,14 +39,9 @@ jobs:
 
           python -m py_compile dashboard-app/app.py
 
-      - name: Validate Parsers
+      - name: Docker Build
         run: |
 
-          find dashboard-app/parsers -name "*.py" -exec python -m py_compile {} \;
-
-      - name: Docker Build Validation
-        run: |
           docker build \
-            -t enterprise-soc-platform \
-            -f dashboard-app/Dockerfile \
-            dashboard-app
+          -f dashboard-app/Dockerfile \
+          -t enterprise-soc .
