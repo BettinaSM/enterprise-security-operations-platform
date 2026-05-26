@@ -29,7 +29,7 @@ with open(
 
     threat_feed = json.load(file)
 
-feed_df = pd.DataFrame(thread_feed)
+feed_df = pd.DataFrame(threat_feed)
 
 st.dataframe(
     feed_df,
