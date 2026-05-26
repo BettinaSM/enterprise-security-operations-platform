@@ -48,6 +48,8 @@ CREATE TABLE IF NOT EXISTS security_events (
 
     id INTEGER PRIMARY KEY AUTOINCREMENT,
 
+    timestamp TEXT,
+    
     event_type TEXT,
 
     severity TEXT,
