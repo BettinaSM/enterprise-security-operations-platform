@@ -6,23 +6,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SIMULATIONS_DIR = BASE_DIR / "simulations"
 
-THREAT_INTEL_DIR = (
-    BASE_DIR / "threat-intelligence"
-)
+LOGS_DIR = BASE_DIR / "logs"
+
+DATABASE_DIR = BASE_DIR / "database"
+
+REPORTS_DIR = BASE_DIR / "reports"
+
+THREAT_INTEL_DIR = BASE_DIR / "threat-intelligence"
 
 RULES_DIR = BASE_DIR / "detections" / "sigma"
 
-THREAT_FEED_DIR = (
-    BASE_DIR / "threat-intelligence"
-)
+AGENTS_DIR = BASE_DIR.parent / "agents"
 
-DATABASE_DIR = (
-    BASE_DIR / "database"
-)
-
-REPORTS_DIR = (
-    BASE_DIR / "reports"
-)
+THREAT_FEED_DIR = BASE_DIR / "threat-intelligence"
 
 SUPPORTED_ENVIRONMENTS = [
     "Linux",
