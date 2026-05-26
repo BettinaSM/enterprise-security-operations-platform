@@ -212,15 +212,29 @@ role = authenticate(
 
 if not role:
 
+    st.session_state["authenticated"] = False
+
     st.warning(
         "Please authenticate to access the platform"
     )
 
     st.stop()
 
+st.session_state["authenticated"] = True
+
+st.session_state["role"] = role
+
 st.sidebar.success(
     f"Authenticated as: {role}"
 )
+
+st.sidebar.divider()
+
+if st.sidebar.button("Logout"):
+
+    st.session_state.clear()
+
+    st.rerun()
 
 # ---------------------------
 # DATABASE INIT
