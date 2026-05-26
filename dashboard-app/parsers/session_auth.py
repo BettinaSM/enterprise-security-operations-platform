@@ -2,15 +2,12 @@ import streamlit as st
 
 def require_auth():
 
-    if "authenticated" not in st.session_state:
+    authenticated = st.session_state.get(
+        "authenticated",
+        False
+    )
 
-        st.warning(
-            "Please login first"
-        )
-
-        st.stop()
-
-    if not st.session_state["authenticated"]:
+    if not authenticated:
 
         st.warning(
             "Please login first"
