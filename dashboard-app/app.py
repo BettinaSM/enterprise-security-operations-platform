@@ -291,7 +291,7 @@ save_incident(
 ioc_matches = match_ioc(linux_logs)
 
 threat_feed = load_threat_feed(
-    SIMULATIONS_DIR / "threat-feed.json"
+    "threat-intelligence/threat-feed.json"
 )
 
 feed_correlations = correlate_threat_feed(
