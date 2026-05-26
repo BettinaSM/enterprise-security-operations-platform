@@ -217,17 +217,13 @@ role = authenticate(
 
 if not role:
 
-    st.session_state["authenticated"] = False
-
     st.warning(
         "Please authenticate to access the platform"
     )
 
     st.stop()
 
-st.session_state["authenticated"] = True
-
-st.session_state["role"] = role
+login_user(role)
 
 st.sidebar.success(
     f"Authenticated as: {role}"
