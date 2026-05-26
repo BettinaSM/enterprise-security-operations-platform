@@ -8,11 +8,11 @@ from parsers.session_auth import (
     require_auth
 )
 
+require_auth()
+
 from configs.settings import (
     THREAT_INTEL_DIR
 )
-
-require_auth()
 
 st.set_page_config(
     page_title="Threat Intelligence",
