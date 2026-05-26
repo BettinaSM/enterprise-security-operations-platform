@@ -48,5 +48,7 @@ jobs:
 
       - name: Docker Build Validation
         run: |
-
-          docker build -t enterprise-soc-platform .
+          docker build \
+            -t enterprise-soc-platform \
+            -f dashboard-app/Dockerfile \
+            dashboard-app
