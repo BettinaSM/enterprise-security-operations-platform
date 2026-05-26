@@ -874,70 +874,15 @@ else:
 # THREAT INTELLIGENCE
 # ---------------------------
 
-st.subheader("Threat Intelligence Enrichment")
+from sections.threat_intelligence_section import (
+    render_threat_intelligence
+)
 
-if enriched_iocs:
-
-    threat_df = pd.DataFrame(
-        enriched_iocs
-    )
-
-    st.dataframe(
-        threat_df,
-        use_container_width=True
-    )
-
-else:
-
-    st.success(
-        "No malicious IOC enrichment identified"
-    )
-
-# ---------------------------
-# THREAT FEED CORRELATION
-# ---------------------------
-
-st.subheader("External Threat Feed Correlation")
-
-if feed_correlations:
-
-    feed_df = pd.DataFrame(
-        feed_correlations
-    )
-
-    st.dataframe(
-        feed_df,
-        use_container_width=True
-    )
-
-else:
-
-    st.success(
-        "No external threat feed matches identified"
-    )
-
-# ---------------------------
-# CVE ENRICHMENT
-# ---------------------------
-
-st.subheader("Threat Intelligence CVE Correlation")
-
-if cve_findings:
-
-    cve_df = pd.DataFrame(
-        cve_findings
-    )
-
-    st.dataframe(
-        cve_df,
-        use_container_width=True
-    )
-
-else:
-
-    st.success(
-        "No CVE correlations identified"
-    )
+render_threat_intelligence(
+    enriched_iocs,
+    feed_correlations,
+    cve_findings
+)
 
 # ---------------------------
 # CLOUD SECURITY EVENTS
