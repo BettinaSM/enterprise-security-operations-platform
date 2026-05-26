@@ -23,7 +23,7 @@ st.set_page_config(
 st.title("🧠 Threat Intelligence")
 
 with open(
-    THREAT_INTEL_DIR / "threat-feed.json",
+    "threat-intelligence/threat-feed.json",
     "r"
 ) as file:
 
