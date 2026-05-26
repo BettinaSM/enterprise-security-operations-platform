@@ -61,7 +61,8 @@ def incident_analytics():
             "Severity",
             "Source",
             "Description",
-            "Status"
+            "Status",
+            "Created At"
         ]
     )
 
