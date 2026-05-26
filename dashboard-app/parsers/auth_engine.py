@@ -5,9 +5,9 @@ USERS = {
         "role": "admin"
     },
 
-    "analyst": {
+    "soc": {
         "password": "soc123",
-        "role": "analyst"
+        "role": "soc_analyst"
     },
 
     "manager": {
@@ -15,9 +15,9 @@ USERS = {
         "role": "manager"
     },
 
-    "readonly": {
-        "password": "view123",
-        "role": "readonly"
+    "exe": {
+        "password": "exec123",
+        "role": "executive"
     }
 }
 
