@@ -3,10 +3,10 @@ services:
   soc-dashboard:
 
     build:
-      context: ./dashboard-app
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: dashboard-app/Dockerfile
 
-    container_name: enterprise-soc-dashboard
+    container_name: soc-dashboard
 
     ports:
       - "8501:8501"
@@ -14,6 +14,22 @@ services:
     volumes:
       - ./dashboard-app:/app
 
-    working_dir: /app
+    restart: always
 
-    command: streamlit run app.py --server.address=0.0.0.0
+  soc-api:
+
+    build:
+      context: .
+      dockerfile: dashboard-app/Dockerfile
+
+    container_name: soc-api
+
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./dashboard-app:/app
+
+    restart: always
