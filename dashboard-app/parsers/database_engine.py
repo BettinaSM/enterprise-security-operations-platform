@@ -43,29 +43,33 @@ def create_tables():
 
     cursor = connection.cursor()
 
+    # ---------------------------
+    # SECURITY EVENTS
+    # ---------------------------
+
     cursor.execute("""
-CREATE TABLE IF NOT EXISTS security_events (
+    CREATE TABLE IF NOT EXISTS security_events (
 
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-    timestamp TEXT,
-    
-    event_type TEXT,
+        timestamp TEXT,
 
-    severity TEXT,
+        event_type TEXT,
 
-    source TEXT,
+        severity TEXT,
 
-    details TEXT,
+        source TEXT,
 
-    created_at TEXT
-)
-""")
+        raw_log TEXT,
+
+        created_at TEXT
+    )
+    """)
 
     # ---------------------------
     # INCIDENTS
     # ---------------------------
-    
+
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS incidents (
 
@@ -78,7 +82,7 @@ CREATE TABLE IF NOT EXISTS security_events (
         description TEXT,
 
         status TEXT,
-        
+
         created_at TEXT
     )
     """)
@@ -86,7 +90,7 @@ CREATE TABLE IF NOT EXISTS security_events (
     # ---------------------------
     # DETECTIONS
     # ---------------------------
-    
+
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS detections (
 
@@ -137,10 +141,75 @@ CREATE TABLE IF NOT EXISTS security_events (
         created_at TEXT
     )
     """)
-    
+
     connection.commit()
 
     connection.close()
+
+
+# ---------------------------
+# SAVE SECURITY EVENT
+# ---------------------------
+
+def save_security_event(
+    event_type,
+    severity,
+    source,
+    raw_log
+):
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    INSERT INTO security_events (
+
+        timestamp,
+        event_type,
+        severity,
+        source,
+        raw_log,
+        created_at
+
+    )
+    VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+
+        datetime.utcnow().isoformat(),
+        event_type,
+        severity,
+        source,
+        raw_log,
+        datetime.utcnow().isoformat()
+
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+
+# ---------------------------
+# LOAD SECURITY EVENTS
+# ---------------------------
+
+def load_security_events():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM security_events
+    ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows
 
 
 # ---------------------------
@@ -160,19 +229,23 @@ def save_incident(
 
     cursor.execute("""
     INSERT INTO incidents (
+
         severity,
         source,
         description,
         status,
         created_at
+
     )
     VALUES (?, ?, ?, ?, ?)
     """, (
+
         severity,
         source,
         description,
         status,
         datetime.utcnow().isoformat()
+
     ))
 
     connection.commit()
@@ -201,6 +274,7 @@ def load_incidents():
 
     return rows
 
+
 # ---------------------------
 # SAVE DETECTION
 # ---------------------------
@@ -217,22 +291,27 @@ def save_detection(
 
     cursor.execute("""
     INSERT INTO detections (
+
         detection_type,
         severity,
         details,
         created_at
+
     )
-    VALUES (?, ?, ?)
+    VALUES (?, ?, ?, ?)
     """, (
+
         detection_type,
         severity,
         details,
         datetime.utcnow().isoformat()
+
     ))
 
     connection.commit()
 
     connection.close()
+
 
 # ---------------------------
 # LOAD DETECTIONS
@@ -254,6 +333,7 @@ def load_detections():
     connection.close()
 
     return rows
+
 
 # ---------------------------
 # SAVE IOC MATCH
@@ -292,6 +372,7 @@ def save_ioc_match(
 
     connection.close()
 
+
 # ---------------------------
 # LOAD IOC MATCHES
 # ---------------------------
@@ -312,6 +393,7 @@ def load_ioc_matches():
     connection.close()
 
     return rows
+
 
 # ---------------------------
 # SAVE HUNT QUERY
@@ -346,6 +428,7 @@ def save_hunting_query(
     connection.commit()
 
     connection.close()
+
 
 # ---------------------------
 # LOAD HUNT QUERIES
