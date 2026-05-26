@@ -1031,7 +1031,8 @@ incident_cases_df = pd.DataFrame(
         "Severity",
         "Source",
         "Description",
-        "Status"
+        "Status",
+        "Created At"
     ]
 )
 
