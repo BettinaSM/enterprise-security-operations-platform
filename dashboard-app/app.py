@@ -3,6 +3,11 @@ import json
 import time
 import requests
 
+from parsers.session_auth import (
+    login_user,
+    logout
+)
+
 # ---------------------------
 # AUTH
 # ---------------------------
