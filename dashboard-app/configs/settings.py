@@ -1,35 +1,46 @@
 from pathlib import Path
 
 # ---------------------------
-# BASE DIR
+# BASE PATHS
 # ---------------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ---------------------------
-# APPLICATION
-# ---------------------------
-
-APP_NAME = "Enterprise Security Operations Platform"
-
-# ---------------------------
-# DIRECTORIES
-# ---------------------------
-
-SIMULATIONS_DIR = BASE_DIR / "simulations"
-
-THREAT_INTEL_DIR = BASE_DIR / "threat-intelligence"
-
-RULES_DIR = BASE_DIR / "detections" / "rules"
+AGENTS_DIR = BASE_DIR / "agents"
 
 LOGS_DIR = BASE_DIR / "logs"
 
 DATABASE_DIR = BASE_DIR / "database"
 
-REPORTS_DIR = BASE_DIR / "reports"
-
 # ---------------------------
-# DATABASE
+# EXECUTION MODE
 # ---------------------------
 
-DB_PATH = DATABASE_DIR / "security.db"
+SIMULATION_MODE = True
+
+# False = coleta real
+# True = usar logs simulados
+
+# ---------------------------
+# LINUX
+# ---------------------------
+
+LINUX_AUTH_LOG = AGENTS_DIR / "linux" / "auth.log"
+
+REAL_LINUX_AUTH_LOG = "/var/log/auth.log"
+
+# ---------------------------
+# AIX
+# ---------------------------
+
+AIX_SUDO_LOG = AGENTS_DIR / "aix" / "sudo.log"
+
+# ---------------------------
+# THREAT INTEL
+# ---------------------------
+
+THREAT_FEED = (
+    BASE_DIR
+    / "threat-intelligence"
+    / "threat-feed.json"
+)
