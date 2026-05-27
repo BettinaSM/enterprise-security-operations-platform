@@ -1,13 +1,27 @@
 import streamlit as st
 import pandas as pd
 
-def render_realtime_events(
-    falco_logs
-):
+from parsers.log_parser import (
+    read_log
+)
+
+def render_realtime():
 
     st.subheader(
         "Live Runtime Events"
     )
+
+    falco_logs = read_log(
+        "logs/falco-events.log"
+    )
+
+    if not falco_logs:
+
+        st.warning(
+            "No runtime events detected"
+        )
+
+        return
 
     runtime_df = pd.DataFrame({
 
