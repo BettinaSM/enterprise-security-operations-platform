@@ -97,7 +97,7 @@ from sections.compliance import (
 )
 
 from sections.executive import (
-    render_executive_summary
+    render_executive
 )
 
 from sections.hunting import (
@@ -348,7 +348,7 @@ render_hunting(
     events
 )
 
-render_executive_summary()
+render_executive()
 
 # ---------------------------
 # FOOTER
