@@ -1,41 +1,41 @@
 from pathlib import Path
 
-# ---------------------------
-# BASE PATH
-# ---------------------------
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# ---------------------------
-# LOG PATHS
-# ---------------------------
-
-LINUX_AUTH_LOG = (
-    BASE_DIR /
-    "agents" /
-    "linux" /
-    "auth.log"
+from configs.settings import (
+    SIMULATION_MODE,
+    LINUX_AUTH_LOG,
+    REAL_LINUX_AUTH_LOG
 )
 
 # ---------------------------
-# LOAD LINUX AUTH LOGS
+# COLLECT LINUX LOGS
 # ---------------------------
 
 def collect_linux_logs():
 
-    if not LINUX_AUTH_LOG.exists():
+    log_file = (
+        LINUX_AUTH_LOG
+        if SIMULATION_MODE
+        else REAL_LINUX_AUTH_LOG
+    )
 
-        return []
+    try:
 
-    with open(
-        LINUX_AUTH_LOG,
-        "r"
-    ) as file:
+        with open(
+            log_file,
+            "r",
+            encoding="utf-8"
+        ) as file:
 
-        logs = file.readlines()
+            logs = file.readlines()
 
-    return [
-        log.strip()
-        for log in logs
-        if log.strip()
-    ]
+        return [
+            log.strip()
+            for log in logs
+            if log.strip()
+        ]
+
+    except Exception as error:
+
+        return [
+            f"collector_error: {error}"
+        ]
