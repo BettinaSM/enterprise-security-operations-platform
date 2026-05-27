@@ -1,0 +1,11 @@
+---
+- name: Collect Linux Logs
+  hosts: linux
+
+  tasks:
+
+    - name: Copy auth.log
+      fetch:
+        src: /var/log/auth.log
+        dest: ./collected/
+        flat: yes
