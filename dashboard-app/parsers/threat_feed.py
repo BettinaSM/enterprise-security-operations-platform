@@ -1,8 +1,8 @@
 import json
 
-from configs.settings import (
-    THREAT_INTEL_DIR
-)
+# ---------------------------
+# LOAD THREAT FEED
+# ---------------------------
 
 def load_threat_feed(path):
 
@@ -10,26 +10,44 @@ def load_threat_feed(path):
 
         return json.load(file)
 
+# ---------------------------
+# CORRELATE THREAT FEED
+# ---------------------------
 
 def correlate_threat_feed(
     ioc_matches,
-    feed_data
+    threat_feed
 ):
 
-    findings = []
+    correlations = []
 
     for ioc in ioc_matches:
 
-        for item in feed_data:
+        for item in threat_feed:
 
-            if ioc == item["ioc"]:
+            if ioc == item.get("indicator"):
 
-                findings.append({
-                    "IOC": ioc,
-                    "Type": item["type"],
-                    "Threat Actor": item["threat_actor"],
-                    "Campaign": item["campaign"],
-                    "Reputation": item["reputation"]
+                correlations.append({
+
+                    "Indicator": item.get(
+                        "indicator",
+                        "Unknown"
+                    ),
+
+                    "Type": item.get(
+                        "type",
+                        "Unknown"
+                    ),
+
+                    "Severity": item.get(
+                        "severity",
+                        "Medium"
+                    ),
+
+                    "Source": item.get(
+                        "source",
+                        "Threat Feed"
+                    )
                 })
 
-    return findings
+    return correlations
