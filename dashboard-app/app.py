@@ -1,5 +1,9 @@
 import streamlit as st
 
+from parsers.database_engine import (
+    create_tables
+)
+
 # ---------------------------
 # SECURITY
 # ---------------------------
@@ -63,6 +67,12 @@ from sections.hunting import (
 from parsers.log_parser import (
     read_log
 )
+
+# ---------------------------
+# INITIALIZE DATABASE
+# ---------------------------
+
+create_tables()
 
 # ---------------------------
 # PAGE CONFIG
