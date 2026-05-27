@@ -8,6 +8,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY dashboard-app/ .
 
+RUN mkdir -p /app/database
+
 EXPOSE 8501
 EXPOSE 8000
 
