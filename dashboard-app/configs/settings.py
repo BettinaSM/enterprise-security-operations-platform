@@ -111,6 +111,14 @@ SSH_TIMEOUT = 10
 SSH_PORT = 22
 
 # ---------------------------
+# WINDOWS
+# ---------------------------
+
+WINDOWS_LOG = AGENTS_DIR / "windows" / "security-events.json"
+
+REAL_WINDOWS_LOG = WINDOWS_LOG
+
+# ---------------------------
 # WINDOWS COLLECTION
 # ---------------------------
 
