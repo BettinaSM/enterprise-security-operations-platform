@@ -1,7 +1,8 @@
 from reportlab.platypus import (
     SimpleDocTemplate,
     Paragraph,
-    Spacer
+    Spacer,
+    PageBreak
 )
 
 from reportlab.lib.styles import (
@@ -18,9 +19,9 @@ from datetime import datetime
 # REPORT DIRECTORY
 # ---------------------------
 
-REPORT_DIR = Path(
-    "reports"
-)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+REPORT_DIR = BASE_DIR / "reports"
 
 REPORT_DIR.mkdir(
     parents=True,
@@ -28,22 +29,25 @@ REPORT_DIR.mkdir(
 )
 
 # ---------------------------
-# GENERATE PDF REPORT
+# GENERATE REPORT
 # ---------------------------
 
 def generate_security_report(
     detections,
     incidents,
-    threat_findings
+    threat_findings,
+    report_type="Security Audit"
 ):
 
     timestamp = datetime.utcnow().strftime(
         "%Y%m%d_%H%M%S"
     )
 
-    report_path = REPORT_DIR / (
-        f"soc_report_{timestamp}.pdf"
+    filename = (
+        f"{report_type.lower().replace(' ', '_')}_{timestamp}.pdf"
     )
+
+    report_path = REPORT_DIR / filename
 
     document = SimpleDocTemplate(
         str(report_path),
@@ -55,18 +59,40 @@ def generate_security_report(
     elements = []
 
     # ---------------------------
-    # TITLE
+    # COVER
     # ---------------------------
 
     elements.append(
         Paragraph(
-            "Enterprise Security Operations Report",
+            "Enterprise Security Audit Report",
             styles["Title"]
         )
     )
 
     elements.append(
+        Spacer(1, 30)
+    )
+
+    elements.append(
+        Paragraph(
+            f"Generated: {datetime.utcnow()} UTC",
+            styles["BodyText"]
+        )
+    )
+
+    elements.append(
         Spacer(1, 20)
+    )
+
+    elements.append(
+        Paragraph(
+            f"Report Type: {report_type}",
+            styles["BodyText"]
+        )
+    )
+
+    elements.append(
+        PageBreak()
     )
 
     # ---------------------------
@@ -75,16 +101,16 @@ def generate_security_report(
 
     elements.append(
         Paragraph(
-            "Detections",
-            styles["Heading2"]
+            "Detection Findings",
+            styles["Heading1"]
         )
     )
 
-    for detection in detections[:20]:
+    for item in detections[:50]:
 
         elements.append(
             Paragraph(
-                str(detection),
+                str(item),
                 styles["BodyText"]
             )
         )
@@ -99,16 +125,16 @@ def generate_security_report(
 
     elements.append(
         Paragraph(
-            "Incidents",
-            styles["Heading2"]
+            "Incident Findings",
+            styles["Heading1"]
         )
     )
 
-    for incident in incidents[:20]:
+    for item in incidents[:50]:
 
         elements.append(
             Paragraph(
-                str(incident),
+                str(item),
                 styles["BodyText"]
             )
         )
@@ -123,20 +149,20 @@ def generate_security_report(
 
     elements.append(
         Paragraph(
-            "Threat Intelligence",
-            styles["Heading2"]
+            "Threat Intelligence Correlation",
+            styles["Heading1"]
         )
     )
 
-    for finding in threat_findings[:20]:
+    for item in threat_findings[:50]:
 
         elements.append(
             Paragraph(
-                str(finding),
+                str(item),
                 styles["BodyText"]
             )
         )
 
     document.build(elements)
 
-    return str(report_path)
+    return report_path
