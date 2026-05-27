@@ -8,3 +8,4 @@ uvicorn
 requests
 PyJWT
 python-multipart
+reportlab
