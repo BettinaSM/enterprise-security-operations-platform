@@ -11,7 +11,7 @@ from parsers.session_auth import (
 require_auth()
 
 from configs.settings import (
-    THREAT_INTEL_DIR
+    THREAT_FEED
 )
 
 st.set_page_config(
