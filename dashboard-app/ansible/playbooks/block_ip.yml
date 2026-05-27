@@ -1,0 +1,12 @@
+---
+- name: Block malicious IP
+  hosts: linux
+  become: yes
+
+  tasks:
+
+    - name: Block IP
+      iptables:
+        chain: INPUT
+        source: "{{ malicious_ip }}"
+        jump: DROP
