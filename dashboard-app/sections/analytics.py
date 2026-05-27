@@ -1,20 +1,22 @@
 import streamlit as st
 import plotly.express as px
 
-from security.guards import (
-    require_auth
+from parsers.analytics_engine import (
+    detection_analytics,
+    incident_analytics
 )
 
-require_auth()
-
-def render_analytics(
-    detection_stats,
-    incident_stats
-):
+def render_analytics():
 
     st.subheader(
         "SOC Historical Analytics"
     )
+
+    detection_stats = detection_analytics()
+
+    incident_stats = incident_analytics()
+
+    # ---------------------------
 
     if not detection_stats.empty:
 
@@ -29,6 +31,8 @@ def render_analytics(
             detection_fig,
             use_container_width=True
         )
+
+    # ---------------------------
 
     if not incident_stats.empty:
 
