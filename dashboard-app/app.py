@@ -34,6 +34,14 @@ from collectors.aix_collector import (
     collect_aix_logs
 )
 
+from collectors.windows_collector import (
+    collect_windows_logs
+)
+
+from collectors.cloud_collector import (
+    collect_cloud_logs
+)
+
 from parsers.detection_engine import (
     run_detections
 )
@@ -209,9 +217,14 @@ linux_logs = collect_linux_logs()
 
 aix_logs = collect_aix_logs()
 
+windows_logs = collect_windows_logs()
+
+cloud_logs = collect_cloud_logs()
+
 events = (
     linux_logs +
-    aix_logs
+    aix_logs +
+    [str(event) for event in windows_logs]
 )
 
 # ---------------------------
@@ -248,23 +261,23 @@ detection_stats = detection_analytics()
 incident_stats = incident_analytics()
 
 # ---------------------------
-# CLOUD FINDINGS
+# CLOUD COLLECTION
 # ---------------------------
 
-cloud_findings = [
+cloud_events = collect_cloud_logs()
 
-    {
-        "Cloud": "AWS",
-        "Finding": "Privileged Activity",
-        "Severity": "Critical"
-    },
+cloud_findings = []
 
-    {
-        "Cloud": "Azure",
-        "Finding": "Failed Login",
-        "Severity": "High"
-    }
-]
+for provider, logs in cloud_events.items():
+
+    if logs:
+
+        cloud_findings.append({
+
+            "Cloud": provider.upper(),
+            "Finding": "Cloud Activity Detected",
+            "Severity": "Medium"
+        })
 
 # ---------------------------
 # THREAT INTELLIGENCE
