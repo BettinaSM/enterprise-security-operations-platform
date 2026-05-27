@@ -20,7 +20,7 @@ def root():
 # TOKEN
 # ---------------------------
 
-from parsers.jwt_engine import (
+from security.jwt_handler import (
     generate_token,
     validate_token
 )
@@ -126,10 +126,12 @@ def login(
             "error": "Invalid credentials"
         }
 
-    token = generate_token(
-        username,
-        role
-    )
+    token = generate_token(({
+
+        "username": username,
+        "role": role
+
+    })
 
     return {
         "token": token,
@@ -159,4 +161,56 @@ def protected(
     return {
         "message": "Authorized",
         "user": payload
+    }
+
+# ---------------------------
+# DATABASE
+# ---------------------------
+
+from parsers.database_engine import (
+    load_security_events,
+    load_incidents,
+    load_detections
+)
+
+# ---------------------------
+# SECURITY EVENTS
+# ---------------------------
+
+@app.get("/security-events")
+
+def security_events():
+
+    events = load_security_events()
+
+    return {
+        "events": events
+    }
+
+# ---------------------------
+# DETECTIONS
+# ---------------------------
+
+@app.get("/detections")
+
+def detections():
+
+    detections = load_detections()
+
+    return {
+        "detections": detections
+    }
+
+# ---------------------------
+# INCIDENTS DATABASE
+# ---------------------------
+
+@app.get("/incidents-db")
+
+def incidents_db():
+
+    incidents = load_incidents()
+
+    return {
+        "incidents": incidents
     }
