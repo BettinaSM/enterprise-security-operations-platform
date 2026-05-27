@@ -1,9 +1,7 @@
-from pathlib import Path
-
 from configs.settings import (
     SIMULATION_MODE,
-    LINUX_AUTH_LOG,
-    REAL_LINUX_AUTH_LOG
+    LINUX_LOG,
+    LINUX_LOG_PATH
 )
 
 # ---------------------------
@@ -13,9 +11,9 @@ from configs.settings import (
 def collect_linux_logs():
 
     log_file = (
-        LINUX_AUTH_LOG
+        LINUX_LOG
         if SIMULATION_MODE
-        else REAL_LINUX_AUTH_LOG
+        else LINUX_LOG_PATH
     )
 
     try:
