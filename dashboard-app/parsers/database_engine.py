@@ -60,7 +60,7 @@ def create_tables():
 
         source TEXT,
 
-        raw_log TEXT,
+        details TEXT,
 
         created_at TEXT
     )
