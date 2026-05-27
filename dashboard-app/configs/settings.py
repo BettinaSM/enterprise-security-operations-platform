@@ -69,3 +69,45 @@ LOGS_DIR.mkdir(
     parents=True,
     exist_ok=True
 )
+
+# ---------------------------
+# APPLICATION MODES
+# ---------------------------
+
+SIMULATION_MODE = True
+
+REALTIME_MONITORING = True
+
+ENABLE_THREAT_INTEL = True
+
+ENABLE_CLOUD_MONITORING = True
+
+ENABLE_SOAR = True
+
+# ---------------------------
+# COLLECTOR SETTINGS
+# ---------------------------
+
+LINUX_LOG_PATH = "/var/log/auth.log"
+
+AIX_LOG_PATH = "/var/log/auth.log"
+
+COLLECT_INTERVAL_SECONDS = 30
+
+# ---------------------------
+# SSH COLLECTION
+# ---------------------------
+
+SSH_TIMEOUT = 10
+
+SSH_PORT = 22
+
+# ---------------------------
+# STREAMLIT
+# ---------------------------
+
+PAGE_TITLE = "Enterprise Security Operations Platform"
+
+PAGE_ICON = "🛡️"
+
+LAYOUT = "wide"
