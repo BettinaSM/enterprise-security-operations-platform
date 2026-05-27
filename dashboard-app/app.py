@@ -338,9 +338,7 @@ render_analytics(
     incident_stats
 )
 
-render_cloud_security(
-    cloud_findings
-)
+render_cloud_security()
 
 render_compliance()
 
