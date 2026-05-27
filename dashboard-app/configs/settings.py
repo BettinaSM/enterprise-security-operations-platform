@@ -18,7 +18,13 @@ RULES_DIR = BASE_DIR / "detections" / "sigma"
 
 AGENTS_DIR = BASE_DIR.parent / "agents"
 
-THREAT_FEED_DIR = BASE_DIR / "threat-intelligence"
+from configs.settings import (
+    THREAT_INTEL_DIR
+)
+
+threat_feed = load_threat_feed(
+    THREAT_INTEL_DIR / "threat-feed.json"
+)
 
 SUPPORTED_ENVIRONMENTS = [
     "Linux",
