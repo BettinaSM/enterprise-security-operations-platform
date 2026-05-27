@@ -9,7 +9,7 @@ from datetime import datetime
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DATABASE_DIR = BASE_DIR / "database"
+DATABASE_DIR = Path("/app/database")
 
 DB_PATH = DATABASE_DIR / "security.db"
 
