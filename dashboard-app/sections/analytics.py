@@ -3,9 +3,7 @@ import plotly.express as px
 import pandas as pd
 
 # ---------------------------
-
 # ANALYTICS SECTION
-
 # ---------------------------
 
 def render_analytics(
