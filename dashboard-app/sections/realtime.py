@@ -1,35 +1,57 @@
 import streamlit as st
 import pandas as pd
 
-from parsers.log_parser import (
-    read_log
+from parsers.realtime_engine import (
+    generate_realtime_event
 )
 
 def render_realtime():
 
     st.subheader(
+        "Real-Time Security Monitoring"
+    )
+
+    realtime_events = []
+
+    for _ in range(10):
+
+        event = generate_realtime_event()
+
+        realtime_events.append(event)
+
+    realtime_df = pd.DataFrame(
+        realtime_events
+    )
+
+    st.dataframe(
+        realtime_df,
+        use_container_width=True
+    )
+
+    st.subheader(
         "Live Runtime Events"
     )
 
-    falco_logs = read_log(
-        "logs/falco-events.log"
-    )
+    for event in realtime_events:
 
-    if not falco_logs:
-
-        st.warning(
-            "No runtime events detected"
+        severity = event.get(
+            "severity",
+            "Low"
         )
 
-        return
+        if severity == "Critical":
 
-    runtime_df = pd.DataFrame({
+            st.error(event)
 
-        "Event": falco_logs[-10:]
+        elif severity == "High":
 
-    })
+            st.warning(event)
 
-    st.dataframe(
-        runtime_df,
-        use_container_width=True
+        elif severity == "Medium":
+
+            st.info(event)
+
+        else:
+
+            st.success(event)
     )
