@@ -1,6 +1,12 @@
 import streamlit as st
 import plotly.express as px
 
+from security.guards import (
+    require_auth
+)
+
+require_auth()
+
 def render_analytics(
     detection_stats,
     incident_stats
