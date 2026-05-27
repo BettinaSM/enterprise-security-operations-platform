@@ -1,4 +1,7 @@
 import streamlit as st
+from datetime import datetime, timedelta
+
+SESSION_TIMEOUT_MINUTES = 30
 
 # ---------------------------
 # CREATE SESSION
