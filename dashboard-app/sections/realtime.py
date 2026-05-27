@@ -1,9 +1,14 @@
 import streamlit as st
 import pandas as pd
+import time
 
 from parsers.realtime_engine import (
     generate_realtime_event
 )
+
+# ---------------------------
+# REALTIME SECTION
+# ---------------------------
 
 def render_realtime():
 
@@ -11,47 +16,46 @@ def render_realtime():
         "Real-Time Security Monitoring"
     )
 
-    realtime_events = []
+    # ---------------------------
+    # LIVE EVENTS
+    # ---------------------------
 
-    for _ in range(10):
+    live_placeholder = st.empty()
 
-        event = generate_realtime_event()
+    for _ in range(5):
 
-        realtime_events.append(event)
+        realtime_event = generate_realtime_event()
 
-    realtime_df = pd.DataFrame(
-        realtime_events
-    )
+        event_df = pd.DataFrame([
+            realtime_event
+        ])
 
-    st.dataframe(
-        realtime_df,
-        use_container_width=True
-    )
+        with live_placeholder.container():
 
-    st.subheader(
-        "Live Runtime Events"
-    )
+            severity = realtime_event.get(
+                "severity",
+                "Low"
+            )
 
-    for event in realtime_events:
+            if severity == "Critical":
 
-        severity = event.get(
-            "severity",
-            "Low"
-        )
+                st.error("Critical security event detected")
 
-        if severity == "Critical":
+            elif severity == "High":
 
-            st.error(event)
+                st.warning("High severity event detected")
 
-        elif severity == "High":
+            elif severity == "Medium":
 
-            st.warning(event)
+                st.info("Medium severity event detected")
 
-        elif severity == "Medium":
+            else:
 
-            st.info(event)
+                st.success("Low severity event detected")
 
-        else:
+            st.dataframe(
+                event_df,
+                use_container_width=True
+            )
 
-            st.success(event)
-    )
+        time.sleep(1)
