@@ -2,7 +2,8 @@ import json
 
 from configs.settings import (
     SIMULATION_MODE,
-    WINDOWS_LOG
+    WINDOWS_LOG,
+    REAL_WINDOWS_LOG
 )
 
 # ---------------------------
@@ -11,34 +12,38 @@ from configs.settings import (
 
 def collect_windows_logs():
 
-    if SIMULATION_MODE:
+    log_source = (
+        WINDOWS_LOG
+        if SIMULATION_MODE
+        else REAL_WINDOWS_LOG
+    )
 
-        try:
+    try:
 
-            with open(
-                WINDOWS_LOG,
-                "r",
-                encoding="utf-8"
-            ) as file:
+        path = Path(log_source)
 
-                events = json.load(file)
-
-            return events
-
-        except Exception as error:
+        if not path.exists():
 
             return [
                 {
-                    "error": str(error)
+                    "error": f"log_not_found: {log_source}"
                 }
             ]
 
-    # ---------------------------
-    # REAL WINDOWS COLLECTION
-    # ---------------------------
+        with open(
+            path,
+            "r",
+            encoding="utf-8"
+        ) as file:
 
-    return [
-        {
-            "message": "Real Windows collection not configured yet"
-        }
-    ]
+            events = json.load(file)
+
+        return events
+
+    except Exception as error:
+
+        return [
+            {
+                "error": str(error)
+            }
+        ]
