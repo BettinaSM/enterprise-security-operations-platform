@@ -1,46 +1,71 @@
 from pathlib import Path
 
 # ---------------------------
-# BASE PATHS
+# BASE DIRECTORIES
 # ---------------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ---------------------------
+# AGENTS
+# ---------------------------
+
 AGENTS_DIR = BASE_DIR / "agents"
 
-LOGS_DIR = BASE_DIR / "logs"
+LINUX_LOG = AGENTS_DIR / "linux" / "auth.log"
+
+AIX_LOG = AGENTS_DIR / "aix" / "sudo.log"
+
+# ---------------------------
+# THREAT INTELLIGENCE
+# ---------------------------
+
+THREAT_INTEL_DIR = BASE_DIR / "threat-intelligence"
+
+THREAT_FEED = THREAT_INTEL_DIR / "threat-feed.json"
+
+IOC_FEED = THREAT_INTEL_DIR / "ioc-feed.json"
+
+# ---------------------------
+# DATABASE
+# ---------------------------
 
 DATABASE_DIR = BASE_DIR / "database"
 
-# ---------------------------
-# EXECUTION MODE
-# ---------------------------
-
-SIMULATION_MODE = True
-
-# False = coleta real
-# True = usar logs simulados
+DATABASE_PATH = DATABASE_DIR / "security.db"
 
 # ---------------------------
-# LINUX
+# DETECTIONS
 # ---------------------------
 
-LINUX_AUTH_LOG = AGENTS_DIR / "linux" / "auth.log"
+DETECTIONS_DIR = BASE_DIR / "detections"
 
-REAL_LINUX_AUTH_LOG = "/var/log/auth.log"
+SIGMA_RULES_DIR = DETECTIONS_DIR / "sigma"
 
-# ---------------------------
-# AIX
-# ---------------------------
-
-AIX_SUDO_LOG = AGENTS_DIR / "aix" / "sudo.log"
+FALCO_RULES = DETECTIONS_DIR / "falco-rules.yaml"
 
 # ---------------------------
-# THREAT INTEL
+# REPORTS
 # ---------------------------
 
-THREAT_FEED = (
-    BASE_DIR
-    / "threat-intelligence"
-    / "threat-feed.json"
+REPORTS_DIR = BASE_DIR / "reports"
+
+# ---------------------------
+# LOGS
+# ---------------------------
+
+LOGS_DIR = BASE_DIR / "logs"
+
+# ---------------------------
+# CREATE REQUIRED DIRECTORIES
+# ---------------------------
+
+DATABASE_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+LOGS_DIR.mkdir(
+    parents=True,
+    exist_ok=True
 )
