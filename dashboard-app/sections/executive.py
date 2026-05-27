@@ -1,6 +1,6 @@
 import streamlit as st
 
-def render_executive_summary():
+def render_executive():
 
     st.subheader(
         "Executive Security Summary"
