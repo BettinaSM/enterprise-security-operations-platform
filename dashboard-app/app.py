@@ -46,7 +46,7 @@ from sections.detections import (
     render_detections
 )
 
-from sections.threat_intel import (
+from sections.threat_intelligence import (
     render_threat_intelligence
 )
 
