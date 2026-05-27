@@ -25,12 +25,12 @@ def correlate_threat_feed(
 
         for item in threat_feed:
 
-            if ioc == item.get("indicator"):
+            if ioc == item.get("ioc"):
 
                 correlations.append({
 
-                    "Indicator": item.get(
-                        "indicator",
+                    "IOC": item.get(
+                        "ioc",
                         "Unknown"
                     ),
 
@@ -39,14 +39,27 @@ def correlate_threat_feed(
                         "Unknown"
                     ),
 
-                    "Severity": item.get(
-                        "severity",
-                        "Medium"
+                    "Threat": item.get(
+                        "threat",
+                        "Unknown"
                     ),
 
-                    "Source": item.get(
-                        "source",
-                        "Threat Feed"
+                    "Threat Actor": item.get(
+                        "threat_actor",
+                        "Unknown"
+                    ),
+
+                    "Severity": item.get(
+                        "severity",
+                        item.get(
+                            "reputation",
+                            "Medium"
+                        )
+                    ),
+
+                    "Campaign": item.get(
+                        "campaign",
+                        "Unknown"
                     )
                 })
 
