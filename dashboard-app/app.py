@@ -1,5 +1,9 @@
 import streamlit as st
 
+# ---------------------------
+# DATABASE
+# ---------------------------
+
 from parsers.database_engine import (
     create_tables
 )
@@ -8,12 +12,52 @@ from parsers.database_engine import (
 # SECURITY
 # ---------------------------
 
-from security.auth import login
+from security.auth import (
+    login
+)
 
 from security.session import (
     create_session,
     logout,
     is_authenticated
+)
+
+# ---------------------------
+# PARSERS
+# ---------------------------
+
+from parsers.log_parser import (
+    read_log
+)
+
+from parsers.detection_engine import (
+    run_detections
+)
+
+from parsers.yaml_detection_engine import (
+    run_yaml_detections
+)
+
+from parsers.mitre_mapper import (
+    map_to_mitre
+)
+
+from parsers.analytics_engine import (
+    detection_analytics,
+    incident_analytics
+)
+
+from parsers.threat_intelligence import (
+    enrich_iocs
+)
+
+from parsers.threat_feed import (
+    load_threat_feed,
+    correlate_threat_feed
+)
+
+from parsers.cve_mapper import (
+    enrich_cves
 )
 
 # ---------------------------
@@ -53,19 +97,11 @@ from sections.compliance import (
 )
 
 from sections.executive import (
-    render_executive
+    render_executive_summary
 )
 
 from sections.hunting import (
     render_hunting
-)
-
-# ---------------------------
-# PARSERS
-# ---------------------------
-
-from parsers.log_parser import (
-    read_log
 )
 
 # ---------------------------
@@ -89,6 +125,7 @@ st.set_page_config(
 # ---------------------------
 
 if "authenticated" not in st.session_state:
+
     st.session_state["authenticated"] = False
 
 # ---------------------------
@@ -97,9 +134,13 @@ if "authenticated" not in st.session_state:
 
 if not is_authenticated():
 
-    st.title("🛡️ Enterprise Security Operations Platform")
+    st.title(
+        "🛡️ Enterprise Security Operations Platform"
+    )
 
-    st.subheader("Authentication Required")
+    st.subheader(
+        "Authentication Required"
+    )
 
     username = st.text_input(
         "Username"
@@ -168,39 +209,65 @@ aix_logs = read_log(
     "agents/aix/sudo.log"
 )
 
-events = linux_logs + aix_logs
+events = (
+    linux_logs +
+    aix_logs
+)
 
 # ---------------------------
 # IOC DATA
 # ---------------------------
 
 ioc_matches = [
-    "185.220.101.1"
+    "185.220.101.1",
+    "malicious-domain.com"
 ]
 
 # ---------------------------
-# RENDER SECTIONS
+# DETECTIONS
 # ---------------------------
 
-render_dashboard()
-
-render_detections(events)
-
-from parsers.threat_intelligence import (
-    enrich_iocs
+detections = run_detections(
+    events
 )
 
-from parsers.threat_feed import (
-    load_threat_feed,
-    correlate_threat_feed
+yaml_detections = run_yaml_detections(
+    events
 )
 
-from parsers.cve_mapper import (
-    enrich_cves
+mitre_events = map_to_mitre(
+    events
 )
 
 # ---------------------------
-# THREAT INTEL PROCESSING
+# ANALYTICS
+# ---------------------------
+
+detection_stats = detection_analytics()
+
+incident_stats = incident_analytics()
+
+# ---------------------------
+# CLOUD FINDINGS
+# ---------------------------
+
+cloud_findings = [
+
+    {
+        "Cloud": "AWS",
+        "Finding": "Privileged Activity",
+        "Severity": "Critical"
+    },
+
+    {
+        "Cloud": "Azure",
+        "Finding": "Failed Login",
+        "Severity": "High"
+    }
+]
+
+# ---------------------------
+# THREAT INTELLIGENCE
 # ---------------------------
 
 threat_feed = load_threat_feed(
@@ -220,6 +287,42 @@ cve_findings = enrich_cves(
     ioc_matches
 )
 
+# ---------------------------
+# HEADER
+# ---------------------------
+
+st.title(
+    "🛡️ Enterprise Security Operations Platform"
+)
+
+st.markdown("""
+
+Unified SOC platform providing:
+
+- Linux Monitoring
+- AIX Monitoring
+- Threat Intelligence
+- SIEM Correlation
+- MITRE ATT&CK Mapping
+- Threat Hunting
+- Incident Response
+- Compliance Monitoring
+- Executive Reporting
+
+""")
+
+# ---------------------------
+# RENDER SECTIONS
+# ---------------------------
+
+render_dashboard()
+
+render_detections(
+    detections,
+    yaml_detections,
+    mitre_events
+)
+
 render_threat_intelligence(
     enriched_iocs,
     feed_correlations,
@@ -230,12 +333,29 @@ render_realtime()
 
 render_incidents()
 
-render_analytics()
+render_analytics(
+    detection_stats,
+    incident_stats
+)
 
-render_cloud_security()
+render_cloud_security(
+    cloud_findings
+)
 
 render_compliance()
 
-render_hunting()
+render_hunting(
+    events
+)
 
-render_executive()
+render_executive_summary()
+
+# ---------------------------
+# FOOTER
+# ---------------------------
+
+st.divider()
+
+st.caption(
+    "Enterprise Security Operations Platform | SOC Engineering Lab"
+)
