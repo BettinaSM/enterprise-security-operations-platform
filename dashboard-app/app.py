@@ -4,34 +4,12 @@ import streamlit as st
 # SECURITY
 # ---------------------------
 
-from security.auth import (
-    login
-)
+from security.auth import login
 
 from security.session import (
     create_session,
     logout,
     is_authenticated
-)
-
-# ---------------------------
-# DATABASE
-# ---------------------------
-
-from parsers.database_engine import (
-    create_tables
-)
-
-# ---------------------------
-# COLLECTORS
-# ---------------------------
-
-from collectors.linux_collector import (
-    collect_linux_logs
-)
-
-from collectors.aix_collector import (
-    collect_aix_logs
 )
 
 # ---------------------------
@@ -62,20 +40,28 @@ from sections.analytics import (
     render_analytics
 )
 
+from sections.cloud_security import (
+    render_cloud_security
+)
+
 from sections.compliance import (
     render_compliance
 )
 
-from sections.cloud_security import (
-    render_cloud_security
+from sections.executive import (
+    render_executive
 )
 
 from sections.hunting import (
     render_hunting
 )
 
-from sections.executive import (
-    render_executive
+# ---------------------------
+# PARSERS
+# ---------------------------
+
+from parsers.log_parser import (
+    read_log
 )
 
 # ---------------------------
@@ -83,45 +69,38 @@ from sections.executive import (
 # ---------------------------
 
 st.set_page_config(
-    page_title="Enterprise Security Operations Platform",
+    page_title="Enterprise SOC Platform",
     page_icon="🛡️",
     layout="wide"
 )
 
 # ---------------------------
-# INITIALIZE DATABASE
+# SESSION VALIDATION
 # ---------------------------
 
-create_tables()
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
 
 # ---------------------------
-# SIDEBAR
-# ---------------------------
-
-st.sidebar.title(
-    "Enterprise SOC Platform"
-)
-
-# ---------------------------
-# AUTHENTICATION
+# LOGIN SCREEN
 # ---------------------------
 
 if not is_authenticated():
 
-    st.sidebar.subheader(
-        "Authentication"
-    )
+    st.title("🛡️ Enterprise Security Operations Platform")
 
-    username = st.sidebar.text_input(
+    st.subheader("Authentication Required")
+
+    username = st.text_input(
         "Username"
     )
 
-    password = st.sidebar.text_input(
+    password = st.text_input(
         "Password",
         type="password"
     )
 
-    if st.sidebar.button("Login"):
+    if st.button("Login"):
 
         role = login(
             username,
@@ -130,37 +109,35 @@ if not is_authenticated():
 
         if role:
 
-            create_session(role)
+            create_session(
+                username,
+                role
+            )
 
-            st.sidebar.success(
-                f"Authenticated as: {role}"
+            st.success(
+                f"Authenticated as {role}"
             )
 
             st.rerun()
 
         else:
 
-            st.sidebar.error(
+            st.error(
                 "Invalid credentials"
             )
-
-    st.warning(
-        "Please authenticate to access the platform"
-    )
 
     st.stop()
 
 # ---------------------------
-# ACTIVE SESSION
+# SIDEBAR
 # ---------------------------
 
-role = st.session_state.get(
-    "role",
-    "analyst"
+st.sidebar.title(
+    "SOC Navigation"
 )
 
 st.sidebar.success(
-    f"Authenticated as: {role}"
+    f"Authenticated as: {st.session_state['role']}"
 )
 
 if st.sidebar.button("Logout"):
@@ -170,123 +147,50 @@ if st.sidebar.button("Logout"):
     st.rerun()
 
 # ---------------------------
-# NAVIGATION
+# LOAD LOGS
 # ---------------------------
 
-section = st.sidebar.radio(
-    "SOC Navigation",
-    [
-        "Dashboard",
-        "Detections",
-        "Threat Intelligence",
-        "Real-Time Monitoring",
-        "Incidents",
-        "Analytics",
-        "Compliance",
-        "Cloud Security",
-        "Threat Hunting",
-        "Executive"
-    ]
+linux_logs = read_log(
+    "agents/linux/auth.log"
 )
 
-# ---------------------------
-# LOAD SECURITY EVENTS
-# ---------------------------
-
-linux_logs = collect_linux_logs()
-
-aix_logs = collect_aix_logs()
-
-events = (
-    linux_logs +
-    aix_logs
+aix_logs = read_log(
+    "agents/aix/sudo.log"
 )
 
+events = linux_logs + aix_logs
+
 # ---------------------------
-# IOC SIMULATION
+# IOC DATA
 # ---------------------------
 
 ioc_matches = [
-    "185.220.101.1",
-    "192.168.100.50"
+    "185.220.101.1"
 ]
 
 # ---------------------------
-# HEADER
+# RENDER SECTIONS
 # ---------------------------
 
-st.title(
-    "🛡️ Enterprise Security Operations Platform"
+render_dashboard()
+
+render_detections(events)
+
+render_threat_intelligence(
+    ioc_matches,
+    "threat-intelligence/threat-feed.json"
 )
 
-st.markdown("""
-Unified SOC platform providing:
+render_realtime()
 
-- Linux Monitoring
-- AIX Monitoring
-- Threat Intelligence
-- SIEM Correlation
-- UEBA Analytics
-- MITRE ATT&CK Mapping
-- Threat Hunting
-- Incident Response
-- Compliance Monitoring
-- Executive Reporting
-""")
+render_incidents()
 
-# ---------------------------
-# ROUTING
-# ---------------------------
+render_analytics()
 
-if section == "Dashboard":
+render_cloud_security()
 
-    render_dashboard()
+render_compliance()
 
-elif section == "Detections":
+render_hunting()
 
-    render_detections(events)
-
-elif section == "Threat Intelligence":
-
-    render_threat_intelligence(
-        ioc_matches,
-        "threat-intelligence/threat-feed.json"
-    )
-
-elif section == "Real-Time Monitoring":
-
-    render_realtime()
-
-elif section == "Incidents":
-
-    render_incidents()
-
-elif section == "Analytics":
-
-    render_analytics()
-
-elif section == "Compliance":
-
-    render_compliance(role)
-
-elif section == "Cloud Security":
-
-    render_cloud_security()
-
-elif section == "Threat Hunting":
-
-    render_hunting(events)
-
-elif section == "Executive":
-
-    render_executive()
-
-# ---------------------------
-# FOOTER
-# ---------------------------
-
-st.divider()
-
-st.caption(
-    "Enterprise Security Operations Platform | SOC Engineering Lab"
-)
+render_executive()
