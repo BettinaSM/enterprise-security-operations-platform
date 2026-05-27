@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 from pathlib import Path
 from datetime import datetime
@@ -28,11 +29,13 @@ DATABASE_DIR.mkdir(
 
 def connect_db():
 
-    connection = sqlite3.connect(DB_PATH)
+    connection = sqlite3.connect(
+        DB_PATH,
+        check_same_thread=False
+    )
 
     return connection
-
-
+    
 # ---------------------------
 # CREATE TABLES
 # ---------------------------
@@ -169,7 +172,7 @@ def save_security_event(
         event_type,
         severity,
         source,
-        raw_log,
+        details,
         created_at
 
     )
