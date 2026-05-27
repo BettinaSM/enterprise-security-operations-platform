@@ -1,31 +1,23 @@
 import streamlit as st
 import pandas as pd
 
-from parsers.detection_engine import (
-    run_detections
-)
+# ---------------------------
+# DETECTIONS SECTION
+# ---------------------------
 
-from parsers.yaml_detection_engine import (
-    run_yaml_detections
-)
-
-from parsers.mitre_mapper import (
-    map_to_mitre
-)
-
-def render_detections(events):
-
-    detections = run_detections(events)
-
-    yaml_detections = run_yaml_detections(events)
-
-    mitre_events = map_to_mitre(events)
-
-    # ---------------------------
+def render_detections(
+    detections,
+    yaml_detections,
+    mitre_events
+):
 
     st.subheader(
         "Detection Engine Findings"
     )
+
+    # ---------------------------
+    # DETECTION ENGINE
+    # ---------------------------
 
     if detections:
 
@@ -44,6 +36,8 @@ def render_detections(events):
             "No active detections identified"
         )
 
+    # ---------------------------
+    # YAML DETECTIONS
     # ---------------------------
 
     st.subheader(
@@ -68,16 +62,26 @@ def render_detections(events):
         )
 
     # ---------------------------
+    # MITRE ATT&CK
+    # ---------------------------
 
     st.subheader(
         "MITRE ATT&CK Coverage"
     )
 
-    mitre_df = pd.DataFrame(
-        mitre_events
-    )
+    if mitre_events:
 
-    st.dataframe(
-        mitre_df,
-        use_container_width=True
-    )
+        mitre_df = pd.DataFrame(
+            mitre_events
+        )
+
+        st.dataframe(
+            mitre_df,
+            use_container_width=True
+        )
+
+    else:
+
+        st.info(
+            "No MITRE mappings identified"
+        )
