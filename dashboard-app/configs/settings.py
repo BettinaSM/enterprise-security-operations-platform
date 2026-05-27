@@ -84,6 +84,14 @@ ENABLE_CLOUD_MONITORING = True
 
 ENABLE_SOAR = True
 
+ENABLE_REAL_LINUX = False
+
+ENABLE_REAL_AIX = False
+
+ENABLE_WINDOWS_MONITORING = False
+
+ENABLE_CLOUD_REALTIME = False
+
 # ---------------------------
 # COLLECTOR SETTINGS
 # ---------------------------
