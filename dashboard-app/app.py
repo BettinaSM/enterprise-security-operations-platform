@@ -72,6 +72,10 @@ from parsers.cve_mapper import (
     enrich_cves
 )
 
+from reporting.pdf_generator import (
+    generate_security_report
+)
+
 # ---------------------------
 # SECTIONS
 # ---------------------------
@@ -389,6 +393,28 @@ render_hunting(
 )
 
 render_executive()
+
+# ---------------------------
+# PDF REPORTING
+# ---------------------------
+
+st.subheader(
+    "Security Reporting"
+)
+
+if st.button(
+    "Generate Executive PDF Report"
+):
+
+    report_file = generate_security_report(
+        detections,
+        incident_stats.to_dict("records"),
+        feed_correlations
+    )
+
+    st.success(
+        f"Report generated: {report_file}"
+    )
 
 # ---------------------------
 # FOOTER
