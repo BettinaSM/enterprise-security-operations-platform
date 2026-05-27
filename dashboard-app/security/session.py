@@ -11,7 +11,7 @@ def create_session(role):
     st.session_state["role"] = role
 
 # ---------------------------
-# CHECK SESSION
+# VALIDATE SESSION
 # ---------------------------
 
 def is_authenticated():
@@ -19,6 +19,17 @@ def is_authenticated():
     return st.session_state.get(
         "authenticated",
         False
+    )
+
+# ---------------------------
+# GET ROLE
+# ---------------------------
+
+def get_role():
+
+    return st.session_state.get(
+        "role",
+        "viewer"
     )
 
 # ---------------------------
