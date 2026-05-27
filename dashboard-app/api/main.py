@@ -126,7 +126,7 @@ def login(
             "error": "Invalid credentials"
         }
 
-    token = generate_token(({
+    token = generate_token({
 
         "username": username,
         "role": role
