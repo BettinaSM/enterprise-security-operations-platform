@@ -103,6 +103,58 @@ SSH_TIMEOUT = 10
 SSH_PORT = 22
 
 # ---------------------------
+# WINDOWS COLLECTION
+# ---------------------------
+
+WINDOWS_LOG = AGENTS_DIR / "windows" / "security-events.json"
+
+WINDOWS_EVENT_LOG = "Security"
+
+WINDOWS_HOST = "192.168.1.100"
+
+WINDOWS_USERNAME = "Administrator"
+
+WINDOWS_PASSWORD = "ChangeMe"
+
+# ---------------------------
+# CLOUD COLLECTION
+# ---------------------------
+
+AWS_REALTIME = False
+
+AZURE_REALTIME = False
+
+GCP_REALTIME = False
+
+OCI_REALTIME = False
+
+IBM_REALTIME = False
+
+# ---------------------------
+# AWS
+# ---------------------------
+
+AWS_REGION = "us-east-1"
+
+# ---------------------------
+# AZURE
+# ---------------------------
+
+AZURE_TENANT_ID = ""
+
+AZURE_CLIENT_ID = ""
+
+AZURE_CLIENT_SECRET = ""
+
+# ---------------------------
+# GCP
+# ---------------------------
+
+GCP_PROJECT_ID = ""
+
+GCP_CREDENTIALS_FILE = ""
+
+# ---------------------------
 # STREAMLIT
 # ---------------------------
 
