@@ -176,9 +176,44 @@ render_dashboard()
 
 render_detections(events)
 
-render_threat_intelligence(
-    ioc_matches,
+from parsers.threat_intelligence import (
+    enrich_iocs
+)
+
+from parsers.threat_feed import (
+    load_threat_feed,
+    correlate_threat_feed
+)
+
+from parsers.cve_mapper import (
+    enrich_cves
+)
+
+# ---------------------------
+# THREAT INTEL PROCESSING
+# ---------------------------
+
+threat_feed = load_threat_feed(
     "threat-intelligence/threat-feed.json"
+)
+
+feed_correlations = correlate_threat_feed(
+    ioc_matches,
+    threat_feed
+)
+
+enriched_iocs = enrich_iocs(
+    ioc_matches
+)
+
+cve_findings = enrich_cves(
+    ioc_matches
+)
+
+render_threat_intelligence(
+    enriched_iocs,
+    feed_correlations,
+    cve_findings
 )
 
 render_realtime()
