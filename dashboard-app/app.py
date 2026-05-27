@@ -213,9 +213,38 @@ if st.sidebar.button("Logout"):
 # LOAD LOGS
 # ---------------------------
 
-linux_logs = collect_linux_logs()
+from configs.settings import (
+    ENABLE_REAL_LINUX,
+    ENABLE_REAL_AIX
+)
 
-aix_logs = collect_aix_logs()
+from collectors.linux_real_collector import (
+    collect_linux_real_logs
+)
+
+from collectors.aix_real_collector import (
+    collect_aix_real_logs
+)
+
+# ---------------------------
+
+if ENABLE_REAL_LINUX:
+
+    linux_logs = collect_linux_real_logs()
+
+else:
+
+    linux_logs = collect_linux_logs()
+
+# ---------------------------
+
+if ENABLE_REAL_AIX:
+
+    aix_logs = collect_aix_real_logs()
+
+else:
+
+    aix_logs = collect_aix_logs()
 
 windows_logs = collect_windows_logs()
 
