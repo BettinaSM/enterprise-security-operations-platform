@@ -26,8 +26,12 @@ from security.session import (
 # PARSERS
 # ---------------------------
 
-from parsers.log_parser import (
-    read_log
+from collectors.linux_collector import (
+    collect_linux_logs
+)
+
+from collectors.aix_collector import (
+    collect_aix_logs
 )
 
 from parsers.detection_engine import (
@@ -201,13 +205,9 @@ if st.sidebar.button("Logout"):
 # LOAD LOGS
 # ---------------------------
 
-linux_logs = read_log(
-    "agents/linux/auth.log"
-)
+linux_logs = collect_linux_logs()
 
-aix_logs = read_log(
-    "agents/aix/sudo.log"
-)
+aix_logs = collect_aix_logs()
 
 events = (
     linux_logs +
