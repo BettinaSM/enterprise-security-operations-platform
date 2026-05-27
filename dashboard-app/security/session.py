@@ -1,14 +1,18 @@
 import streamlit as st
 
+# ---------------------------
+# CREATE SESSION
+# ---------------------------
+
 def create_session(role):
 
     st.session_state["authenticated"] = True
 
     st.session_state["role"] = role
 
-def logout():
-
-    st.session_state.clear()
+# ---------------------------
+# CHECK SESSION
+# ---------------------------
 
 def is_authenticated():
 
@@ -16,3 +20,11 @@ def is_authenticated():
         "authenticated",
         False
     )
+
+# ---------------------------
+# LOGOUT
+# ---------------------------
+
+def logout():
+
+    st.session_state.clear()
