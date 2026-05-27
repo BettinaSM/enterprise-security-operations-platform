@@ -1,11 +1,27 @@
 import streamlit as st
 import pandas as pd
 
-def render_detections(
-    detections,
-    yaml_detections,
-    mitre_events
-):
+from parsers.detection_engine import (
+    run_detections
+)
+
+from parsers.yaml_detection_engine import (
+    run_yaml_detections
+)
+
+from parsers.mitre_mapper import (
+    map_to_mitre
+)
+
+def render_detections(events):
+
+    detections = run_detections(events)
+
+    yaml_detections = run_yaml_detections(events)
+
+    mitre_events = map_to_mitre(events)
+
+    # ---------------------------
 
     st.subheader(
         "Detection Engine Findings"
