@@ -1,34 +1,14 @@
 import streamlit as st
 
 # ---------------------------
-# Automação Ansible
+# PAGE CONFIG
 # ---------------------------
 
-from sections.automation import (
-    render_automation
+st.set_page_config(
+    page_title="Enterprise SOC Platform",
+    page_icon="🛡️",
+    layout="wide"
 )
-
-render_automation()
-
-# ---------------------------
-# Automação Audit
-# ---------------------------
-
-from sections.enterprise_audit import (
-    render_enterprise_audit
-)
-
-render_enterprise_audit()
-
-# ---------------------------
-# Automação Soar
-# ---------------------------
-
-from sections.soar import (
-    render_soar
-)
-
-render_soar()
 
 # ---------------------------
 # DATABASE
@@ -37,6 +17,8 @@ render_soar()
 from parsers.database_engine import (
     create_tables
 )
+
+create_tables()
 
 # ---------------------------
 # SECURITY
@@ -53,7 +35,112 @@ from security.session import (
 )
 
 # ---------------------------
-# PARSERS
+# LOGIN
+# ---------------------------
+
+if "authenticated" not in st.session_state:
+
+    st.session_state["authenticated"] = False
+
+if not is_authenticated():
+
+    st.title(
+        "🛡️ Enterprise Security Operations Platform"
+    )
+
+    st.subheader(
+        "Authentication Required"
+    )
+
+    username = st.text_input(
+        "Username",
+        key="login_username"
+    )
+
+    password = st.text_input(
+        "Password",
+        type="password",
+        key="login_password"
+    )
+
+    if st.button(
+        "Login",
+        key="login_button"
+    ):
+
+        role = login(
+            username,
+            password
+        )
+
+        if role:
+
+            create_session(
+                username,
+                role
+            )
+
+            st.success(
+                f"Authenticated as {role}"
+            )
+
+            st.rerun()
+
+        else:
+
+            st.error(
+                "Invalid credentials"
+            )
+
+    st.stop()
+
+# ---------------------------
+# SIDEBAR
+# ---------------------------
+
+st.sidebar.title(
+    "SOC Navigation"
+)
+
+st.sidebar.success(
+    f"Authenticated as: {st.session_state['role']}"
+)
+
+menu = st.sidebar.radio(
+
+    "Select Section",
+
+    [
+
+        "Dashboard",
+        "Detections",
+        "Threat Intelligence",
+        "Realtime Monitoring",
+        "Incidents",
+        "Analytics",
+        "Cloud Security",
+        "Threat Hunting",
+        "Compliance",
+        "Executive",
+        "SOAR",
+        "Automation",
+        "Enterprise Audit",
+        "Reporting"
+
+    ]
+)
+
+if st.sidebar.button(
+    "Logout",
+    key="logout_button"
+):
+
+    logout()
+
+    st.rerun()
+
+# ---------------------------
+# COLLECTORS
 # ---------------------------
 
 from collectors.linux_collector import (
@@ -71,6 +158,22 @@ from collectors.windows_collector import (
 from collectors.cloud_collector import (
     collect_cloud_logs
 )
+
+linux_logs = collect_linux_logs()
+
+aix_logs = collect_aix_logs()
+
+windows_logs = collect_windows_logs()
+
+events = (
+    linux_logs +
+    aix_logs +
+    [str(event) for event in windows_logs]
+)
+
+# ---------------------------
+# PARSERS
+# ---------------------------
 
 from parsers.detection_engine import (
     run_detections
@@ -102,20 +205,48 @@ from parsers.cve_mapper import (
     enrich_cves
 )
 
-from sections.live_syslog import (
-    render_live_syslog
+# ---------------------------
+# DATA PROCESSING
+# ---------------------------
+
+ioc_matches = [
+
+    "185.220.101.1",
+    "malicious-domain.com"
+
+]
+
+detections = run_detections(
+    events
 )
 
-from sections.mitre_heatmap import (
-    render_mitre_heatmap
+yaml_detections = run_yaml_detections(
+    events
 )
 
-from parsers.ueba_engine import (
-    detect_anomalous_users
+mitre_events = map_to_mitre(
+    events
 )
 
-from parsers.lateral_movement import (
-    detect_lateral_movement
+detection_stats = detection_analytics()
+
+incident_stats = incident_analytics()
+
+threat_feed = load_threat_feed(
+    "threat-intelligence/threat-feed.json"
+)
+
+feed_correlations = correlate_threat_feed(
+    ioc_matches,
+    threat_feed
+)
+
+enriched_iocs = enrich_iocs(
+    ioc_matches
+)
+
+cve_findings = enrich_cves(
+    ioc_matches
 )
 
 # ---------------------------
@@ -162,231 +293,16 @@ from sections.hunting import (
     render_hunting
 )
 
-# ---------------------------
-# INITIALIZE DATABASE
-# ---------------------------
-
-create_tables()
-
-# ---------------------------
-# PAGE CONFIG
-# ---------------------------
-
-st.set_page_config(
-    page_title="Enterprise SOC Platform",
-    page_icon="🛡️",
-    layout="wide"
+from sections.soar import (
+    render_soar
 )
 
-# ---------------------------
-# SESSION VALIDATION
-# ---------------------------
-
-if "authenticated" not in st.session_state:
-
-    st.session_state["authenticated"] = False
-
-# ---------------------------
-# LOGIN SCREEN
-# ---------------------------
-
-if not is_authenticated():
-
-    st.title(
-        "🛡️ Enterprise Security Operations Platform"
-    )
-
-    st.subheader(
-        "Authentication Required"
-    )
-
-    username = st.text_input(
-        "Username"
-    )
-
-    password = st.text_input(
-        "Password",
-        type="password"
-    )
-
-    if st.button("Login"):
-
-        role = login(
-            username,
-            password
-        )
-
-        if role:
-
-            create_session(
-                username,
-                role
-            )
-
-            st.success(
-                f"Authenticated as {role}"
-            )
-
-            st.rerun()
-
-        else:
-
-            st.error(
-                "Invalid credentials"
-            )
-
-    st.stop()
-
-# ---------------------------
-# SIDEBAR
-# ---------------------------
-
-st.sidebar.title(
-    "SOC Navigation"
+from sections.automation import (
+    render_automation
 )
 
-st.sidebar.success(
-    f"Authenticated as: {st.session_state['role']}"
-)
-
-if st.sidebar.button("Logout"):
-
-    logout()
-
-    st.rerun()
-
-# ---------------------------
-# LOAD LOGS
-# ---------------------------
-
-from configs.settings import (
-    ENABLE_REAL_LINUX,
-    ENABLE_REAL_AIX
-)
-
-from collectors.linux_real_collector import (
-    collect_linux_real_logs
-)
-
-from collectors.aix_real_collector import (
-    collect_aix_real_logs
-)
-
-# ---------------------------
-
-if ENABLE_REAL_LINUX:
-
-    linux_logs = collect_linux_real_logs()
-
-else:
-
-    linux_logs = collect_linux_logs()
-
-# ---------------------------
-
-if ENABLE_REAL_AIX:
-
-    aix_logs = collect_aix_real_logs()
-
-else:
-
-    aix_logs = collect_aix_logs()
-
-windows_logs = collect_windows_logs()
-
-cloud_logs = collect_cloud_logs()
-
-events = (
-    linux_logs +
-    aix_logs +
-    [str(event) for event in windows_logs]
-)
-
-# ---------------------------
-# IOC DATA
-# ---------------------------
-
-ioc_matches = [
-    "185.220.101.1",
-    "malicious-domain.com"
-]
-
-# ---------------------------
-# DETECTIONS
-# ---------------------------
-
-detections = run_detections(
-    events
-)
-
-yaml_detections = run_yaml_detections(
-    events
-)
-
-mitre_events = map_to_mitre(
-    events
-)
-
-ueba_findings = detect_anomalous_users(
-    events
-)
-
-lateral_findings = detect_lateral_movement(
-    events
-)
-
-render_mitre_heatmap(
-    mitre_events
-)
-
-render_live_syslog()
-
-# ---------------------------
-# ANALYTICS
-# ---------------------------
-
-detection_stats = detection_analytics()
-
-incident_stats = incident_analytics()
-
-# ---------------------------
-# CLOUD COLLECTION
-# ---------------------------
-
-cloud_events = collect_cloud_logs()
-
-cloud_findings = []
-
-for provider, logs in cloud_events.items():
-
-    if logs:
-
-        cloud_findings.append({
-
-            "Cloud": provider.upper(),
-            "Finding": "Cloud Activity Detected",
-            "Severity": "Medium"
-        })
-
-# ---------------------------
-# THREAT INTELLIGENCE
-# ---------------------------
-
-threat_feed = load_threat_feed(
-    "threat-intelligence/threat-feed.json"
-)
-
-feed_correlations = correlate_threat_feed(
-    ioc_matches,
-    threat_feed
-)
-
-enriched_iocs = enrich_iocs(
-    ioc_matches
-)
-
-cve_findings = enrich_cves(
-    ioc_matches
+from sections.enterprise_audit import (
+    render_enterprise_audit
 )
 
 # ---------------------------
@@ -397,98 +313,113 @@ st.title(
     "🛡️ Enterprise Security Operations Platform"
 )
 
-st.markdown("""
-
-Unified SOC platform providing:
-
-- Linux Monitoring
-- AIX Monitoring
-- Threat Intelligence
-- SIEM Correlation
-- MITRE ATT&CK Mapping
-- Threat Hunting
-- Incident Response
-- Compliance Monitoring
-- Executive Reporting
-
-""")
-
 # ---------------------------
-# RENDER SECTIONS
+# ROUTING
 # ---------------------------
 
-render_dashboard()
+if menu == "Dashboard":
 
-render_detections(
-    detections,
-    yaml_detections,
-    mitre_events
-)
+    render_dashboard()
 
-render_threat_intelligence(
-    enriched_iocs,
-    feed_correlations,
-    cve_findings
-)
+elif menu == "Detections":
 
-render_realtime()
-
-render_incidents()
-
-render_analytics(
-    detection_stats,
-    incident_stats
-)
-
-render_cloud_security()
-
-render_compliance()
-
-render_hunting(
-    events
-)
-
-render_executive()
-
-# ---------------------------
-# PDF REPORTING
-# ---------------------------
-
-from reporting.pdf_generator import (
-    generate_security_report
-)
-
-st.subheader(
-    "Security Reporting"
-)
-
-if st.button(
-    "Generate Executive PDF Report",
-    key="executive_pdf_button"
-):
-
-    report_file = generate_security_report(
+    render_detections(
         detections,
-        incident_stats.to_dict("records"),
-        feed_correlations
+        yaml_detections,
+        mitre_events
     )
 
-    st.success(
-        f"Report generated: {report_file}"
+elif menu == "Threat Intelligence":
+
+    render_threat_intelligence(
+        enriched_iocs,
+        feed_correlations,
+        cve_findings
     )
 
-    with open(
-        report_file,
-        "rb"
-    ) as pdf_data:
+elif menu == "Realtime Monitoring":
 
-        st.download_button(
-            label="Download Executive PDF",
-            data=pdf_data,
-            file_name=report_file.name,
-            mime="application/pdf",
-            key="download_pdf_button"
+    render_realtime()
+
+elif menu == "Incidents":
+
+    render_incidents()
+
+elif menu == "Analytics":
+
+    render_analytics(
+        detection_stats,
+        incident_stats
+    )
+
+elif menu == "Cloud Security":
+
+    render_cloud_security()
+
+elif menu == "Threat Hunting":
+
+    render_hunting(
+        events
+    )
+
+elif menu == "Compliance":
+
+    render_compliance()
+
+elif menu == "Executive":
+
+    render_executive()
+
+elif menu == "SOAR":
+
+    render_soar()
+
+elif menu == "Automation":
+
+    render_automation()
+
+elif menu == "Enterprise Audit":
+
+    render_enterprise_audit()
+
+elif menu == "Reporting":
+
+    from reporting.pdf_generator import (
+        generate_security_report
+    )
+
+    st.subheader(
+        "Security Reporting"
+    )
+
+    if st.button(
+        "Generate Executive PDF Report",
+        key="pdf_button"
+    ):
+
+        report_file = generate_security_report(
+            detections,
+            incident_stats.to_dict("records"),
+            feed_correlations
         )
+
+        st.success(
+            f"Report generated: {report_file}"
+        )
+
+        with open(
+            report_file,
+            "rb"
+        ) as pdf_data:
+
+            st.download_button(
+                label="Download PDF",
+                data=pdf_data,
+                file_name=report_file.name,
+                mime="application/pdf",
+                key="download_pdf"
+            )
+
 # ---------------------------
 # FOOTER
 # ---------------------------
