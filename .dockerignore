@@ -3,9 +3,10 @@ __pycache__/
 *.pyo
 *.pyd
 
-.env
+venv/
+.env/
 
-.git
+.git/
 .github
 .vscode
 
@@ -13,7 +14,12 @@ Python
 venv/
 .venv/
 
+database/
+reports/
+logs/
+
 *.db
+*.pdf
 
 .streamlit/
 
