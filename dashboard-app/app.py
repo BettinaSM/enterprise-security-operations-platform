@@ -1,6 +1,16 @@
 import streamlit as st
 
 # ---------------------------
+# Automação Ansible
+# ---------------------------
+
+from sections.automation import (
+    render_automation
+)
+
+render_automation()
+
+# ---------------------------
 # DATABASE
 # ---------------------------
 
