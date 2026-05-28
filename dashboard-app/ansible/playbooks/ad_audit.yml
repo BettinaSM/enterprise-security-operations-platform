@@ -1,0 +1,19 @@
+- name: AD Audit
+  hosts: windows
+
+  tasks:
+
+    - name: Enumerate AD users
+      win_shell: |
+        Get-ADUser -Filter * |
+        Select Name, Enabled
+      register: ad_users
+
+    - name: Save AD audit
+      win_copy:
+        content: |
+          ACTIVE DIRECTORY AUDIT
+
+          {{ ad_users.stdout }}
+
+        dest: C:\Temp\ad_audit.txt
