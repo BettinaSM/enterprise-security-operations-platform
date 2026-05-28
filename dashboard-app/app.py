@@ -102,6 +102,22 @@ from parsers.cve_mapper import (
     enrich_cves
 )
 
+from sections.live_syslog import (
+    render_live_syslog
+)
+
+from sections.mitre_heatmap import (
+    render_mitre_heatmap
+)
+
+from parsers.ueba_engine import (
+    detect_anomalous_users
+)
+
+from parsers.lateral_movement import (
+    detect_lateral_movement
+)
+
 # ---------------------------
 # SECTIONS
 # ---------------------------
@@ -310,6 +326,20 @@ yaml_detections = run_yaml_detections(
 mitre_events = map_to_mitre(
     events
 )
+
+ueba_findings = detect_anomalous_users(
+    events
+)
+
+lateral_findings = detect_lateral_movement(
+    events
+)
+
+render_mitre_heatmap(
+    mitre_events
+)
+
+render_live_syslog()
 
 # ---------------------------
 # ANALYTICS
