@@ -1,0 +1,42 @@
+- name: User Audit
+  hosts: all
+  become: yes
+
+  vars:
+    target_user: "{{ lookup('env','TARGET_USER') }}"
+
+  tasks:
+
+    - name: Check user exists
+      shell: "id {{ target_user }}"
+      register: user_check
+      ignore_errors: yes
+
+    - name: User groups
+      shell: "groups {{ target_user }}"
+      register: user_groups
+      ignore_errors: yes
+
+    - name: Sudo privileges
+      shell: "sudo -l -U {{ target_user }}"
+      register: sudo_privs
+      ignore_errors: yes
+
+    - name: Save report
+      copy:
+        content: |
+          USER AUDIT REPORT
+
+          USER:
+          {{ target_user }}
+
+          USER CHECK:
+          {{ user_check.stdout }}
+
+          GROUPS:
+          {{ user_groups.stdout }}
+
+          SUDO:
+          {{ sudo_privs.stdout }}
+
+        dest: /tmp/user_audit_{{ target_user }}.txt
