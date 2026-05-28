@@ -1,0 +1,20 @@
+- name: LDAP Audit
+  hosts: ldap
+  become: yes
+
+  tasks:
+
+    - name: LDAP users
+      shell: |
+        ldapsearch -x -LLL \
+        "(objectClass=person)" uid
+      register: ldap_users
+
+    - name: Save LDAP audit
+      copy:
+        content: |
+          LDAP AUDIT
+
+          {{ ldap_users.stdout }}
+
+        dest: /tmp/ldap_audit.txt
