@@ -11,6 +11,16 @@ from sections.automation import (
 render_automation()
 
 # ---------------------------
+# Automação Audit
+# ---------------------------
+
+from sections.enterprise_audit import (
+    render_enterprise_audit
+)
+
+render_enterprise_audit()
+
+# ---------------------------
 # DATABASE
 # ---------------------------
 
