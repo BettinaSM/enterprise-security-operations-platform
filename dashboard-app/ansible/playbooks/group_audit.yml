@@ -1,0 +1,26 @@
+- name: Group Audit
+  hosts: all
+  become: yes
+
+  vars:
+    target_group: "{{ lookup('env','TARGET_GROUP') }}"
+
+  tasks:
+
+    - name: Group lookup
+      shell: "grep {{ target_group }} /etc/group"
+      register: group_result
+      ignore_errors: yes
+
+    - name: Save report
+      copy:
+        content: |
+          GROUP AUDIT REPORT
+
+          GROUP:
+          {{ target_group }}
+
+          RESULT:
+          {{ group_result.stdout }}
+
+        dest: /tmp/group_audit_{{ target_group }}.txt
