@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY dashboard-app/requirements.txt .
 
+RUN apt-get update && apt-get install -y ansible sshpass
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY dashboard-app/ .
