@@ -14,5 +14,6 @@ RUN mkdir -p /app/reports
 
 EXPOSE 8501
 EXPOSE 8000
+EXPOSE 5140/udp
 
 CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
