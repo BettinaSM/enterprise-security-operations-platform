@@ -21,6 +21,16 @@ from sections.enterprise_audit import (
 render_enterprise_audit()
 
 # ---------------------------
+# Automação Soar
+# ---------------------------
+
+from sections.soar import (
+    render_soar
+)
+
+render_soar()
+
+# ---------------------------
 # DATABASE
 # ---------------------------
 
