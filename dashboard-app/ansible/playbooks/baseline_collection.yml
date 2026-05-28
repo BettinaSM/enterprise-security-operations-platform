@@ -1,0 +1,54 @@
+---
+- name: Enterprise Baseline Collection
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Hostname
+      command: hostname
+      register: hostname_output
+
+    - name: OS Information
+      shell: uname -a
+      register: os_output
+
+    - name: Logged Users
+      command: who
+      register: who_output
+
+    - name: Sudoers
+      shell: cat /etc/sudoers
+      register: sudoers_output
+      ignore_errors: yes
+
+    - name: passwd
+      shell: cat /etc/passwd
+      register: passwd_output
+
+    - name: groups
+      shell: cat /etc/group
+      register: group_output
+
+    - name: Save audit report
+      copy:
+        content: |
+          HOSTNAME:
+          {{ hostname_output.stdout }}
+
+          OS:
+          {{ os_output.stdout }}
+
+          USERS:
+          {{ who_output.stdout }}
+
+          SUDOERS:
+          {{ sudoers_output.stdout }}
+
+          PASSWD:
+          {{ passwd_output.stdout }}
+
+          GROUPS:
+          {{ group_output.stdout }}
+
+        dest: /tmp/security_audit.txt
