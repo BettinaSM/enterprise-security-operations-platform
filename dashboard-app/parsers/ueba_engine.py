@@ -1,4 +1,35 @@
-def analyze_user_behavior(events):
+from collections import Counter
+
+# ---------------------------
+# UEBA ENGINE
+# ---------------------------
+
+SUSPICIOUS_COMMANDS = [
+
+    "curl",
+    "wget",
+    "nc ",
+    "nmap",
+    "scp",
+    "psexec",
+    "wmic"
+]
+
+PRIVILEGED_KEYWORDS = [
+
+    "sudo",
+    "root",
+    "admin",
+    "wheel"
+]
+
+# ---------------------------
+# ANALYZE USER BEHAVIOR
+# ---------------------------
+
+def analyze_user_behavior(
+    events
+):
 
     findings = []
 
@@ -8,50 +39,81 @@ def analyze_user_behavior(events):
 
     suspicious_commands = 0
 
+    user_activity = []
+
+    # ---------------------------
+    # PROCESS EVENTS
+    # ---------------------------
+
     for event in events:
 
-        log = event.lower()
+        log = str(event).lower()
 
-        # ---------------------------
-        # FAILED AUTHENTICATIONS
-        # ---------------------------
+        # failed auth
 
-        if "failed" in log:
+        if (
+
+            "failed" in log
+            or "authentication failure" in log
+
+        ):
 
             failed_logins += 1
 
-        # ---------------------------
-        # PRIVILEGED ACTIONS
-        # ---------------------------
+        # privileged actions
 
-        if (
-            "sudo" in log
-            or "root" in log
-            or "admin" in log
-        ):
+        for keyword in PRIVILEGED_KEYWORDS:
 
-            privileged_actions += 1
+            if keyword in log:
 
-        # ---------------------------
-        # SUSPICIOUS COMMANDS
-        # ---------------------------
+                privileged_actions += 1
 
-        if (
-            "curl" in log
-            or "wget" in log
-            or "nc " in log
-            or "nmap" in log
-        ):
+        # suspicious commands
 
-            suspicious_commands += 1
+        for command in SUSPICIOUS_COMMANDS:
+
+            if command in log:
+
+                suspicious_commands += 1
+
+        # track users
+
+        words = log.split()
+
+        for word in words:
+
+            if "user" in word:
+
+                user_activity.append(word)
 
     # ---------------------------
-    # UEBA LOGIC
+    # USER FREQUENCY
+    # ---------------------------
+
+    counter = Counter(
+        user_activity
+    )
+
+    anomalous_users = []
+
+    for user, count in counter.items():
+
+        if count > 10:
+
+            anomalous_users.append({
+
+                "user": user,
+                "count": count
+            })
+
+    # ---------------------------
+    # UEBA RULES
     # ---------------------------
 
     if failed_logins >= 5:
 
         findings.append({
+
             "type": "Brute Force Behavior",
             "severity": "High"
         })
@@ -59,53 +121,38 @@ def analyze_user_behavior(events):
     if privileged_actions >= 3:
 
         findings.append({
-            "type": "Suspicious Admin Activity",
+
+            "type": "Suspicious Privileged Activity",
             "severity": "Critical"
         })
 
     if suspicious_commands >= 2:
 
         findings.append({
-            "type": "Potential Insider Threat",
+
+            "type": "Potential Lateral Movement",
             "severity": "Critical"
         })
+
+    if anomalous_users:
+
+        findings.append({
+
+            "type": "Anomalous User Activity",
+            "severity": "High",
+            "users": anomalous_users
+        })
+
+    # ---------------------------
+    # NORMAL
+    # ---------------------------
 
     if not findings:
 
         findings.append({
-            "type": "Normal User Behavior",
+
+            "type": "Normal Behavior",
             "severity": "Low"
         })
-
-    return findings
-
-    # ---------------------------
-    # Suspicious Log
-    # ---------------------------
-
-def analyze_user_behavior(logs):
-
-    findings = []
-
-    suspicious_keywords = [
-        "root",
-        "sudo",
-        "failed",
-        "unauthorized",
-        "admin"
-    ]
-
-    for log in logs:
-
-        for keyword in suspicious_keywords:
-
-            if keyword.lower() in log.lower():
-
-                findings.append({
-                    "user_behavior": "Suspicious Activity",
-                    "keyword": keyword,
-                    "log": log,
-                    "risk": "High"
-                })
 
     return findings
