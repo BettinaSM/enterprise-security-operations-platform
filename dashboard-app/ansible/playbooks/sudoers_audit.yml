@@ -1,0 +1,26 @@
+- name: Sudoers Audit
+  hosts: all
+  become: yes
+
+  vars:
+    keyword: "{{ lookup('env','TARGET_KEYWORD') }}"
+
+  tasks:
+
+    - name: Search sudoers
+      shell: "grep -Ri '{{ keyword }}' /etc/sudoers /etc/sudoers.d/"
+      register: sudoers_result
+      ignore_errors: yes
+
+    - name: Save report
+      copy:
+        content: |
+          SUDOERS AUDIT
+
+          KEYWORD:
+          {{ keyword }}
+
+          RESULTS:
+          {{ sudoers_result.stdout }}
+
+        dest: /tmp/sudoers_audit.txt
