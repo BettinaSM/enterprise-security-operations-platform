@@ -1,6 +1,41 @@
-def calculate_risk_score(detections):
+# ---------------------------
+# RISK ENGINE
+# ---------------------------
+
+SEVERITY_WEIGHTS = {
+
+    "Low": 5,
+    "Medium": 20,
+    "High": 50,
+    "Critical": 80
+}
+
+# ---------------------------
+# CALCULATE RISK
+# ---------------------------
+
+def calculate_risk_score(
+
+    detections,
+
+    threat_intel=False,
+
+    privileged_activity=False,
+
+    lateral_movement=False,
+
+    baseline_drift=False,
+
+    suspicious_user=False,
+
+    cloud_event=False
+):
 
     score = 0
+
+    # ---------------------------
+    # DETECTIONS
+    # ---------------------------
 
     for detection in detections:
 
@@ -9,31 +44,80 @@ def calculate_risk_score(detections):
             "Low"
         )
 
-        if severity == "Critical":
+        score += SEVERITY_WEIGHTS.get(
+            severity,
+            0
+        )
 
-            score += 40
+    # ---------------------------
+    # THREAT INTEL
+    # ---------------------------
 
-        elif severity == "High":
+    if threat_intel:
 
-            score += 25
+        score += 30
 
-        elif severity == "Medium":
+    # ---------------------------
+    # PRIVILEGED ACTIVITY
+    # ---------------------------
 
-            score += 10
+    if privileged_activity:
 
-        else:
+        score += 25
 
-            score += 5
+    # ---------------------------
+    # LATERAL MOVEMENT
+    # ---------------------------
 
-    if score >= 80:
+    if lateral_movement:
+
+        score += 40
+
+    # ---------------------------
+    # BASELINE DRIFT
+    # ---------------------------
+
+    if baseline_drift:
+
+        score += 35
+
+    # ---------------------------
+    # UEBA
+    # ---------------------------
+
+    if suspicious_user:
+
+        score += 30
+
+    # ---------------------------
+    # CLOUD
+    # ---------------------------
+
+    if cloud_event:
+
+        score += 20
+
+    # ---------------------------
+    # LIMIT
+    # ---------------------------
+
+    if score > 100:
+
+        score = 100
+
+    # ---------------------------
+    # LEVEL
+    # ---------------------------
+
+    if score >= 90:
 
         level = "Critical"
 
-    elif score >= 50:
+    elif score >= 70:
 
         level = "High"
 
-    elif score >= 20:
+    elif score >= 40:
 
         level = "Medium"
 
@@ -41,4 +125,8 @@ def calculate_risk_score(detections):
 
         level = "Low"
 
-    return score, level
+    return {
+
+        "score": score,
+        "level": level
+    }
