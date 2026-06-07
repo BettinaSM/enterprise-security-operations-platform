@@ -1,10 +1,14 @@
-import streamlit as st
-
 from parsers.session_auth import (
     require_auth
 )
 
 require_auth()
+
+import streamlit as st
+
+from parsers.session_auth import (
+    require_auth
+)
 
 role = st.sidebar.selectbox(
     "Role Validation",
