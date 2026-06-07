@@ -4,7 +4,7 @@ import grp
 import platform
 
 # ---------------------------
-# PLATFORM
+# PLATFORM OS
 # ---------------------------
 
 OS_TYPE = platform.system().lower()
