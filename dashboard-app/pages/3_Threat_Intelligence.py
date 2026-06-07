@@ -22,8 +22,12 @@ st.set_page_config(
 
 st.title("🧠 Threat Intelligence")
 
+from configs.settings import (
+    THREAT_FEED
+)
+
 with open(
-    "threat-intelligence/threat-feed.json",
+    THREAT_FEED,
     "r"
 ) as file:
 
