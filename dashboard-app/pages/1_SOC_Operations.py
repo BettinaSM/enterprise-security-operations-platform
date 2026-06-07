@@ -1,3 +1,9 @@
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
 import streamlit as st
 
 from collectors.linux_collector import (
