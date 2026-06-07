@@ -1,3 +1,9 @@
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
 import streamlit as st
 import pandas as pd
 import json
@@ -7,8 +13,6 @@ from pathlib import Path
 from parsers.session_auth import (
     require_auth
 )
-
-require_auth()
 
 from configs.settings import (
     THREAT_FEED
