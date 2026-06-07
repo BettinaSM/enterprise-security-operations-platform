@@ -1,11 +1,31 @@
+import os
 import pwd
 import grp
+import platform
+
+# ---------------------------
+# PLATFORM
+# ---------------------------
+
+OS_TYPE = platform.system().lower()
 
 # ---------------------------
 # LOCAL USERS
 # ---------------------------
 
 def get_local_users():
+
+    if OS_TYPE == "windows":
+
+        return get_windows_users()
+
+    return get_unix_users()
+
+# ---------------------------
+# UNIX USERS
+# ---------------------------
+
+def get_unix_users():
 
     users = []
 
@@ -16,33 +36,37 @@ def get_local_users():
             "username": user.pw_name,
             "uid": user.pw_uid,
             "gid": user.pw_gid,
-            "home": user.pw_dir,
-            "shell": user.pw_shell
+            "shell": user.pw_shell,
+            "source": "Local"
+
         })
 
     return users
 
 # ---------------------------
-# PRIVILEGED USERS
+# WINDOWS USERS
 # ---------------------------
 
-def get_privileged_users():
+def get_windows_users():
 
-    privileged = []
+    return [
 
-    for user in pwd.getpwall():
+        {
+            "username": "Administrator",
+            "source": "Local"
+        }
 
-        if user.pw_uid == 0:
-
-            privileged.append(user.pw_name)
-
-    return privileged
+    ]
 
 # ---------------------------
 # GROUPS
 # ---------------------------
 
 def get_groups():
+    
+    if OS_TYPE == "windows":
+
+        return []
 
     groups = []
 
@@ -52,7 +76,50 @@ def get_groups():
 
             "group": group.gr_name,
             "gid": group.gr_gid,
-            "members": ",".join(group.gr_mem)
+            "members": group.gr_mem
         })
 
     return groups
+
+# ---------------------------
+# SUDO USERS
+# ---------------------------
+
+def get_sudo_users():
+
+    sudo_users = []
+
+    sudo_files = [
+
+        "/etc/sudoers"
+
+    ]
+
+    for file_path in sudo_files:
+
+        if not os.path.exists(file_path):
+
+            continue
+
+        try:
+
+            with open(file_path) as file:
+
+                for line in file:
+
+                    line = line.strip()
+
+                    if (
+
+                        line
+                        and not line.startswith("#")
+
+                    ):
+
+                        sudo_users.append(line)
+
+        except:
+
+            pass
+
+    return sudo_users
