@@ -42,7 +42,7 @@ st.title(
     "IAM Governance"
 )
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 
     "Local",
     "LDAP",
@@ -132,3 +132,12 @@ with tab5:
         )
     )
 
+with tab6:
+
+    st.subheader(
+        "Service Accounts"
+    )
+
+    st.write(
+        get_service_accounts()
+    )
