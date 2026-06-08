@@ -67,6 +67,50 @@ def calculate_identity_risk(identity):
         score += 10
 
     # ---------------------------
+    # MFA
+    # ---------------------------
+
+    if identity.get(
+        "mfa_disabled",
+        False
+    ):
+
+        score += 30
+
+    # ---------------------------
+    # SHARED ACCOUNT
+    # ---------------------------
+
+    if identity.get(
+        "shared_account",
+        False
+    ):
+
+        score += 25
+
+    # ---------------------------
+    # ORPHAN ACCOUNT
+    # ---------------------------
+
+    if identity.get(
+        "orphan_account",
+        False
+    ):
+
+        score += 35
+
+    # ---------------------------
+    # EXCESSIVE PRIVILEGES
+    # ---------------------------
+
+    if identity.get(
+        "excessive_privileges",
+        False
+    ):
+
+        score += 40
+    
+    # ---------------------------
     # RISK LEVEL
     # ---------------------------
 
