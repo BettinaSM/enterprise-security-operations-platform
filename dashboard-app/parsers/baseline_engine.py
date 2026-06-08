@@ -2,6 +2,11 @@ import hashlib
 import json
 
 from pathlib import Path
+from datetime import datetime
+
+# ---------------------------
+# BASELINE DIRECTORY
+# ---------------------------
 
 BASELINE_DIR = (
     Path(__file__).resolve().parent.parent /
@@ -17,22 +22,24 @@ BASELINE_DIR.mkdir(
 # HASH
 # ---------------------------
 
-def calculate_hash(
-    content
-):
+def calculate_hash(content):
+
+    if isinstance(content, (dict, list)):
+
+        content = json.dumps(
+            content,
+            sort_keys=True
+        )
 
     return hashlib.sha256(
-        content.encode()
+        str(content).encode()
     ).hexdigest()
 
 # ---------------------------
 # SAVE BASELINE
 # ---------------------------
 
-def save_baseline(
-    name,
-    content
-):
+def save_baseline(name, content):
 
     baseline_file = (
         BASELINE_DIR /
@@ -41,8 +48,14 @@ def save_baseline(
 
     data = {
 
-        "hash": calculate_hash(content),
-        "content": content
+        "timestamp":
+            datetime.utcnow().isoformat(),
+
+        "hash":
+            calculate_hash(content),
+
+        "content":
+            content
     }
 
     with open(
@@ -54,7 +67,51 @@ def save_baseline(
         json.dump(
             data,
             file,
-            indent=4
+            indent=4,
+            default=str
+        )
+
+# ---------------------------
+# SAVE SNAPSHOT
+# ---------------------------
+
+def save_baseline_snapshot(
+    name,
+    content
+):
+
+    timestamp = datetime.utcnow().strftime(
+        "%Y%m%d_%H%M%S"
+    )
+
+    snapshot_file = (
+        BASELINE_DIR /
+        f"{name}_{timestamp}.json"
+    )
+
+    data = {
+
+        "timestamp":
+            datetime.utcnow().isoformat(),
+
+        "hash":
+            calculate_hash(content),
+
+        "content":
+            content
+    }
+
+    with open(
+        snapshot_file,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        json.dump(
+            data,
+            file,
+            indent=4,
+            default=str
         )
 
 # ---------------------------
@@ -74,7 +131,12 @@ def compare_baseline(
     if not baseline_file.exists():
 
         return {
-            "status": "NEW_BASELINE"
+
+            "status":
+                "NEW_BASELINE",
+
+            "drift":
+                False
         }
 
     with open(
@@ -83,18 +145,30 @@ def compare_baseline(
         encoding="utf-8"
     ) as file:
 
-        data = json.load(file)
+        baseline = json.load(file)
 
     current_hash = calculate_hash(
         content
     )
 
-    if current_hash != data["hash"]:
-
-        return {
-            "status": "DRIFT_DETECTED"
-        }
+    drift = (
+        current_hash !=
+        baseline["hash"]
+    )
 
     return {
-        "status": "UNCHANGED"
+
+        "status":
+            "DRIFT_DETECTED"
+            if drift
+            else "UNCHANGED",
+
+        "drift":
+            drift,
+
+        "baseline_hash":
+            baseline["hash"],
+
+        "current_hash":
+            current_hash
     }
