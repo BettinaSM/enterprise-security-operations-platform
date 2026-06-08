@@ -1,4 +1,13 @@
+from pathlib import Path
 import json
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+CMDB_FILE = (
+    BASE_DIR /
+    "inventory" /
+    "cmdb.json"
+)
 
 # ---------------------------
 # LOAD CMDB
