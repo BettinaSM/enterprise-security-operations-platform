@@ -1,0 +1,28 @@
+[
+  {
+    "hostname": "linux01",
+    "ip": "10.10.10.10",
+    "os": "Linux",
+    "environment": "Production",
+    "owner": "Unix Team",
+    "criticality": "High"
+  },
+
+  {
+    "hostname": "aix01",
+    "ip": "10.10.20.10",
+    "os": "AIX",
+    "environment": "Production",
+    "owner": "Unix Team",
+    "criticality": "Critical"
+  },
+
+  {
+    "hostname": "win01",
+    "ip": "10.10.30.10",
+    "os": "Windows",
+    "environment": "Production",
+    "owner": "Windows Team",
+    "criticality": "High"
+  }
+]
