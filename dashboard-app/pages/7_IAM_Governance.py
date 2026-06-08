@@ -1,11 +1,12 @@
+import streamlit as st
+import pandas as pd
+
+
 from parsers.session_auth import (
     require_auth
 )
 
 require_auth()
-
-import streamlit as st
-import pandas as pd
 
 from parsers.iam_engine import (
     get_local_users,
@@ -13,58 +14,121 @@ from parsers.iam_engine import (
     get_groups
 )
 
+from parsers.ldap_engine import (
+    get_ldap_users
+)
+
+from parsers.ad_engine import (
+    get_ad_users
+)
+
+from parsers.aws_iam_engine import (
+    get_aws_users
+)
+
+from parsers.azure_iam_engine import (
+    get_entra_users
+)
+
+from parsers.gcp_iam_engine import (
+    get_gcp_users
+)
+
+from parsers.k8s_rbac_engine import (
+    get_k8s_roles
+)
+
 st.title(
     "IAM Governance"
 )
 
-# ---------------------------
-# USERS
-# ---------------------------
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
 
-users = get_local_users()
+    "Local",
+    "LDAP",
+    "AD",
+    "Cloud",
+    "Kubernetes"
 
-users_df = pd.DataFrame(
-    users
-)
+])
 
-st.subheader(
-    "Local Users"
-)
+with tab1:
 
-st.dataframe(
-    users_df,
-    use_container_width=True
-)
+    st.subheader(
+        "Local Users"
+    )
 
-# ---------------------------
-# PRIVILEGED
-# ---------------------------
+    users = get_local_users()
 
-privileged = get_privileged_users()
+    st.dataframe(
+        pd.DataFrame(
+            users
+        ),
+        use_container_width=True
+    )
 
-st.subheader(
-    "Privileged Accounts"
-)
+    st.subheader(
+        "Privileged Accounts"
+    )
 
-st.write(
-    privileged
-)
+    privileged = get_privileged_users()
 
-# ---------------------------
-# GROUPS
-# ---------------------------
+    st.write(
+        privileged
+    )
 
-groups = get_groups()
+    st.subheader(
+        "Groups"
+    )
 
-groups_df = pd.DataFrame(
-    groups
-)
+    groups = get_groups()
 
-st.subheader(
-    "Groups"
-)
+    st.dataframe(
+        pd.DataFrame(
+            groups
+        ),
+        use_container_width=True
+    )
 
-st.dataframe(
-    groups_df,
-    use_container_width=True
-)
+with tab2:
+
+    st.dataframe(
+        pd.DataFrame(
+            get_ldap_users()
+        )
+    )
+
+with tab3:
+
+    st.dataframe(
+        pd.DataFrame(
+            get_ad_users()
+        )
+    )
+
+with tab4:
+
+    cloud_users = (
+
+        get_aws_users()
+        +
+        get_entra_users()
+        +
+        get_gcp_users()
+
+    )
+
+    st.dataframe(
+        pd.DataFrame(
+            cloud_users
+        )
+    )
+
+with tab5:
+
+    st.dataframe(
+        pd.DataFrame(
+            get_k8s_roles()
+        )
+    )
+
