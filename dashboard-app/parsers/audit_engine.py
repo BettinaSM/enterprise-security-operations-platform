@@ -68,3 +68,64 @@ def run_full_audit():
             get_k8s_roles()
 
     }
+
+# ---------------------------
+# AUDIT BY USER
+# ---------------------------
+
+def audit_user(username):
+
+    findings = []
+
+    # ---------------------------
+    # LOCAL USERS
+    # ---------------------------
+
+    for user in get_local_users():
+
+        if user.get(
+            "username"
+        ) == username:
+
+            findings.append({
+
+                "source": "Local",
+                "details": user
+
+            })
+
+    # ---------------------------
+    # LDAP
+    # ---------------------------
+
+    for user in get_ldap_users():
+
+        if user.get(
+            "username"
+        ) == username:
+
+            findings.append({
+
+                "source": "LDAP",
+                "details": user
+
+            })
+
+    # ---------------------------
+    # AD
+    # ---------------------------
+
+    for user in get_ad_users():
+
+        if user.get(
+            "username"
+        ) == username:
+
+            findings.append({
+
+                "source": "AD",
+                "details": user
+
+            })
+
+    return findings
