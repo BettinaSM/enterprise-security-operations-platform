@@ -1,5 +1,15 @@
-def get_cluster_roles():
+def get_k8s_roles():
 
-    return []
+    return [
 
-kubernetes python sdk
+        {
+            "role": "cluster-admin",
+            "namespace": "default"
+        },
+
+        {
+            "role": "view",
+            "namespace": "dev"
+        }
+
+    ]
