@@ -1,6 +1,7 @@
 import os
 import pwd
 import grp
+import subprocess
 
 # ---------------------------
 # USERS
