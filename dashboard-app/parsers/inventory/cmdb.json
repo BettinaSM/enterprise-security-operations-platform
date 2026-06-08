@@ -1,0 +1,17 @@
+[
+  {
+    "hostname": "linux01",
+    "application": "SAP",
+    "database": "HANA",
+    "owner": "ERP Team",
+    "criticality": "Critical"
+  },
+
+  {
+    "hostname": "aix01",
+    "application": "Oracle ERP",
+    "database": "Oracle",
+    "owner": "ERP Team",
+    "criticality": "Critical"
+  }
+]
