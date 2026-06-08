@@ -1,29 +1,42 @@
+from datetime import datetime
+from collections import Counter
+
 from parsers.iam_engine import (
     get_local_users,
     get_groups,
-    get_sudo_users
+    get_sudo_users,
+    get_service_accounts
 )
 
 # ---------------------------
-# PRIVILEGED ACCOUNTS
+# DORMANT ACCOUNTS
 # ---------------------------
 
-def find_privileged_accounts():
+def find_dormant_accounts(users):
 
-    privileged = []
+    findings = []
 
-    sudo_entries = get_sudo_users()
+    for user in users:
 
-    for entry in sudo_entries:
+        if user.get(
+            "last_login_days",
+            0
+        ) > 90:
 
-        privileged.append({
+            findings.append({
 
-            "type": "sudo",
-            "account": entry
+                "username":
+                    user["username"],
 
-        })
+                "issue":
+                    "Dormant Account",
 
-    return privileged
+                "severity":
+                    "High"
+
+            })
+
+    return findings
 
 # ---------------------------
 # SERVICE ACCOUNTS
@@ -31,77 +44,136 @@ def find_privileged_accounts():
 
 def find_service_accounts():
 
-    accounts = []
+    findings = []
 
-    for user in get_local_users():
+    for account in get_service_accounts():
 
-        username = user.get(
-            "username",
-            ""
-        )
+        findings.append({
 
-        if (
+            "username":
+                account,
 
-            username.startswith("svc")
+            "issue":
+                "Service Account",
 
-            or username.startswith("sa")
+            "severity":
+                "Medium"
 
-            or username.startswith("oracle")
+        })
 
-            or username.startswith("db2")
-
-            or username.startswith("ansible")
-
-        ):
-
-            accounts.append(user)
-
-    return accounts
+    return findings
 
 # ---------------------------
-# DORMANT USERS
+# PRIVILEGED ACCOUNTS
 # ---------------------------
 
-def find_dormant_users():
+def find_privileged_accounts():
 
-    dormant = []
+    findings = []
 
-    for user in get_local_users():
+    sudo_entries = get_sudo_users()
 
-        shell = user.get(
-            "shell",
-            ""
-        )
+    for entry in sudo_entries:
 
-        if (
+        findings.append({
 
-            shell == "/sbin/nologin"
+            "entry":
+                entry,
 
-            or shell == "/usr/sbin/nologin"
+            "issue":
+                "Privileged Access",
 
-            or shell == "/bin/false"
+            "severity":
+                "Critical"
 
-        ):
+        })
 
-            dormant.append(user)
-
-    return dormant
+    return findings
 
 # ---------------------------
-# GOVERNANCE SUMMARY
+# DUPLICATE ACCOUNTS
 # ---------------------------
 
-def identity_governance_summary():
+def find_duplicate_accounts(users):
+
+    usernames = [
+
+        user["username"]
+
+        for user in users
+
+    ]
+
+    duplicates = [
+
+        name
+
+        for name, count
+
+        in Counter(
+            usernames
+        ).items()
+
+        if count > 1
+
+    ]
+
+    return duplicates
+
+# ---------------------------
+# EMPTY GROUPS
+# ---------------------------
+
+def find_empty_groups():
+
+    findings = []
+
+    for group in get_groups():
+
+        if len(
+
+            group.get(
+                "members",
+                []
+            )
+
+        ) == 0:
+
+            findings.append({
+
+                "group":
+                    group["group"],
+
+                "issue":
+                    "Empty Group"
+
+            })
+
+    return findings
+
+# ---------------------------
+# FULL GOVERNANCE AUDIT
+# ---------------------------
+
+def run_identity_governance():
+
+    users = get_local_users()
 
     return {
 
-        "privileged_accounts":
-            find_privileged_accounts(),
+        "dormant_accounts":
+            find_dormant_accounts(users),
 
         "service_accounts":
             find_service_accounts(),
 
-        "dormant_accounts":
-            find_dormant_users()
+        "privileged_accounts":
+            find_privileged_users(),
+
+        "duplicate_accounts":
+            find_duplicate_accounts(users),
+
+        "empty_groups":
+            find_empty_groups()
 
     }
