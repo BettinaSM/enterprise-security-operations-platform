@@ -166,3 +166,12 @@ def audit_service_accounts():
 
     return get_service_accounts()
 
+# ---------------------------
+# REPORT PDF
+# ---------------------------
+
+from parsers.audit_engine import (
+    run_full_audit
+)
+
+audit_results = run_full_audit()
