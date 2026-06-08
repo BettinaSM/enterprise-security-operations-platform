@@ -4,6 +4,18 @@ from parsers.session_auth import (
     require_auth
 )
 
+from parsers.audit_engine import (
+    run_full_audit
+)
+
+from parsers.risk_engine import (
+    calculate_risk_score
+)
+
+from parsers.compliance_score_engine import (
+    calculate_compliance_score
+)
+
 require_auth()
 
 role = st.sidebar.selectbox(
@@ -67,4 +79,17 @@ col2.metric(
 col3.metric(
     "Detection Coverage",
     "91%"
+)
+
+audit = run_full_audit()
+
+compliance = calculate_compliance_score(
+    audit
+)
+
+st.metric(
+
+    "Compliance Score",
+
+    f"{compliance['score']}%"
 )
