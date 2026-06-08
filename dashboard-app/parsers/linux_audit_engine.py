@@ -18,7 +18,8 @@ def get_linux_users():
             "username": user.pw_name,
             "uid": user.pw_uid,
             "gid": user.pw_gid,
-            "shell": user.pw_shell
+            "shell": user.pw_shell,
+            "source": "Linux"
 
         })
 
@@ -50,12 +51,23 @@ def get_linux_groups():
 
 def get_linux_sudo():
 
-    sudo_entries = []
+    entries = []
 
     sudo_files = [
 
         "/etc/sudoers"
+
     ]
+
+    sudoers_d = "/etc/sudoers.d"
+
+    if os.path.exists(sudoers_d):
+
+        for file in os.listdir(sudoers_d):
+
+            sudo_files.append(
+                f"{sudoers_d}/{file}"
+            )
 
     for path in sudo_files:
 
@@ -71,15 +83,71 @@ def get_linux_sudo():
 
                     line = line.strip()
 
-                    if line and not line.startswith("#"):
+                    if (
 
-                        sudo_entries.append(line)
+                        line
+                        and not line.startswith("#")
+
+                    ):
+
+                        entries.append(line)
 
         except:
 
             pass
 
-    return sudo_entries
+    return entries
+
+# ---------------------------
+# LAST LOGINS
+# ---------------------------
+
+def get_last_logins():
+
+    try:
+
+        result = subprocess.run(
+
+            ["last", "-n", "20"],
+
+            capture_output=True,
+            text=True
+
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        return []
+
+# ---------------------------
+# SERVICES
+# ---------------------------
+
+def get_running_services():
+
+    try:
+
+        result = subprocess.run(
+
+            [
+                "systemctl",
+                "list-units",
+                "--type=service",
+                "--state=running"
+            ],
+
+            capture_output=True,
+            text=True
+
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        return []
 
 # ---------------------------
 # AUDIT
@@ -91,6 +159,8 @@ def run_linux_audit():
 
         "users": get_linux_users(),
         "groups": get_linux_groups(),
-        "sudo": get_linux_sudo()
+        "sudo": get_linux_sudo(),
+        "last_logins": get_last_logins(),
+        "services": get_running_services()
 
     }
