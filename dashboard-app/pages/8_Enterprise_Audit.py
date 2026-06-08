@@ -13,6 +13,10 @@ from parsers.audit_engine import (
     audit_service_accounts
 )
 
+from parsers.identity_governance import (
+    identity_governance_summary
+)
+
 require_auth()
 
 st.title(
@@ -26,10 +30,16 @@ audit_type = st.selectbox(
     [
 
         "Full Audit",
+        
         "User Audit",
+        
         "Group Audit",
+        
         "Sudo Audit",
-        "Service Accounts"
+        
+        "Service Accounts",
+
+        "Identity Governance"
 
     ]
 )
@@ -48,10 +58,16 @@ if audit_type == "Full Audit":
             section.replace("_", " ").title()
         )
 
-        st.dataframe(
-            pd.DataFrame(data)
-        )
+        try:
 
+            st.dataframe(
+                pd.DataFrame(data)
+            )
+
+        except:
+
+            st.write(data)
+            
 # ---------------------------
 # USER AUDIT
 # ---------------------------
@@ -63,7 +79,8 @@ elif audit_type == "User Audit":
     )
 
     if st.button(
-        "Run User Audit"
+        "Run User Audit",
+        key="audit_user_btn"
     ):
 
         st.dataframe(
@@ -79,11 +96,13 @@ elif audit_type == "User Audit":
 elif audit_type == "Group Audit":
 
     group_name = st.text_input(
-        "Group"
+        "Group",
+        key="audit_group"
     )
 
     if st.button(
-        "Run Group Audit"
+        "Run Group Audit",
+        key="audit_group_btn"
     ):
 
         st.dataframe(
@@ -116,3 +135,24 @@ elif audit_type == "Service Accounts":
             audit_service_accounts()
         )
     )
+
+# ---------------------------
+# GOVERNANCE
+# ---------------------------
+
+elif audit_type == "Identity Governance":
+
+    results = identity_governance_summary()
+
+    for section, data in results.items():
+
+        st.subheader(
+            section.replace(
+                "_",
+                " "
+            ).title()
+        )
+
+        st.dataframe(
+            pd.DataFrame(data)
+        )
