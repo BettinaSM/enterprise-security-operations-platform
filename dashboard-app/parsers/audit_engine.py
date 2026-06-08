@@ -29,6 +29,18 @@ from parsers.k8s_rbac_engine import (
     get_k8s_roles
 )
 
+from parsers.linux_audit_engine import (
+    run_linux_audit
+)
+
+from parsers.aix_audit_engine import (
+    run_aix_audit
+)
+
+from parsers.windows_audit_engine import (
+    run_windows_audit
+)
+
 # ---------------------------
 # COMPLETE AUDIT
 # ---------------------------
@@ -36,6 +48,15 @@ from parsers.k8s_rbac_engine import (
 def run_full_audit():
 
     return {
+
+        "linux":
+            run_linux_audit(),
+
+        "aix":
+            run_aix_audit(),
+
+        "windows":
+            run_windows_audit(),
 
         "local_users":
             get_local_users(),
