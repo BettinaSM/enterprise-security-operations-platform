@@ -123,3 +123,36 @@ def get_sudo_users():
             pass
 
     return sudo_users
+
+# ---------------------------
+# Melhoria - teste
+# ---------------------------
+
+def get_service_accounts():
+
+    accounts = []
+
+    users = get_local_users()
+
+    for user in users:
+
+        username = user.get(
+            "username",
+            ""
+        )
+
+        if (
+
+            username.startswith("svc")
+            or username.startswith("oracle")
+            or username.startswith("db2")
+
+        ):
+
+            accounts.append(
+
+                username
+
+            )
+
+    return accounts
