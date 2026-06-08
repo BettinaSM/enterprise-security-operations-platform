@@ -18,7 +18,8 @@ def get_aix_users():
             "username": user.pw_name,
             "uid": user.pw_uid,
             "gid": user.pw_gid,
-            "shell": user.pw_shell
+            "shell": user.pw_shell,
+            "source": "AIX"
 
         })
 
@@ -45,20 +46,59 @@ def get_aix_groups():
     return groups
 
 # ---------------------------
-# RBAC
+# ROLES
 # ---------------------------
 
 def get_aix_roles():
 
-    roles = []
+    try:
 
-    role_file = "/etc/security/roles"
+        result = subprocess.run(
 
-    if os.path.exists(role_file):
+            ["lsrole"],
 
-        roles.append(role_file)
+            capture_output=True,
+            text=True
 
-    return roles
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        role_file = "/etc/security/roles"
+
+        if os.path.exists(role_file):
+
+            return [role_file]
+
+        return []
+
+# ---------------------------
+# SUDO
+# ---------------------------
+
+def get_aix_sudo():
+
+    sudo_file = "/etc/sudoers"
+
+    if not os.path.exists(sudo_file):
+
+        return []
+
+    entries = []
+
+    with open(sudo_file) as file:
+
+        for line in file:
+
+            line = line.strip()
+
+            if line and not line.startswith("#"):
+
+                entries.append(line)
+
+    return entries
 
 # ---------------------------
 # AUDIT
