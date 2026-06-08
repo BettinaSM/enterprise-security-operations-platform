@@ -29,6 +29,9 @@ def calculate_risk_score(
     suspicious_user=False,
 
     cloud_event=False
+
+    identity_risk=False
+
 ):
 
     score = 0
@@ -96,7 +99,15 @@ def calculate_risk_score(
     if cloud_event:
 
         score += 20
+        
+    # ---------------------------
+    # IAM
+    # ---------------------------
 
+    if identity_risk:
+
+        score += 30
+    
     # ---------------------------
     # LIMIT
     # ---------------------------
@@ -127,6 +138,8 @@ def calculate_risk_score(
 
     return {
 
-        "score": score,
-        "level": level
+        "score":
+            score,
+        "level":
+            level
     }
