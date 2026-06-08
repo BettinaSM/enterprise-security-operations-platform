@@ -129,3 +129,40 @@ def audit_user(username):
             })
 
     return findings
+
+# ---------------------------
+# AUDIT BY GROUP
+# ---------------------------
+
+def audit_group(group_name):
+
+    results = []
+
+    for group in get_groups():
+
+        if group.get(
+            "group"
+        ) == group_name:
+
+            results.append(
+                group
+            )
+
+    return results
+
+# ---------------------------
+# AUDIT OF SUDO
+# ---------------------------
+
+def audit_sudo():
+
+    return get_sudo_users()
+
+# ---------------------------
+# AUDIT OF SERVICE ACCOUNTS
+# ---------------------------
+
+def audit_service_accounts():
+
+    return get_service_accounts()
+
