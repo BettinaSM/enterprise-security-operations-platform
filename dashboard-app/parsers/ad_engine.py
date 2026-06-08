@@ -4,7 +4,12 @@ def get_ad_users():
 
         {
             "username": "administrator",
-            "source": "AD"
+            "source": "Active Directory"
+        },
+
+        {
+            "username": "svc_backup",
+            "source": "Active Directory"
         }
 
     ]
