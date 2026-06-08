@@ -11,12 +11,57 @@ from configs.settings import (
 
 def get_windows_users():
 
-    return [
+    try:
 
-        {
-            "username": "Administrator"
-        }
-    ]
+        result = subprocess.run(
+
+            [
+
+                "powershell",
+                "-Command",
+                "Get-LocalUser | Select Name"
+
+            ],
+
+            capture_output=True,
+            text=True
+
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        return []
+
+# ---------------------------
+# LOCAL ADMINS
+# ---------------------------
+
+def get_local_admins():
+
+    try:
+
+        result = subprocess.run(
+
+            [
+
+                "powershell",
+                "-Command",
+                "Get-LocalGroupMember Administrators"
+
+            ],
+
+            capture_output=True,
+            text=True
+
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        return []
 
 # ---------------------------
 # EVENTS
@@ -47,6 +92,7 @@ def run_windows_audit():
     return {
 
         "users": get_windows_users(),
+        "local_admins": get_local_admins(),
         "events": get_windows_events()
 
     }
