@@ -107,3 +107,29 @@ def evaluate_baseline(data):
         })
 
     return findings
+
+    # ---------------------------
+    # Compliance Score
+    # ---------------------------
+    
+    def calculate_compliance_score(findings):
+
+        total_controls = 20
+
+        failed_controls = len(findings)
+
+        passed = (
+
+            total_controls -
+            failed_controls
+
+        )
+
+        score = int(
+
+            (passed / total_controls)
+            * 100
+
+        )
+
+        return score
