@@ -1,0 +1,22 @@
+[
+    {
+        "hostname": "vpn01",
+        "ip": "200.100.10.10",
+        "service": "VPN",
+        "internet_facing": true
+    },
+
+    {
+        "hostname": "mail01",
+        "ip": "200.100.10.20",
+        "service": "SMTP",
+        "internet_facing": true
+    },
+
+    {
+        "hostname": "web01",
+        "ip": "200.100.10.30",
+        "service": "HTTPS",
+        "internet_facing": true
+    }
+]
