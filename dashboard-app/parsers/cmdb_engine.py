@@ -15,36 +15,78 @@ CMDB_FILE = (
 
 def load_cmdb():
 
-    try:
-
-        with open(
-            "inventory/cmdb.json",
-            "r",
-            encoding="utf-8"
-        ) as file:
-
-            return json.load(file)
-
-    except:
+    if not CMDB_FILE.exists():
 
         return []
 
-# ---------------------------
-# SEARCH
-# ---------------------------
+    with open(
+        CMDB_FILE,
+        "r",
+        encoding="utf-8"
+    ) as file:
 
-def get_asset_relationships(hostname):
+        return json.load(file)
 
-    cmdb = load_cmdb()
+# --------------------------------
+# GET ASSET
+# --------------------------------
 
-    return [
+def get_asset(hostname):
 
-        item
+    assets = load_cmdb()
 
-        for item in cmdb
+    for asset in assets:
 
-        if item.get(
+        if asset.get(
             "hostname"
-        ) == hostname
+        ) == hostname:
 
-    ]
+            return asset
+
+    return {}
+
+# --------------------------------
+# FILTER
+# --------------------------------
+
+def filter_assets(
+    environment=None,
+    operating_system=None,
+    owner=None
+):
+
+    assets = load_cmdb()
+
+    results = []
+
+    for asset in assets:
+
+        if environment:
+
+            if asset.get(
+                "environment"
+            ) != environment:
+
+                continue
+
+        if operating_system:
+
+            if asset.get(
+                "os"
+            ) != operating_system:
+
+                continue
+
+        if owner:
+
+            if asset.get(
+                "owner"
+            ) != owner:
+
+                continue
+
+        results.append(
+            asset
+        )
+
+    return results
