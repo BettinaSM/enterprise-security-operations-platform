@@ -1,24 +1,37 @@
-import boto3
+from integrations.aws_connector import (
+    aws_session
+)
 
 def get_aws_users():
 
-    try:
-        iam = boto3.client("iam")
-        
-        response = iam.list_users()
-        
-        return response["Users"]
-        
-    except Exception:
+    session = aws_session()
 
-        return [
+    iam = session.client("iam")
 
-            {
-                "UserName": "aws-admin-simulated"
-            },
+    users = []
 
-            {
-                "UserName": "aws-readonly-simulated"
-            }
+    paginator = iam.get_paginator(
+        "list_users"
+    )
 
-        ]
+    for page in paginator.paginate():
+
+        for user in page["Users"]:
+
+            users.append({
+
+                "username":
+                    user["UserName"],
+
+                "arn":
+                    user["Arn"],
+
+                "created":
+                    str(user["CreateDate"]),
+
+                "source":
+                    "AWS IAM"
+
+            })
+
+    return users
