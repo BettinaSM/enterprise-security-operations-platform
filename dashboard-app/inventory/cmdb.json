@@ -1,17 +1,29 @@
 [
-  {
-    "hostname": "linux01",
-    "application": "SAP",
-    "database": "HANA",
-    "owner": "ERP Team",
-    "criticality": "Critical"
-  },
+[
+    {
+        "hostname": "linux01",
+        "ip": "192.168.1.10",
+        "environment": "Production",
+        "os": "Linux",
+        "owner": "Infrastructure",
+        "criticality": "High"
+    },
 
-  {
-    "hostname": "aix01",
-    "application": "Oracle ERP",
-    "database": "Oracle",
-    "owner": "ERP Team",
-    "criticality": "Critical"
-  }
+    {
+        "hostname": "aix01",
+        "ip": "192.168.1.20",
+        "environment": "Production",
+        "os": "AIX",
+        "owner": "Unix Team",
+        "criticality": "Critical"
+    },
+
+    {
+        "hostname": "win01",
+        "ip": "192.168.1.30",
+        "environment": "Production",
+        "os": "Windows",
+        "owner": "Windows Team",
+        "criticality": "High"
+    }
 ]
