@@ -87,6 +87,62 @@ def count_assets():
 
     return len(load_cmdb())
 
+# --------------------------------
+# GET CRITICAL ASSETS
+# --------------------------------
+
+def get_critical_assets():
+
+    return [
+
+        asset
+
+        for asset in load_cmdb()
+
+        if asset.get(
+            "criticality"
+        ) == "Critical"
+
+    ]
+
+# --------------------------------
+# GET INTERNET FACING
+# --------------------------------
+
+def get_internet_facing_assets():
+
+    return [
+
+        asset
+
+        for asset in load_cmdb()
+
+        if asset.get(
+            "internet_facing",
+            False
+        )
+
+    ]
+
+# --------------------------------
+# GET BY OWNER
+# --------------------------------
+
+def get_asset_owners():
+
+    owners = set()
+
+    for asset in load_cmdb():
+
+        owner = asset.get(
+            "owner"
+        )
+
+        if owner:
+
+            owners.add(owner)
+
+    return list(owners)
 
 # --------------------------------
 # FILTER
