@@ -15,35 +15,78 @@ CMDB_FILE = (
 
 def load_cmdb():
 
-    if not CMDB_FILE.exists():
+    try:
+
+        with open(
+            CMDB_FILE,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            return json.load(file)
+
+    except:
 
         return []
 
-    with open(
-        CMDB_FILE,
-        "r",
-        encoding="utf-8"
-    ) as file:
-
-        return json.load(file)
-
 # --------------------------------
-# GET ASSET
+# SEARCH ASSET
 # --------------------------------
 
-def get_asset(hostname):
+def search_asset(keyword):
+
+    keyword = keyword.lower()
 
     assets = load_cmdb()
 
+    results = []
+
     for asset in assets:
 
-        if asset.get(
-            "hostname"
-        ) == hostname:
+        values = str(asset).lower()
+
+        if keyword in values:
+
+            results.append(asset)
+
+    return results
+
+# --------------------------------
+# GET ASSET BY HOSTNAME
+# --------------------------------
+
+def get_asset_by_hostname(hostname):
+
+    for asset in load_cmdb():
+
+        if asset["hostname"] == hostname:
 
             return asset
 
-    return {}
+    return None
+
+# --------------------------------
+# GET ASSET BY CRITICALITY
+# --------------------------------
+
+def get_assets_by_criticality(level):
+
+    return [
+
+        asset
+
+        for asset in load_cmdb()
+
+        if asset.get(
+            "criticality"
+        ) == level
+    ]
+
+
+def count_assets():
+
+    return len(load_cmdb())
+
 
 # --------------------------------
 # FILTER
