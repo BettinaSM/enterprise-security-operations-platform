@@ -1,0 +1,370 @@
+.
+├── README.md
+├── alerts
+│   ├── cloud-alerts.json
+│   └── generated-alerts.json
+├── arvore.txt
+├── automation
+│   ├── alert_parser.py
+│   ├── automation-concepts.md
+│   ├── security-pipeline.yml
+│   └── severity_classifier.py
+├── cases
+│   ├── incident-001.md
+│   └── incident-002.md
+├── codigo_otimizado.txt
+├── correlation
+│   └── alert-correlation.md
+├── correlation-engine
+│   ├── correlation.py
+│   └── rules.json
+├── dashboard
+│   ├── architecture-diagram.md
+│   ├── security-overview.md
+│   └── soc-dashboard.json
+├── dashboard-app
+│   ├── Dockerfile
+│   ├── __init__.py
+│   ├── agents
+│   │   ├── aix
+│   │   │   ├── errpt.log
+│   │   │   └── sudo.log
+│   │   ├── aws
+│   │   │   └── cloudtrail.json
+│   │   ├── azure
+│   │   │   └── entra-signins.json
+│   │   ├── gcp
+│   │   │   └── audit-logs.json
+│   │   ├── ibm-cloud
+│   │   │   └── activity-tracker.json
+│   │   ├── kubernetes
+│   │   │   └── kube-audit.json
+│   │   ├── linux
+│   │   │   └── auth.log
+│   │   ├── oracle-cloud
+│   │   │   └── oci-audit.json
+│   │   └── windows
+│   │       └── security-events.json
+│   ├── ansible
+│   │   ├── __pycache__
+│   │   │   └── ansible_runner.cpython-311.pyc
+│   │   ├── ansible_runner.py
+│   │   ├── inventory
+│   │   │   ├── inventory.ini
+│   │   │   └── temporary
+│   │   │       └── temporary_inventory.ini
+│   │   ├── playbooks
+│   │   │   ├── ad_audit.yml
+│   │   │   ├── baseline_collection.yml
+│   │   │   ├── block_ip.yml
+│   │   │   ├── collect_logs.yml
+│   │   │   ├── group_audit.yml
+│   │   │   ├── ldap_audit.yml
+│   │   │   ├── linux_hardening.yml
+│   │   │   ├── restart_service.yml
+│   │   │   ├── sudoers_audit.yml
+│   │   │   └── user_audit.yml
+│   │   ├── reports
+│   │   │   └── ansible-output
+│   │   └── temporary_inventory.py
+│   ├── api
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   └── main.cpython-311.pyc
+│   │   ├── ingestion.py
+│   │   └── main.py
+│   ├── app.py
+│   ├── collectors
+│   │   ├── __pycache__
+│   │   │   ├── aix_collector.cpython-311.pyc
+│   │   │   ├── aix_real_collector.cpython-311.pyc
+│   │   │   ├── cloud_collector.cpython-311.pyc
+│   │   │   ├── linux_collector.cpython-311.pyc
+│   │   │   ├── linux_real_collector.cpython-311.pyc
+│   │   │   └── windows_collector.cpython-311.pyc
+│   │   ├── aix_collector.py
+│   │   ├── aix_real_collector.py
+│   │   ├── cloud_collector.py
+│   │   ├── linux_collector.py
+│   │   ├── linux_real_collector.py
+│   │   ├── syslog_collector.py
+│   │   └── windows_collector.py
+│   ├── configs
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── settings.cpython-311.pyc
+│   │   │   └── settings.cpython-312.pyc
+│   │   ├── falco-config.yml
+│   │   ├── settings.py
+│   │   └── siem-config.yml
+│   ├── database
+│   │   └── security.db
+│   ├── detections
+│   │   ├── detection-rules.json
+│   │   ├── falco-rules.yaml
+│   │   ├── rules
+│   │   │   ├── linux_bruteforce.yml
+│   │   │   └── privileged_access.yml
+│   │   ├── sigma
+│   │   │   └── linux_bruteforce.yml
+│   │   └── sigma-rules.yml
+│   ├── inventory
+│   │   ├── assets.json
+│   │   └── cmdb.json
+│   ├── logs
+│   │   ├── auth.log
+│   │   ├── falco-events.log
+│   │   └── kubernetes-audit.log
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── detection.py
+│   │   ├── event.py
+│   │   ├── incident.py
+│   │   └── threat.py
+│   ├── pages
+│   │   ├── 10_SOAR_Automation.py
+│   │   ├── 11_Identity_Governance.py
+│   │   ├── 12_Executive_Reports.py
+│   │   ├── 13_Baseline_Compliance.py
+│   │   ├── 14_PAM_Governance.py
+│   │   ├── 15_Identity_Lifecycle.py
+│   │   ├── 16_Attack_Path_Analysis.py
+│   │   ├── 17_Access_Certification.py
+│   │   ├── 18_Identity_Analytics.py
+│   │   ├── 19_Identity_Correlation.py
+│   │   ├── 1_SOC_Operations.py
+│   │   ├── 2_Detection_Engineering.py
+│   │   ├── 3_Threat_Intelligence.py
+│   │   ├── 4_Threat_Hunting.py
+│   │   ├── 5_Live_Monitoring.py
+│   │   ├── 6_Cloud_Security.py
+│   │   ├── 7_IAM_Governance.py
+│   │   ├── 8_Enterprise_Audit.py
+│   │   ├── 9_Compliance_Audit.py
+│   │   └── __init__.py
+│   ├── parsers
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── analytics_engine.cpython-311.pyc
+│   │   │   ├── auth_engine.cpython-311.pyc
+│   │   │   ├── cloud_parser.cpython-311.pyc
+│   │   │   ├── cve_mapper.cpython-311.pyc
+│   │   │   ├── database_engine.cpython-311.pyc
+│   │   │   ├── detection_engine.cpython-311.pyc
+│   │   │   ├── jwt_engine.cpython-311.pyc
+│   │   │   ├── log_parser.cpython-311.pyc
+│   │   │   ├── mitre_mapper.cpython-311.pyc
+│   │   │   ├── realtime_engine.cpython-311.pyc
+│   │   │   ├── session_auth.cpython-311.pyc
+│   │   │   ├── threat_feed.cpython-311.pyc
+│   │   │   ├── threat_intelligence.cpython-311.pyc
+│   │   │   └── yaml_detection_engine.cpython-311.pyc
+│   │   ├── access_certification_engine.py
+│   │   ├── ad_engine.py
+│   │   ├── aix_audit_engine.py
+│   │   ├── analytics_engine.py
+│   │   ├── asset_inventory.py
+│   │   ├── attack_chain.py
+│   │   ├── attack_path_engine.py
+│   │   ├── audit_engine.py
+│   │   ├── auth_engine.py
+│   │   ├── auth_parser.py
+│   │   ├── aws_iam_engine.py
+│   │   ├── azure_iam_engine.py
+│   │   ├── baseline_compare.py
+│   │   ├── baseline_engine.py
+│   │   ├── cloud_identity_engine.py
+│   │   ├── cloud_parser.py
+│   │   ├── cmdb_engine.py
+│   │   ├── compliance_baseline_engine.py
+│   │   ├── compliance_engine.py
+│   │   ├── compliance_score_engine.py
+│   │   ├── correlation_engine.py
+│   │   ├── cve_mapper.py
+│   │   ├── database_engine.py
+│   │   ├── detection_engine.py
+│   │   ├── entra_engine.py
+│   │   ├── falco_parser.py
+│   │   ├── gcp_iam_engine.py
+│   │   ├── iam_engine.py
+│   │   ├── identity_analytics_engine.py
+│   │   ├── identity_correlation.py
+│   │   ├── identity_governance.py
+│   │   ├── identity_governance_engine.py
+│   │   ├── identity_lifecycle_engine.py
+│   │   ├── identity_review_engine.py
+│   │   ├── identity_risk_engine.py
+│   │   ├── incident_manager.py
+│   │   ├── ioc_auto_ingest.py
+│   │   ├── ioc_matcher.py
+│   │   ├── jwt_engine.py
+│   │   ├── k8s_rbac_engine.py
+│   │   ├── lateral_movement.py
+│   │   ├── ldap_engine.py
+│   │   ├── linux_audit_engine.py
+│   │   ├── live_metrics.py
+│   │   ├── log_parser.py
+│   │   ├── mitre_heatmap.py
+│   │   ├── mitre_mapper.py
+│   │   ├── normalization_engine.py
+│   │   ├── pam_audit_engine.py
+│   │   ├── pam_governance_engine.py
+│   │   ├── privilege_detection.py
+│   │   ├── privilege_graph.py
+│   │   ├── rbac_engine.py
+│   │   ├── realtime_engine.py
+│   │   ├── reporting_engine.py
+│   │   ├── risk_engine.py
+│   │   ├── rule_engine.py
+│   │   ├── session_auth.py
+│   │   ├── threat_feed.py
+│   │   ├── threat_intelligence.py
+│   │   ├── threat_scoring.py
+│   │   ├── timeline_engine.py
+│   │   ├── ueba_engine.py
+│   │   ├── windows_audit_engine.py
+│   │   └── yaml_detection_engine.py
+│   ├── reporting
+│   │   ├── __pycache__
+│   │   │   └── pdf_generator.cpython-311.pyc
+│   │   ├── audit_pdf.py
+│   │   └── pdf_generator.py
+│   ├── reports
+│   │   ├── executive_security_report.pdf
+│   │   ├── security_audit_20260528_002613.pdf
+│   │   ├── security_audit_20260528_180533.pdf
+│   │   ├── security_audit_20260528_181431.pdf
+│   │   ├── security_audit_20260607_183836.pdf
+│   │   ├── security_audit_20260607_184436.pdf
+│   │   ├── security_audit_20260607_184716.pdf
+│   │   ├── security_audit_20260607_185021.pdf
+│   │   └── soc_report_20260527_233536.pdf
+│   ├── repositories
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   └── incidents_repository.cpython-311.pyc
+│   │   ├── detections_repository.py
+│   │   ├── events_repository.py
+│   │   ├── hunting_repository.py
+│   │   └── incidents_repository.py
+│   ├── requirements.txt
+│   ├── rules
+│   │   └── detection_rules.json
+│   ├── sections
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── analytics.cpython-311.pyc
+│   │   │   ├── automation.cpython-311.pyc
+│   │   │   ├── cloud_security.cpython-311.pyc
+│   │   │   ├── compliance.cpython-311.pyc
+│   │   │   ├── dashboard.cpython-311.pyc
+│   │   │   ├── detections.cpython-311.pyc
+│   │   │   ├── enterprise_audit.cpython-311.pyc
+│   │   │   ├── executive.cpython-311.pyc
+│   │   │   ├── hunting.cpython-311.pyc
+│   │   │   ├── incidents.cpython-311.pyc
+│   │   │   ├── realtime.cpython-311.pyc
+│   │   │   ├── soar.cpython-311.pyc
+│   │   │   └── threat_intelligence.cpython-311.pyc
+│   │   ├── analytics.py
+│   │   ├── automation.py
+│   │   ├── cloud_security.py
+│   │   ├── compliance.py
+│   │   ├── dashboard.py
+│   │   ├── detections.py
+│   │   ├── enterprise_audit.py
+│   │   ├── executive.py
+│   │   ├── hunting.py
+│   │   ├── incidents.py
+│   │   ├── kpis.py
+│   │   ├── live_syslog.py
+│   │   ├── mitre_heatmap.py
+│   │   ├── realtime.py
+│   │   ├── soar.py
+│   │   └── threat_intelligence.py
+│   ├── security
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── auth.cpython-311.pyc
+│   │   │   ├── jwt_handler.cpython-311.pyc
+│   │   │   └── session.cpython-311.pyc
+│   │   ├── auth.py
+│   │   ├── guards.py
+│   │   ├── jwt_handler.py
+│   │   ├── permissions.py
+│   │   ├── rbac.py
+│   │   └── session.py
+│   ├── services
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── ansible_service.cpython-311.pyc
+│   │   │   └── incident_service.cpython-311.pyc
+│   │   ├── analytics_service.py
+│   │   ├── ansible_service.py
+│   │   ├── detection_service.py
+│   │   ├── hunting_service.py
+│   │   ├── incident_service.py
+│   │   ├── realtime_service.py
+│   │   ├── reporting_service.py
+│   │   └── threat_intel_service.py
+│   ├── simulations
+│   │   ├── assets.json
+│   │   ├── attack-simulation.json
+│   │   ├── k8s-runtime.json
+│   │   ├── realtime-events.json
+│   │   └── security-events.json
+│   ├── soar
+│   │   ├── __pycache__
+│   │   │   └── response_engine.cpython-311.pyc
+│   │   ├── automation-flow.yml
+│   │   ├── response-workflow.md
+│   │   └── response_engine.py
+│   ├── threat-intelligence
+│   │   ├── enrichment.md
+│   │   ├── enrichment.py
+│   │   ├── indicators.md
+│   │   ├── ioc-feed.json
+│   │   └── threat-feed.json
+│   └── utils
+│       ├── __init__.py
+│       ├── file_loader.py
+│       ├── logger.py
+│       ├── paths.py
+│       └── time_utils.py
+├── dashboards
+│   ├── elastic-queries.md
+│   ├── security-dashboard.md
+│   └── splunk-queries.md
+├── docker-compose.yml
+├── docs
+│   ├── architecture.md
+│   └── security-workflow.md
+├── estrutura_repositorio.txt
+├── evidence
+│   └── incident-artifacts.md
+├── governance
+│   └── policy-as-code.md
+├── incident-response
+│   ├── escalation-flow.md
+│   └── incident-playbook.md
+├── metrics
+│   └── security-metrics.md
+├── mitre
+│   └── attack-mapping.md
+├── reports
+│   ├── executive-report.md
+│   └── technical-report.md
+├── soc-workflows
+│   ├── escalation.md
+│   └── triage.md
+└── timelines
+    └── incident-timeline.md
+
+68 directories, 300 files

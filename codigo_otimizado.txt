@@ -1,0 +1,10336 @@
+=== ARQUIVO: ./dashboards/elastic-queries.md ===
+# Elastic Queries
+
+## Failed Authentication Attempts
+
+```kql
+message: "Failed password"
+```
+
+## Falco Runtime Events
+
+```kql
+event.module: falco
+```
+
+
+=== ARQUIVO: ./dashboards/security-dashboard.md ===
+# Security Dashboard Concepts
+
+## Monitoring Areas
+
+- Runtime alerts
+- Kubernetes events
+- SIEM detections
+- Authentication failures
+- Threat severity trends
+
+## Example Metrics
+
+| Metric | Description |
+|---|---|
+| Critical Alerts | High severity detections |
+| Runtime Events | Container activity alerts |
+| MITRE Coverage | Detection technique visibility |
+| Escalated Incidents | SOC escalations |
+
+
+=== ARQUIVO: ./dashboards/splunk-queries.md ===
+# Splunk Detection Queries
+
+## SSH Failures
+
+```spl
+index=security "Failed password"
+```
+
+## Container Shell Detection
+
+```spl
+index=kubernetes "Shell spawned inside container"
+```
+
+
+=== ARQUIVO: ./incident-response/escalation-flow.md ===
+# Escalation Workflow
+
+## Severity Levels
+
+| Severity | Action |
+|---|---|
+| Low | Monitoring |
+| Medium | Analyst review |
+| High | Security escalation |
+| Critical | Incident response activation |
+
+## Escalation Process
+
+Detection
+    ↓
+SIEM Correlation
+    ↓
+Security Analysis
+    ↓
+Incident Escalation
+    ↓
+Containment & Recovery
+
+
+=== ARQUIVO: ./incident-response/incident-playbook.md ===
+# Incident Response Playbook
+
+## Detection
+
+Security alerts are generated from runtime detections and SIEM correlation.
+
+## Triage
+
+- Validate alert severity
+- Identify affected assets
+- Verify suspicious activity
+
+## Containment
+
+- Restrict affected workload
+- Isolate suspicious container
+- Block malicious activity
+
+## Investigation
+
+- Review logs
+- Analyze MITRE techniques
+- Validate indicators of compromise
+
+## Recovery
+
+- Restore secure environment
+- Validate remediation
+- Monitor post-incident activity
+
+
+=== ARQUIVO: ./metrics/security-metrics.md ===
+# Security Metrics
+
+## Example Metrics
+
+| Metric | Value |
+|---|---|
+| Critical Alerts | 3 |
+| Runtime Events | 12 |
+| Failed Auth Attempts | 21 |
+| Escalated Incidents | 2 |
+
+## Monitoring Goals
+
+- Improve detection visibility
+- Reduce response time
+- Enhance incident prioritization
+
+
+=== ARQUIVO: ./correlation-engine/correlation.py ===
+alerts = [
+    "multiple_failed_passwords",
+    "shell_execution",
+    "privileged_container"
+]
+
+if "shell_execution" in alerts and "privileged_container" in alerts:
+
+    print("[CRITICAL] Potential container compromise detected")
+
+elif "multiple_failed_passwords" in alerts:
+
+    print("[HIGH] Potential brute force detected")
+
+
+=== ARQUIVO: ./correlation-engine/rules.json ===
+[
+  {
+    "rule": "SSH Brute Force",
+    "conditions": [
+      "multiple_failed_passwords"
+    ],
+    "severity": "high"
+  },
+  {
+    "rule": "Container Compromise",
+    "conditions": [
+      "shell_execution",
+      "privileged_container"
+    ],
+    "severity": "critical"
+  }
+]
+
+
+=== ARQUIVO: ./timelines/incident-timeline.md ===
+# Incident Timeline
+
+| Time | Event |
+|---|---|
+| 10:15 | Multiple SSH failures detected |
+| 10:20 | Falco runtime alert triggered |
+| 10:22 | SIEM correlation initiated |
+| 10:25 | Incident escalated |
+| 10:30 | Container isolated |
+
+
+=== ARQUIVO: ./cases/incident-002.md ===
+# Incident Case 002
+
+## Scenario
+
+Multiple failed authentication attempts detected from suspicious IP addresses.
+
+## Detection
+
+- Authentication spikes
+- Correlated brute force indicators
+- SIEM alert escalation
+
+## Response
+
+- IP blocked
+- Access logs reviewed
+- Security monitoring increased
+
+
+=== ARQUIVO: ./cases/incident-001.md ===
+# Incident Case 001
+
+## Scenario
+
+Falco detected interactive shell execution inside Kubernetes container.
+
+## Detection
+
+- Runtime shell activity
+- Suspicious process execution
+- MITRE T1059
+
+## Response
+
+- Container isolated
+- Logs reviewed
+- IOC validation performed
+- Monitoring increased
+
+## Lessons Learned
+
+- Improve container restrictions
+- Enhance runtime monitoring
+
+
+=== ARQUIVO: ./alerts/generated-alerts.json ===
+[
+  {
+    "severity": "critical",
+    "title": "Potential Container Compromise",
+    "source": "Falco",
+    "mitre": "T1611"
+  },
+  {
+    "severity": "high",
+    "title": "SSH Brute Force Attempt",
+    "source": "Linux Auth",
+    "mitre": "T1110"
+  }
+]
+
+
+=== ARQUIVO: ./alerts/cloud-alerts.json ===
+[
+  {
+    "cloud": "AWS",
+    "event": "Failed Console Login",
+    "severity": "High",
+    "mitre": "T1110"
+  },
+  {
+    "cloud": "Azure",
+    "event": "Suspicious Sign-In",
+    "severity": "Medium",
+    "mitre": "T1078"
+  },
+  {
+    "cloud": "GCP",
+    "event": "Privileged Compute Creation",
+    "severity": "Critical",
+    "mitre": "T1611"
+  }
+]
+
+
+=== ARQUIVO: ./dashboard/architecture-diagram.md ===
+# Enterprise Security Architecture
+
+Linux / AIX / Windows
+        ↓
+Cloud Providers (AWS/Azure/GCP/OCI/IBM)
+        ↓
+Kubernetes Runtime
+        ↓
+Log Collection
+        ↓
+SIEM Correlation Engine
+        ↓
+Threat Intelligence Enrichment
+        ↓
+MITRE ATT&CK Classification
+        ↓
+SOC Dashboard
+        ↓
+Incident Response
+        ↓
+SOAR Automation
+
+
+=== ARQUIVO: ./dashboard/security-overview.md ===
+# Enterprise Security Dashboard
+
+## Environment Coverage
+
+| Environment | Monitoring |
+|---|---|
+| Linux | Enabled |
+| AIX | Enabled |
+| Windows | Enabled |
+| AWS | Enabled |
+| Azure | Enabled |
+| GCP | Enabled |
+| OCI | Enabled |
+| IBM Cloud | Enabled |
+| Kubernetes | Enabled |
+
+## Security Metrics
+
+| Metric | Value |
+|---|---|
+| Critical Alerts | 4 |
+| Failed Auth Attempts | 23 |
+| Runtime Threats | 7 |
+| MITRE Techniques | 5 |
+| Correlated Incidents | 2 |
+
+
+=== ARQUIVO: ./dashboard/soc-dashboard.json ===
+{
+  "critical_alerts": 4,
+  "high_alerts": 12,
+  "runtime_events": 7,
+  "cloud_alerts": 9,
+  "failed_authentications": 23,
+  "incident_cases": 2
+}
+
+
+=== ARQUIVO: ./docs/architecture.md ===
+# Platform Architecture
+
+## Components
+
+| Component | Purpose |
+|---|---|
+| SIEM | Event monitoring |
+| Falco | Runtime detection |
+| Kubernetes | Cloud-native platform |
+| MITRE | Threat classification |
+| Observability | Monitoring & visibility |
+| Governance | Policy enforcement |
+
+## Security Flow
+
+Container Runtime
+        ↓
+Falco Detection
+        ↓
+SIEM Alert
+        ↓
+MITRE Mapping
+        ↓
+Incident Response
+
+
+=== ARQUIVO: ./docs/security-workflow.md ===
+# Enterprise Security Workflow
+
+Cloud/Kubernetes Activity
+        ↓
+Runtime Detection
+        ↓
+Security Event Generation
+        ↓
+SIEM Correlation
+        ↓
+MITRE Classification
+        ↓
+Incident Response
+        ↓
+Recovery & Monitoring
+
+
+=== ARQUIVO: ./evidence/incident-artifacts.md ===
+# Incident Artifacts
+
+## Collected Evidence
+
+- SSH authentication logs
+- Falco runtime alerts
+- Kubernetes audit events
+- Detection correlation outputs
+
+## Investigation Objectives
+
+- Validate suspicious activity
+- Identify affected assets
+- Correlate runtime events
+
+
+=== ARQUIVO: ./docker-compose.yml ===
+services:
+
+  soc-dashboard:
+
+    build:
+      context: .
+      dockerfile: dashboard-app/Dockerfile
+
+    container_name: soc-dashboard
+
+    ports:
+      - "8501:8501"
+
+    volumes:
+      - ./dashboard-app:/app
+
+    restart: always
+
+  soc-api:
+
+    build:
+      context: .
+      dockerfile: dashboard-app/Dockerfile
+
+    container_name: soc-api
+
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./dashboard-app:/app
+
+    restart: always
+
+
+=== ARQUIVO: ./README.md ===
+# 🛡️ Enterprise Security Operations Platform
+
+Unified Enterprise Security Operations Platform focused on:
+
+- SIEM & Security Monitoring
+- Detection Engineering
+- Threat Intelligence
+- UEBA & Risk Analysis
+- MITRE ATT&CK
+- IAM & Access Governance
+- SOAR Automation
+- Compliance & Audit
+- Hybrid Infrascture Security
+- Cloud & Kubernetes Monitoring
+
+Built with Python + Streamlit + Ansible for enterprise security operations, auditing, automation and detection engineering simulations.
+
+---
+
+# 🚀 Core Features
+
+### Operating Systems
+
+* Linux monitoring
+* AIX monitoring
+* Windows monitoring
+
+### Cloud Platforms
+
+* AWS CloudTrail
+* Azure Entra Sign-In Logs
+* GCP Audit Logs
+* Oracle Cloud Audit
+* IBM Cloud Activity Tracker
+
+### Container & Runtime Security
+
+* Kubernetes audit visibility
+* Runtime activity monitoring
+* Container event ingestion
+
+---
+
+# 🧠 Detection Engineering
+
+* Sigma-like detections
+* YAML-based detections
+* IOC matching engine
+* MITRE ATT&CK mapping
+* Detection severity scoring
+* Threat correlation engine
+* Lateral movement detection
+* UEBA anomaly detection
+
+---
+
+# 🛡️ Threat Intelligence
+
+* IOC enrichment
+* Threat feed ingestion
+* CVE enrichment
+* Threat correlation
+* IOC severity analysis
+* Threat chain simulation
+
+---
+
+# 👥 IAM & Access Governance
+
+* User audit automation
+* LDAP audit automation
+* Privileged access review
+* Sudoers analysis
+* Group membership analysis
+* Root/admin activity monitoring
+* Access baseline validation
+* Identity governance simulations
+
+---
+
+# ⚙️ SOAR Automation
+
+* Ansible playbook execution
+* Automated audit collection
+* Temporary inventory generation
+* Dynamic server targeting
+* Security response orchestration
+* Evidence collection workflows
+
+---
+
+# 📋 Compliance & Audit
+
+### Framework Visibility
+
+* ISO27001
+* NIST
+* CIS Controls
+* PCI-DSS
+
+### Audit Capabilities
+
+* User privilege auditing
+* Access governance reviews
+* Baseline validation
+* Infrastructure inventory tracking
+* Security evidence generation
+* Executive PDF reports
+
+---
+
+# 📊 SOC Capabilities
+
+* SIEM correlation
+* Incident management
+* Threat hunting console
+* Executive dashboards
+* SOC analytics
+* MITRE ATT&CK heatmaps
+* Real-time syslog monitoring
+
+---
+
+# 🏗️ Enterprise Architecture
+
+```text
+Linux / AIX / Windows
+        ↓
+Cloud Providers
+(AWS / Azure / GCP / OCI / IBM)
+        ↓
+Kubernetes Runtime Security
+        ↓
+Collectors & Log Parsers
+        ↓
+Detection Engine
+        ↓
+Threat Intelligence
+        ↓
+MITRE ATT&CK Correlation
+        ↓
+UEBA & Risk Scoring
+        ↓
+SIEM Analytics
+        ↓
+SOC Dashboard
+        ↓
+Incident Response
+        ↓
+SOAR Automation
+        ↓
+Audit & Compliance Reporting
+```
+
+---
+
+# ⚙️ Technologies
+
+## Backend
+
+* Python
+* FastAPI
+* SQLite
+
+## Security & Automation
+
+* Ansible
+* YAML
+* JWT
+* MITRE ATT&CK
+
+## Visualization
+
+* Streamlit
+* Plotly
+* Pandas
+
+## Infrastructure
+
+* Docker
+* Docker Compose
+
+---
+
+# 📂 Project Structure
+
+```text
+dashboard-app/
+├── agents/
+│   ├── linux/
+│   ├── aix/
+│   ├── windows/
+│   ├── aws/
+│   ├── azure/
+│   ├── gcp/
+│   ├── oracle-cloud/
+│   ├── ibm-cloud/
+│   └── kubernetes/
+│
+├── ansible/
+│   ├── inventories/
+│   ├── playbooks/
+│   └── reports/
+│
+├── collectors/
+├── configs/
+├── detections/
+├── parsers/
+├── reporting/
+├── sections/
+├── services/
+├── security/
+├── logs/
+├── database/
+├── api/
+└── app.py
+```
+
+---
+
+# 🐳 Docker Deployment
+
+```bash
+docker compose up --build
+```
+
+---
+
+# ▶️ Local Execution
+
+```bash
+pip install -r requirements.txt
+
+streamlit run dashboard-app/app.py
+```
+
+---
+
+# 🔐 Authentication & RBAC
+
+Current implementation includes:
+
+* Simulated RBAC
+* Session management
+* JWT support
+* Role-based authentication model
+
+Planned improvements:
+
+* LDAP integration
+* Active Directory integration
+* Azure Entra ID SSO
+* OAuth2 / OpenID Connect
+* MFA support
+* Password hashing
+* Vault/Secrets integration
+* Enterprise IAM federation
+
+---
+
+# 🎯 MITRE ATT&CK Coverage
+
+* Initial Access
+* Execution
+* Persistence
+* Privilege Escalation
+* Defense Evasion
+* Credential Access
+* Discovery
+* Lateral Movement
+* Collection
+* Exfiltration
+
+---
+
+# 📈 Roadmap
+
+## SOC & SIEM
+
+* [ ] Elastic integration
+* [ ] Splunk integration
+* [ ] Real-time syslog ingestion
+* [ ] Sigma correlation engine
+
+## IAM & Governance
+
+* [ ] Full LDAP connector
+* [ ] Active Directory auditing
+* [ ] PAM integration
+* [ ] Access certification workflows
+
+## Detection Engineering
+
+* [ ] YARA integration
+* [ ] AI-assisted detections
+* [ ] Behavioral correlation engine
+* [ ] Threat simulation engine
+
+## SOAR
+
+* [ ] Automated remediation
+* [ ] Incident workflows
+* [ ] Slack/Teams integration
+* [ ] Case management
+
+## Cloud Security
+
+* [ ] CSPM integrations
+* [ ] Multi-cloud posture analysis
+* [ ] Kubernetes RBAC analysis
+
+---
+
+# ⚠️ Disclaimer
+
+This platform is intended for:
+
+* educational purposes
+* security engineering practice
+* portfolio demonstrations
+* enterprise security simulations
+* defensive cybersecurity research
+
+No offensive capabilities are included.
+
+---
+
+# 👩‍💻 Author
+
+Developed by Bettina Meirelles
+
+Cybersecurity | Detection Engineering | SIEM | IAM | Cloud Security | DevSecOps | SOAR | Enterprise Infrastructure
+
+
+
+
+=== ARQUIVO: ./automation/security-pipeline.yml ===
+name: Enterprise Security Validation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  security-validation:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Simulated Detection Validation
+      run: |
+        echo "Security validation pipeline executed"
+
+    - name: Simulated Governance Validation
+      run: |
+        echo "Governance controls validated"
+
+
+=== ARQUIVO: ./automation/automation-concepts.md ===
+# Security Automation Concepts
+
+This project demonstrates foundational Security Operations automation concepts.
+
+## Areas
+
+- Automated alert handling
+- Detection workflows
+- Governance validation
+- DevSecOps pipelines
+
+
+=== ARQUIVO: ./automation/alert_parser.py ===
+def parse_alert(alert):
+
+    severity_map = {
+        "Warning": "Medium",
+        "Critical": "High"
+    }
+
+    for key in severity_map:
+        if key in alert:
+            return severity_map[key]
+
+    return "Low"
+
+
+sample_alert = "Critical Privileged container execution detected"
+
+print(parse_alert(sample_alert))
+
+
+=== ARQUIVO: ./automation/severity_classifier.py ===
+alerts = [
+    "Failed password",
+    "Shell spawned inside container",
+    "Privilege escalation"
+]
+
+for alert in alerts:
+
+    if "Privilege" in alert:
+        print(f"{alert} -> CRITICAL")
+
+    elif "Shell" in alert:
+        print(f"{alert} -> HIGH")
+
+    else:
+        print(f"{alert} -> MEDIUM")
+
+
+=== ARQUIVO: ./correlation/alert-correlation.md ===
+# Alert Correlation
+
+## Correlation Workflow
+
+Falco Runtime Alert
+        ↓
+SIEM Ingestion
+        ↓
+MITRE Classification
+        ↓
+Threat Intelligence Enrichment
+        ↓
+SOC Triage
+        ↓
+Incident Escalation
+
+## Correlation Examples
+
+| Event | Correlated With |
+|---|---|
+| Container shell execution | Privilege escalation |
+| Unauthorized access | Suspicious process execution |
+| Failed authentication spikes | Potential brute force |
+
+## Objectives
+
+- Reduce false positives
+- Improve incident prioritization
+- Enhance threat visibility
+
+
+=== ARQUIVO: ./mitre/attack-mapping.md ===
+# MITRE ATT&CK Mapping
+
+| Threat | Technique |
+|---|---|
+| Shell Execution | T1059 |
+| Privilege Escalation | T1611 |
+| Unauthorized Access | T1078 |
+
+## Objectives
+
+- Improve threat visibility
+- Simulate detection engineering
+- Support incident investigation
+
+
+=== ARQUIVO: ./soc-workflows/triage.md ===
+# SOC Triage Workflow
+
+## Triage Process
+
+1. Alert received
+2. Severity validation
+3. Asset identification
+4. IOC verification
+5. MITRE classification
+6. Escalation decision
+
+## Priorities
+
+| Severity | Response |
+|---|---|
+| Low | Monitor |
+| Medium | Investigate |
+| High | Escalate |
+| Critical | Incident response activation |
+
+
+=== ARQUIVO: ./soc-workflows/escalation.md ===
+# Escalation Workflow
+
+## Escalation Criteria
+
+- Critical infrastructure impact
+- Privilege escalation
+- Lateral movement indicators
+- Runtime compromise indicators
+
+## Escalation Path
+
+SOC Analyst
+    ↓
+Security Engineer
+    ↓
+Incident Response Team
+
+
+=== ARQUIVO: ./dashboard-app/reporting/audit_pdf.py ===
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer
+)
+
+from reportlab.lib.styles import (
+    getSampleStyleSheet
+)
+
+from pathlib import Path
+from datetime import datetime
+
+REPORT_DIR = (
+    Path(__file__).resolve().parent.parent /
+    "reports"
+)
+
+REPORT_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+# ---------------------------
+# GENERATE AUDIT PDF
+# ---------------------------
+
+def generate_audit_pdf(
+    title,
+    content
+):
+
+    timestamp = datetime.utcnow().strftime(
+        "%Y%m%d_%H%M%S"
+    )
+
+    pdf_path = (
+        REPORT_DIR /
+        f"audit_report_{timestamp}.pdf"
+    )
+
+    document = SimpleDocTemplate(
+        str(pdf_path)
+    )
+
+    styles = getSampleStyleSheet()
+
+    elements = []
+
+    elements.append(
+        Paragraph(
+            title,
+            styles["Title"]
+        )
+    )
+
+    elements.append(
+        Spacer(1, 12)
+    )
+
+    elements.append(
+        Paragraph(
+            content.replace("\n", "<br/>"),
+            styles["BodyText"]
+        )
+    )
+
+    document.build(
+        elements
+    )
+
+    return pdf_path
+
+
+=== ARQUIVO: ./dashboard-app/reporting/pdf_generator.py ===
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer,
+    PageBreak
+)
+
+from reportlab.lib.styles import (
+    getSampleStyleSheet
+)
+
+from reportlab.lib.pagesizes import letter
+
+from pathlib import Path
+
+from datetime import datetime
+
+# ---------------------------
+# REPORT DIRECTORY
+# ---------------------------
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+REPORT_DIR = BASE_DIR / "reports"
+
+REPORT_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+# ---------------------------
+# GENERATE REPORT
+# ---------------------------
+
+def generate_security_report(
+    detections,
+    incidents,
+    threat_findings,
+    report_type="Security Audit"
+):
+
+    timestamp = datetime.utcnow().strftime(
+        "%Y%m%d_%H%M%S"
+    )
+
+    filename = (
+        f"{report_type.lower().replace(' ', '_')}_{timestamp}.pdf"
+    )
+
+    report_path = REPORT_DIR / filename
+
+    document = SimpleDocTemplate(
+        str(report_path),
+        pagesize=letter
+    )
+
+    styles = getSampleStyleSheet()
+
+    elements = []
+
+    # ---------------------------
+    # COVER
+    # ---------------------------
+
+    elements.append(
+        Paragraph(
+            "Enterprise Security Audit Report",
+            styles["Title"]
+        )
+    )
+
+    elements.append(
+        Spacer(1, 30)
+    )
+
+    elements.append(
+        Paragraph(
+            f"Generated: {datetime.utcnow()} UTC",
+            styles["BodyText"]
+        )
+    )
+
+    elements.append(
+        Spacer(1, 20)
+    )
+
+    elements.append(
+        Paragraph(
+            f"Report Type: {report_type}",
+            styles["BodyText"]
+        )
+    )
+
+    elements.append(
+        PageBreak()
+    )
+
+    # ---------------------------
+    # DETECTIONS
+    # ---------------------------
+
+    elements.append(
+        Paragraph(
+            "Detection Findings",
+            styles["Heading1"]
+        )
+    )
+
+    for item in detections[:50]:
+
+        elements.append(
+            Paragraph(
+                str(item),
+                styles["BodyText"]
+            )
+        )
+
+    elements.append(
+        Spacer(1, 20)
+    )
+
+    # ---------------------------
+    # INCIDENTS
+    # ---------------------------
+
+    elements.append(
+        Paragraph(
+            "Incident Findings",
+            styles["Heading1"]
+        )
+    )
+
+    for item in incidents[:50]:
+
+        elements.append(
+            Paragraph(
+                str(item),
+                styles["BodyText"]
+            )
+        )
+
+    elements.append(
+        Spacer(1, 20)
+    )
+
+    # ---------------------------
+    # THREAT INTELLIGENCE
+    # ---------------------------
+
+    elements.append(
+        Paragraph(
+            "Threat Intelligence Correlation",
+            styles["Heading1"]
+        )
+    )
+
+    for item in threat_findings[:50]:
+
+        elements.append(
+            Paragraph(
+                str(item),
+                styles["BodyText"]
+            )
+        )
+
+    document.build(elements)
+
+    return report_path
+
+
+=== ARQUIVO: ./dashboard-app/ansible/ansible_runner.py ===
+import subprocess
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+
+INVENTORY_FILE = (
+    BASE_DIR /
+    "inventory" /
+    "inventory.ini"
+)
+
+PLAYBOOK_DIR = (
+    BASE_DIR /
+    "playbooks"
+)
+
+REPORT_DIR = (
+    BASE_DIR /
+    "reports" /
+    "ansible-output"
+)
+
+REPORT_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+# ---------------------------
+# RUN PLAYBOOK
+# ---------------------------
+
+def run_playbook(
+    playbook_name
+):
+
+    playbook_path = (
+        PLAYBOOK_DIR /
+        playbook_name
+    )
+
+    command = [
+
+        "ansible-playbook",
+
+        "-i",
+        str(INVENTORY_FILE),
+
+        str(playbook_path)
+    ]
+
+    result = subprocess.run(
+
+        command,
+
+        capture_output=True,
+        text=True
+    )
+
+    return {
+
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+        "returncode": result.returncode
+    }
+
+
+=== ARQUIVO: ./dashboard-app/ansible/temporary_inventory.py ===
+from pathlib import Path
+
+TEMP_DIR = (
+    Path(__file__).resolve().parent /
+    "temporary_inventory"
+)
+
+TEMP_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+# ---------------------------
+# CREATE TEMP INVENTORY
+# ---------------------------
+
+def create_temp_inventory(
+    hosts
+):
+
+    inventory_path = (
+        TEMP_DIR /
+        "temp_inventory.ini"
+    )
+
+    with open(
+        inventory_path,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        file.write("[temporary]\n")
+
+        for host in hosts:
+
+            file.write(f"{host}\n")
+
+    return inventory_path
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/user_audit.yml ===
+- name: User Audit
+  hosts: all
+  become: yes
+
+  vars:
+    target_user: "{{ lookup('env','TARGET_USER') }}"
+
+  tasks:
+
+    - name: Check user exists
+      shell: "id {{ target_user }}"
+      register: user_check
+      ignore_errors: yes
+
+    - name: User groups
+      shell: "groups {{ target_user }}"
+      register: user_groups
+      ignore_errors: yes
+
+    - name: Sudo privileges
+      shell: "sudo -l -U {{ target_user }}"
+      register: sudo_privs
+      ignore_errors: yes
+
+    - name: Save report
+      copy:
+        content: |
+          USER AUDIT REPORT
+
+          USER:
+          {{ target_user }}
+
+          USER CHECK:
+          {{ user_check.stdout }}
+
+          GROUPS:
+          {{ user_groups.stdout }}
+
+          SUDO:
+          {{ sudo_privs.stdout }}
+
+        dest: /tmp/user_audit_{{ target_user }}.txt
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/block_ip.yml ===
+---
+- name: Block malicious IP
+  hosts: linux
+  become: yes
+
+  tasks:
+
+    - name: Block IP
+      iptables:
+        chain: INPUT
+        source: "{{ malicious_ip }}"
+        jump: DROP
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/linux_hardening.yml ===
+em andamento
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/restart_service.yml ===
+em andamento
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/ldap_audit.yml ===
+- name: LDAP Audit
+  hosts: ldap
+  become: yes
+
+  tasks:
+
+    - name: LDAP users
+      shell: |
+        ldapsearch -x -LLL \
+        "(objectClass=person)" uid
+      register: ldap_users
+
+    - name: Save LDAP audit
+      copy:
+        content: |
+          LDAP AUDIT
+
+          {{ ldap_users.stdout }}
+
+        dest: /tmp/ldap_audit.txt
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/collect_logs.yml ===
+---
+- name: Collect Linux Logs
+  hosts: linux
+
+  tasks:
+
+    - name: Copy auth.log
+      fetch:
+        src: /var/log/auth.log
+        dest: ./collected/
+        flat: yes
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/baseline_collection.yml ===
+---
+- name: Enterprise Baseline Collection
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Hostname
+      command: hostname
+      register: hostname_output
+
+    - name: OS Information
+      shell: uname -a
+      register: os_output
+
+    - name: Logged Users
+      command: who
+      register: who_output
+
+    - name: Sudoers
+      shell: cat /etc/sudoers
+      register: sudoers_output
+      ignore_errors: yes
+
+    - name: passwd
+      shell: cat /etc/passwd
+      register: passwd_output
+
+    - name: groups
+      shell: cat /etc/group
+      register: group_output
+
+    - name: Save audit report
+      copy:
+        content: |
+          HOSTNAME:
+          {{ hostname_output.stdout }}
+
+          OS:
+          {{ os_output.stdout }}
+
+          USERS:
+          {{ who_output.stdout }}
+
+          SUDOERS:
+          {{ sudoers_output.stdout }}
+
+          PASSWD:
+          {{ passwd_output.stdout }}
+
+          GROUPS:
+          {{ group_output.stdout }}
+
+        dest: /tmp/security_audit.txt
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/group_audit.yml ===
+- name: Group Audit
+  hosts: all
+  become: yes
+
+  vars:
+    target_group: "{{ lookup('env','TARGET_GROUP') }}"
+
+  tasks:
+
+    - name: Group lookup
+      shell: "grep {{ target_group }} /etc/group"
+      register: group_result
+      ignore_errors: yes
+
+    - name: Save report
+      copy:
+        content: |
+          GROUP AUDIT REPORT
+
+          GROUP:
+          {{ target_group }}
+
+          RESULT:
+          {{ group_result.stdout }}
+
+        dest: /tmp/group_audit_{{ target_group }}.txt
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/ad_audit.yml ===
+- name: AD Audit
+  hosts: windows
+
+  tasks:
+
+    - name: Enumerate AD users
+      win_shell: |
+        Get-ADUser -Filter * |
+        Select Name, Enabled
+      register: ad_users
+
+    - name: Save AD audit
+      win_copy:
+        content: |
+          ACTIVE DIRECTORY AUDIT
+
+          {{ ad_users.stdout }}
+
+        dest: C:\Temp\ad_audit.txt
+
+
+=== ARQUIVO: ./dashboard-app/ansible/playbooks/sudoers_audit.yml ===
+- name: Sudoers Audit
+  hosts: all
+  become: yes
+
+  vars:
+    keyword: "{{ lookup('env','TARGET_KEYWORD') }}"
+
+  tasks:
+
+    - name: Search sudoers
+      shell: "grep -Ri '{{ keyword }}' /etc/sudoers /etc/sudoers.d/"
+      register: sudoers_result
+      ignore_errors: yes
+
+    - name: Save report
+      copy:
+        content: |
+          SUDOERS AUDIT
+
+          KEYWORD:
+          {{ keyword }}
+
+          RESULTS:
+          {{ sudoers_result.stdout }}
+
+        dest: /tmp/sudoers_audit.txt
+
+
+=== ARQUIVO: ./dashboard-app/repositories/detections_repository.py ===
+from parsers.database_engine import (
+    save_detection,
+    load_detections
+)
+
+def save_detection_repository(
+    detection_type,
+    severity,
+    details
+):
+
+    save_detection(
+        detection_type,
+        severity,
+        details
+    )
+
+def load_detections_repository():
+
+    return load_detections()
+
+
+=== ARQUIVO: ./dashboard-app/repositories/hunting_repository.py ===
+from parsers.database_engine import (
+    save_hunting_query,
+    load_hunting_queries
+)
+
+def save_hunt_query_repository(
+    query,
+    analyst
+):
+
+    save_hunting_query(
+        query,
+        analyst
+    )
+
+def load_hunt_queries_repository():
+
+    return load_hunting_queries()
+
+
+=== ARQUIVO: ./dashboard-app/repositories/__init__.py ===
+
+
+
+=== ARQUIVO: ./dashboard-app/repositories/incidents_repository.py ===
+from parsers.database_engine import (
+    save_incident,
+    load_incidents
+)
+
+def save_incident_repository(
+    severity,
+    source,
+    description,
+    status
+):
+
+    save_incident(
+        severity,
+        source,
+        description,
+        status
+    )
+
+def load_incidents_repository():
+
+    return load_incidents()
+
+
+=== ARQUIVO: ./dashboard-app/repositories/events_repository.py ===
+from parsers.database_engine import (
+    connect_db
+)
+
+import pandas as pd
+
+def load_security_events():
+
+    connection = connect_db()
+
+    df = pd.read_sql_query(
+        """
+        SELECT * FROM security_events
+        ORDER BY id DESC
+        LIMIT 100
+        """,
+        connection
+    )
+
+    connection.close()
+
+    return df
+
+
+=== ARQUIVO: ./dashboard-app/security/auth.py ===
+from parsers.auth_engine import (
+    authenticate
+)
+
+def login(
+    username,
+    password
+):
+
+    return authenticate(
+        username,
+        password
+    )
+
+
+=== ARQUIVO: ./dashboard-app/security/session.py ===
+import streamlit as st
+
+from datetime import (
+    datetime,
+    timedelta
+)
+
+SESSION_TIMEOUT_MINUTES = 30
+
+# ---------------------------
+# CREATE SESSION
+# ---------------------------
+
+def create_session(
+    username,
+    role
+):
+
+    st.session_state["authenticated"] = True
+
+    st.session_state["username"] = username
+
+    st.session_state["role"] = role
+
+    st.session_state["last_activity"] = datetime.utcnow()
+
+# ---------------------------
+# VALIDATE SESSION
+# ---------------------------
+
+def is_authenticated():
+
+    authenticated = st.session_state.get(
+        "authenticated",
+        False
+    )
+
+    if not authenticated:
+
+        return False
+
+    last_activity = st.session_state.get(
+        "last_activity"
+    )
+
+    if not last_activity:
+
+        return False
+
+    now = datetime.utcnow()
+
+    timeout = timedelta(
+        minutes=SESSION_TIMEOUT_MINUTES
+    )
+
+    if now - last_activity > timeout:
+
+        logout()
+
+        return False
+
+    st.session_state["last_activity"] = now
+
+    return True
+
+# ---------------------------
+# GET ROLE
+# ---------------------------
+
+def get_role():
+
+    return st.session_state.get(
+        "role",
+        "viewer"
+    )
+
+# ---------------------------
+# GET USERNAME
+# ---------------------------
+
+def get_username():
+
+    return st.session_state.get(
+        "username",
+        "unknown"
+    )
+
+# ---------------------------
+# LOGOUT
+# ---------------------------
+
+def logout():
+
+    st.session_state.clear()
+
+
+=== ARQUIVO: ./dashboard-app/security/__init__.py ===
+
+
+
+=== ARQUIVO: ./dashboard-app/security/permissions.py ===
+from parsers.rbac_engine import (
+    has_permission
+)
+
+def check_permission(
+    role,
+    permission
+):
+
+    return has_permission(
+        role,
+        permission
+    )
+
+
+=== ARQUIVO: ./dashboard-app/security/guards.py ===
+import streamlit as st
+
+from security.session import (
+    is_authenticated
+)
+
+def require_auth():
+
+    if not is_authenticated():
+
+        st.warning(
+            "Please authenticate"
+        )
+
+        st.stop()
+
+
+=== ARQUIVO: ./dashboard-app/security/rbac.py ===
+ROLE_PERMISSIONS = {
+
+    "admin": [
+        "compliance",
+        "executive",
+        "soar"
+    ],
+
+    "analyst": [
+        "compliance"
+    ],
+
+    "viewer": []
+}
+
+
+=== ARQUIVO: ./dashboard-app/security/jwt_handler.py ===
+import jwt
+
+SECRET = "enterprise-secret"
+
+def generate_token(payload):
+
+    return jwt.encode(
+        payload,
+        SECRET,
+        algorithm="HS256"
+    )
+
+def validate_token(token):
+
+    return jwt.decode(
+        token,
+        SECRET,
+        algorithms=["HS256"]
+    )
+
+
+=== ARQUIVO: ./dashboard-app/soar/automation-flow.yml ===
+workflow:
+
+  trigger:
+    - critical_alert
+
+  actions:
+    - isolate_container
+    - notify_soc
+    - collect_logs
+    - enrich_iocs
+
+
+=== ARQUIVO: ./dashboard-app/soar/response-workflow.md ===
+# SOAR Response Workflow
+
+## Automated Actions
+
+- Alert enrichment
+- Runtime isolation
+- Log collection
+- Incident escalation
+
+## Objectives
+
+- Reduce response time
+- Improve containment
+- Accelerate investigations
+
+
+=== ARQUIVO: ./dashboard-app/soar/response_engine.py ===
+import subprocess
+
+# ---------------------------
+# BLOCK USER
+# ---------------------------
+
+def block_linux_user(
+    username
+):
+
+    command = [
+
+        "sudo",
+        "usermod",
+        "-L",
+        username
+    ]
+
+    try:
+
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True
+        )
+
+        return {
+
+            "success": True,
+            "output": result.stdout
+        }
+
+    except Exception as error:
+
+        return {
+
+            "success": False,
+            "error": str(error)
+        }
+
+
+=== ARQUIVO: ./dashboard-app/services/detection_service.py ===
+from parsers.detection_engine import (
+    run_detections
+)
+
+from parsers.yaml_detection_engine import (
+    run_yaml_detections
+)
+
+from repositories.detections_repository import (
+    save_detection_repository
+)
+
+def process_detections(events):
+
+    findings = []
+
+    standard = run_detections(events)
+
+    yaml_findings = run_yaml_detections(events)
+
+    findings.extend(standard)
+    findings.extend(yaml_findings)
+
+    for detection in findings:
+
+        save_detection_repository(
+            detection.get(
+                "Detection",
+                "Unknown"
+            ),
+            detection.get(
+                "Severity",
+                "Medium"
+            ),
+            str(detection)
+        )
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/services/threat_intel_service.py ===
+from parsers.threat_feed import (
+    load_threat_feed,
+    correlate_threat_feed
+)
+
+from parsers.threat_intelligence import (
+    enrich_iocs
+)
+
+def process_threat_intelligence(
+    ioc_matches,
+    path
+):
+
+    feed = load_threat_feed(path)
+
+    correlations = correlate_threat_feed(
+        ioc_matches,
+        feed
+    )
+
+    enrichment = enrich_iocs(
+        ioc_matches
+    )
+
+    return {
+        "feed": feed,
+        "correlations": correlations,
+        "enrichment": enrichment
+    }
+
+
+=== ARQUIVO: ./dashboard-app/services/realtime_service.py ===
+from parsers.realtime_engine import (
+    generate_realtime_event
+)
+
+from parsers.live_metrics import (
+    generate_live_metrics
+)
+
+def get_live_event():
+
+    return generate_realtime_event()
+
+def get_live_metrics():
+
+    return generate_live_metrics()
+
+
+=== ARQUIVO: ./dashboard-app/services/incident_service.py ===
+from repositories.incidents_repository import (
+    save_incident_repository,
+    load_incidents_repository
+)
+
+def create_incident(
+    severity,
+    source,
+    description,
+    status="Open"
+):
+
+    save_incident_repository(
+        severity,
+        source,
+        description,
+        status
+    )
+
+def get_all_incidents():
+
+    return load_incidents_repository()
+
+
+=== ARQUIVO: ./dashboard-app/services/__init__.py ===
+
+
+
+=== ARQUIVO: ./dashboard-app/services/ansible_service.py ===
+import subprocess
+
+from pathlib import Path
+
+# ---------------------------
+# EXECUTE PLAYBOOK
+# ---------------------------
+
+def execute_playbook(
+    playbook,
+    inventory
+):
+
+    command = [
+
+        "ansible-playbook",
+
+        playbook,
+
+        "-i",
+
+        inventory
+
+    ]
+
+    result = subprocess.run(
+        command,
+        capture_output=True,
+        text=True
+    )
+
+    return {
+
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+        "returncode": result.returncode
+    }
+
+
+=== ARQUIVO: ./dashboard-app/services/analytics_service.py ===
+from parsers.analytics_engine import (
+    detection_analytics,
+    incident_analytics
+)
+
+def get_detection_analytics():
+
+    return detection_analytics()
+
+def get_incident_analytics():
+
+    return incident_analytics()
+
+
+=== ARQUIVO: ./dashboard-app/services/hunting_service.py ===
+def hunt_logs(
+    hunt_term,
+    logs
+):
+
+    findings = []
+
+    for log in logs:
+
+        if hunt_term.lower() in log.lower():
+
+            findings.append(log)
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/services/reporting_service.py ===
+from parsers.reporting_engine import (
+    generate_executive_report
+)
+
+def generate_report(
+    threat_score,
+    risk_level,
+    incidents,
+    critical_alerts
+):
+
+    return generate_executive_report(
+        threat_score,
+        risk_level,
+        incidents,
+        critical_alerts
+    )
+
+
+=== ARQUIVO: ./dashboard-app/models/event.py ===
+{
+    "timestamp": "",
+    "source": "",
+    "provider": "",
+    "event_type": "",
+    "severity": "",
+    "raw_log": "",
+    "normalized": True
+}
+
+
+=== ARQUIVO: ./dashboard-app/models/threat.py ===
+
+
+
+=== ARQUIVO: ./dashboard-app/models/__init__.py ===
+
+
+
+=== ARQUIVO: ./dashboard-app/models/detection.py ===
+from dataclasses import dataclass
+
+@dataclass
+class Detection:
+
+    detection_type: str
+
+    severity: str
+
+    details: str
+
+
+=== ARQUIVO: ./dashboard-app/models/incident.py ===
+from dataclasses import dataclass
+
+@dataclass
+class Incident:
+
+    severity: str
+
+    source: str
+
+    description: str
+
+    status: str
+
+
+=== ARQUIVO: ./dashboard-app/sections/live_syslog.py ===
+import streamlit as st
+
+from collectors.syslog_collector import (
+    start_syslog_listener,
+    receive_syslog_event
+)
+
+# ---------------------------
+# LIVE SYSLOG
+# ---------------------------
+
+def render_live_syslog():
+
+    st.subheader(
+        "Live Syslog Monitoring"
+    )
+
+    if st.button(
+        "Start Syslog Listener",
+        key="start_syslog"
+    ):
+
+        sock = start_syslog_listener()
+
+        st.success(
+            "Syslog listener started on UDP 5140"
+        )
+
+        event = receive_syslog_event(
+            sock
+        )
+
+        st.code(event)
+
+
+=== ARQUIVO: ./dashboard-app/sections/analytics.py ===
+import streamlit as st
+import plotly.express as px
+import pandas as pd
+
+# ---------------------------
+# ANALYTICS SECTION
+# ---------------------------
+
+def render_analytics(
+    detection_stats,
+    incident_stats
+):
+
+    st.subheader(
+        "SOC Historical Analytics"
+    )
+
+    # ---------------------------
+    # DETECTION ANALYTICS
+    # ---------------------------
+
+    st.markdown(
+        "### Detection Severity Distribution"
+    )
+
+    if detection_stats is not None and not detection_stats.empty:
+
+        detection_fig = px.bar(
+            detection_stats,
+            x="Severity",
+            y="Count",
+            title="Detection Severity Overview"
+        )
+
+        st.plotly_chart(
+            detection_fig,
+            use_container_width=True
+        )
+
+        st.dataframe(
+            detection_stats,
+            use_container_width=True
+        )
+
+    else:
+
+        st.info(
+            "No detection analytics available"
+        )
+
+    # ---------------------------
+    # INCIDENT ANALYTICS
+    # ---------------------------
+
+    st.markdown(
+        "### Incident Severity Distribution"
+    )
+
+    if incident_stats is not None and not incident_stats.empty:
+
+        incident_fig = px.pie(
+            incident_stats,
+            names="Severity",
+            values="Count",
+            title="Incident Severity Overview"
+        )
+
+        st.plotly_chart(
+            incident_fig,
+            use_container_width=True
+        )
+
+        st.dataframe(
+            incident_stats,
+            use_container_width=True
+        )
+
+    else:
+
+        st.info(
+            "No incident analytics available"
+        )
+
+
+=== ARQUIVO: ./dashboard-app/sections/mitre_heatmap.py ===
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+
+from parsers.mitre_heatmap import (
+    build_mitre_heatmap
+)
+
+# ---------------------------
+# MITRE HEATMAP
+# ---------------------------
+
+def render_mitre_heatmap(
+    mitre_events
+):
+
+    st.subheader(
+        "MITRE ATT&CK Heatmap"
+    )
+
+    heatmap = build_mitre_heatmap(
+        mitre_events
+    )
+
+    if not heatmap:
+
+        st.info(
+            "No MITRE data available"
+        )
+
+        return
+
+    df = pd.DataFrame(
+        heatmap
+    )
+
+    fig = px.bar(
+        df,
+        x="Technique",
+        y="Count",
+        title="MITRE ATT&CK Activity"
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
+
+
+=== ARQUIVO: ./dashboard-app/sections/detections.py ===
+import streamlit as st
+import pandas as pd
+
+# ---------------------------
+# DETECTIONS SECTION
+# ---------------------------
+
+def render_detections(
+    detections,
+    yaml_detections,
+    mitre_events
+):
+
+    st.subheader(
+        "Detection Engine Findings"
+    )
+
+    # ---------------------------
+    # DETECTION ENGINE
+    # ---------------------------
+
+    if detections:
+
+        detection_df = pd.DataFrame(
+            detections
+        )
+
+        st.dataframe(
+            detection_df,
+            use_container_width=True
+        )
+
+    else:
+
+        st.success(
+            "No active detections identified"
+        )
+
+    # ---------------------------
+    # YAML DETECTIONS
+    # ---------------------------
+
+    st.subheader(
+        "YAML Detection Rules"
+    )
+
+    if yaml_detections:
+
+        yaml_df = pd.DataFrame(
+            yaml_detections
+        )
+
+        st.dataframe(
+            yaml_df,
+            use_container_width=True
+        )
+
+    else:
+
+        st.success(
+            "No YAML detections identified"
+        )
+
+    # ---------------------------
+    # MITRE ATT&CK
+    # ---------------------------
+
+    st.subheader(
+        "MITRE ATT&CK Coverage"
+    )
+
+    if mitre_events:
+
+        mitre_df = pd.DataFrame(
+            mitre_events
+        )
+
+        st.dataframe(
+            mitre_df,
+            use_container_width=True
+        )
+
+    else:
+
+        st.info(
+            "No MITRE mappings identified"
+        )
+
+
+=== ARQUIVO: ./dashboard-app/sections/automation.py ===
+import streamlit as st
+
+from services.ansible_service import (
+    execute_playbook
+)
+
+# ---------------------------
+# AUTOMATION SECTION
+# ---------------------------
+
+def render_automation():
+
+    st.subheader(
+        "SOAR Automation"
+    )
+
+    playbook = st.selectbox(
+
+        "Playbook",
+
+        [
+
+            "collect_logs.yml",
+            "users_audit.yml",
+            "sudoers_audit.yml"
+
+        ]
+    )
+
+    if st.button(
+        "Execute Playbook"
+    ):
+
+        result = execute_playbook(
+
+            f"ansible/playbooks/{playbook}",
+
+            "ansible/inventory/inventory.ini"
+        )
+
+        st.code(
+            result["stdout"]
+        )
+
+        if result["stderr"]:
+
+            st.error(
+                result["stderr"]
+            )
+
+
+=== ARQUIVO: ./dashboard-app/sections/compliance.py ===
+import streamlit as st
+import pandas as pd
+
+def render_compliance():
+
+    st.subheader(
+        "Compliance Overview"
+    )
+
+    compliance_df = pd.DataFrame({
+
+        "Framework": [
+            "ISO 27001",
+            "NIST",
+            "PCI-DSS",
+            "CIS"
+        ],
+
+        "Status": [
+            "Compliant",
+            "Partial",
+            "In Review",
+            "Compliant"
+        ],
+
+        "Coverage": [
+            "92%",
+            "81%",
+            "74%",
+            "89%"
+        ]
+    })
+
+    st.dataframe(
+        compliance_df,
+        use_container_width=True
+    )
+
+
+=== ARQUIVO: ./dashboard-app/sections/soar.py ===
+import streamlit as st
+
+from soar.response_engine import (
+    block_linux_user
+)
+
+# ---------------------------
+# SOAR SECTION
+# ---------------------------
+
+def render_soar():
+
+    st.subheader(
+        "SOAR Automation"
+    )
+
+    username = st.text_input(
+        "Target User"
+    )
+
+    if st.button(
+        "Block Linux User",
+        key="block_linux_user"
+    ):
+
+        result = block_linux_user(
+            username
+        )
+
+        if result["success"]:
+
+            st.success(
+                "User blocked successfully"
+            )
+
+            st.code(
+                result["output"]
+            )
+
+        else:
+
+            st.error(
+                result["error"]
+            )
+
+
+=== ARQUIVO: ./dashboard-app/sections/kpis.py ===
+import streamlit as st
+
+def render_kpis(
+    threat_score,
+    threat_severity,
+    risk_score,
+    risk_level
+):
+
+    st.subheader(
+        "Security Operations KPIs"
+    )
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric(
+        "Threat Score",
+        threat_score
+    )
+
+    col2.metric(
+        "Threat Severity",
+        threat_severity
+    )
+
+    col3.metric(
+        "Risk Score",
+        risk_score
+    )
+
+    col4.metric(
+        "Risk Level",
+        risk_level
+    )
+
+    if threat_severity == "Critical":
+
+        st.error(
+            "Critical threat activity identified"
+        )
+
+    elif threat_severity == "High":
+
+        st.warning(
+            "High threat activity identified"
+        )
+
+    else:
+
+        st.success(
+            "Environment operating normally"
+        )
+
+
+=== ARQUIVO: ./dashboard-app/sections/__init__.py ===
+
+
+
+=== ARQUIVO: ./dashboard-app/sections/incidents.py ===
+import streamlit as st
+import pandas as pd
+
+from services.incident_service import (
+    get_all_incidents
+)
+
+def render_incidents():
+
+    st.subheader(
+        "SOC Case Management"
+    )
+
+    incidents = get_all_incidents()
+
+    if incidents:
+
+        incident_df = pd.DataFrame(
+            incidents,
+            columns=[
+                "ID",
+                "Severity",
+                "Source",
+                "Description",
+                "Status",
+                "Created At"
+            ]
+        )
+
+        st.dataframe(
+            incident_df,
+            use_container_width=True
+        )
+
+    else:
+
+        st.info(
+            "No incidents stored"
+        )
+
+
+=== ARQUIVO: ./dashboard-app/sections/enterprise_audit.py ===
+import os
+import streamlit as st
+
+from ansible.ansible_runner import (
+    run_playbook
+)
+
+# ---------------------------
+# ENTERPRISE AUDIT
+# ---------------------------
+
+def render_enterprise_audit():
+
+    st.subheader(
+        "Enterprise Audit Engine"
+    )
+
+    audit_type = st.selectbox(
+
+        "Audit Type",
+
+        [
+
+            "User Audit",
+            "Group Audit",
+            "Sudoers Audit"
+        ]
+    )
+
+    # ---------------------------
+
+    if audit_type == "User Audit":
+
+        target_user = st.text_input(
+            "Target User"
+        )
+
+        if st.button(
+            "Execute User Audit",
+            key="user_audit_button"
+        ):
+
+            os.environ["TARGET_USER"] = (
+                target_user
+            )
+
+            result = run_playbook(
+                "user_audit.yml"
+            )
+
+            st.code(
+                result["stdout"]
+            )
+
+    # ---------------------------
+
+    elif audit_type == "Group Audit":
+
+        target_group = st.text_input(
+            "Target Group"
+        )
+
+        if st.button(
+            "Execute Group Audit",
+            key="group_audit_button"
+        ):
+
+            os.environ["TARGET_GROUP"] = (
+                target_group
+            )
+
+            result = run_playbook(
+                "group_audit.yml"
+            )
+
+            st.code(
+                result["stdout"]
+            )
+
+    # ---------------------------
+
+    elif audit_type == "Sudoers Audit":
+
+        keyword = st.text_input(
+            "Privilege Keyword"
+        )
+
+        if st.button(
+            "Execute Sudoers Audit",
+            key="sudoers_audit_button"
+        ):
+
+            os.environ["TARGET_KEYWORD"] = (
+                keyword
+            )
+
+            result = run_playbook(
+                "sudoers_audit.yml"
+            )
+
+            st.code(
+                result["stdout"]
+            )
+
+
+=== ARQUIVO: ./dashboard-app/sections/dashboard.py ===
+import streamlit as st
+
+def render_dashboard():
+
+    st.title(
+        "Unified Enterprise Security Operations Platform"
+    )
+
+    st.markdown("""
+Unified Security Operations monitoring platform covering:
+
+- Linux
+- AIX
+- Windows
+- AWS
+- Azure
+- GCP
+- OCI
+- IBM Cloud
+- Kubernetes
+""")
+
+
+=== ARQUIVO: ./dashboard-app/sections/threat_intelligence.py ===
+import streamlit as st
+import pandas as pd
+
+def render_threat_intelligence(
+    enriched_iocs,
+    feed_correlations,
+    cve_findings
+):
+
+    st.subheader(
+        "Threat Intelligence Enrichment"
+    )
+
+    if enriched_iocs:
+
+        threat_df = pd.DataFrame(
+            enriched_iocs
+        )
+
+        st.dataframe(
+            threat_df,
+            use_container_width=True
+        )
+
+    else:
+
+        st.success(
+            "No malicious IOC enrichment identified"
+        )
+
+    # ---------------------------
+
+    st.subheader(
+        "Threat Feed Correlation"
+    )
+
+    if feed_correlations:
+
+        feed_df = pd.DataFrame(
+            feed_correlations
+        )
+
+        st.dataframe(
+            feed_df,
+            use_container_width=True
+        )
+
+    else:
+
+        st.success(
+            "No external threat feed matches identified"
+        )
+
+    # ---------------------------
+
+    st.subheader(
+        "CVE Correlation"
+    )
+
+    if cve_findings:
+
+        cve_df = pd.DataFrame(
+            cve_findings
+        )
+
+        st.dataframe(
+            cve_df,
+            use_container_width=True
+        )
+
+    else:
+
+        st.success(
+            "No CVE correlations identified"
+        )
+
+
+=== ARQUIVO: ./dashboard-app/sections/hunting.py ===
+import streamlit as st
+
+def render_hunting(
+    logs
+):
+
+    st.subheader(
+        "Threat Hunting Console"
+    )
+
+    hunt_term = st.text_input(
+        "Hunt indicators"
+    )
+
+    if hunt_term:
+
+        matches = []
+
+        for log in logs:
+
+            if hunt_term.lower() in log.lower():
+
+                matches.append(log)
+
+        if matches:
+
+            st.success(
+                f"{len(matches)} matches found"
+            )
+
+            for match in matches:
+
+                st.code(match)
+
+        else:
+
+            st.warning(
+                "No matching events found"
+            )
+
+
+=== ARQUIVO: ./dashboard-app/sections/cloud_security.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.cloud_parser import (
+    load_json_log,
+    detect_failed_cloud_login,
+    detect_privileged_activity,
+    calculate_severity
+)
+
+def render_cloud_security():
+
+    aws_log = load_json_log(
+        "agents/aws/cloudtrail.json"
+    )
+
+    azure_log = load_json_log(
+        "agents/azure/entra-signins.json"
+    )
+
+    gcp_log = load_json_log(
+        "agents/gcp/audit-logs.json"
+    )
+
+    oci_log = load_json_log(
+        "agents/oracle-cloud/oci-audit.json"
+    )
+
+    ibm_log = load_json_log(
+        "agents/ibm-cloud/activity-tracker.json"
+    )
+
+    cloud_findings = []
+
+    cloud_events = [
+
+        ("AWS", aws_log),
+        ("Azure", azure_log),
+        ("GCP", gcp_log),
+        ("OCI", oci_log),
+        ("IBM Cloud", ibm_log)
+
+    ]
+
+    for provider, event in cloud_events:
+
+        if not event:
+            continue
+
+        if detect_failed_cloud_login(event):
+
+            cloud_findings.append({
+
+                "Cloud": provider,
+                "Finding": "Failed Authentication",
+                "Severity": calculate_severity(event)
+
+            })
+
+        if detect_privileged_activity(event):
+
+            cloud_findings.append({
+
+                "Cloud": provider,
+                "Finding": "Privileged Activity",
+                "Severity": "Critical"
+
+            })
+
+    # ---------------------------
+
+    st.subheader(
+        "Cloud Security Findings"
+    )
+
+    if cloud_findings:
+
+        cloud_df = pd.DataFrame(
+            cloud_findings
+        )
+
+        st.dataframe(
+            cloud_df,
+            use_container_width=True
+        )
+
+    else:
+
+        st.success(
+            "No cloud findings identified"
+        )
+
+
+=== ARQUIVO: ./dashboard-app/sections/realtime.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.realtime_engine import (
+    generate_realtime_event
+)
+
+# ---------------------------
+# REALTIME SECTION
+# ---------------------------
+
+def render_realtime():
+
+    st.subheader(
+        "Real-Time Security Monitoring"
+    )
+
+    realtime_events = []
+
+    for _ in range(10):
+
+        event = generate_realtime_event()
+
+        realtime_events.append(event)
+
+    realtime_df = pd.DataFrame(
+        realtime_events
+    )
+
+    st.dataframe(
+        realtime_df,
+        use_container_width=True
+    )
+
+    # ---------------------------
+
+    st.subheader(
+        "Live Event Stream"
+    )
+
+    for event in realtime_events:
+
+        severity = event.get(
+            "severity",
+            "Low"
+        )
+
+        if severity == "Critical":
+
+            st.error(event)
+
+        elif severity == "High":
+
+            st.warning(event)
+
+        elif severity == "Medium":
+
+            st.info(event)
+
+        else:
+
+            st.success(event)
+
+
+=== ARQUIVO: ./dashboard-app/sections/executive.py ===
+import streamlit as st
+
+def render_executive():
+
+    st.subheader(
+        "Executive Security Summary"
+    )
+
+    st.success("""
+
+Enterprise monitoring coverage active across:
+
+- Linux
+- AIX
+- Windows
+- AWS
+- Azure
+- GCP
+- OCI
+- IBM Cloud
+- Kubernetes
+
+Threat detection pipelines operational.
+
+MITRE ATT&CK coverage enabled.
+
+IOC monitoring active.
+
+SOAR integrations simulated successfully.
+
+""")
+
+
+=== ARQUIVO: ./dashboard-app/agents/azure/entra-signins.json ===
+{
+  "user": "security.admin",
+  "status": "failure",
+  "location": "Unknown"
+}
+
+
+=== ARQUIVO: ./dashboard-app/agents/aws/cloudtrail.json ===
+{
+  "eventName": "ConsoleLogin",
+  "sourceIPAddress": "185.220.101.1",
+  "errorMessage": "Failed authentication"
+}
+
+
+=== ARQUIVO: ./dashboard-app/agents/kubernetes/kube-audit.json ===
+{
+  "verb": "create",
+  "objectRef": {
+    "resource": "pods"
+  },
+  "user": {
+    "username": "system:admin"
+  }
+}
+
+
+=== ARQUIVO: ./dashboard-app/agents/windows/security-events.json ===
+[
+    {
+        "timestamp": "2026-05-27T10:00:00",
+        "event_id": 4625,
+        "severity": "High",
+        "source": "Windows",
+        "message": "Failed login attempt detected"
+    },
+    {
+        "timestamp": "2026-05-27T10:05:00",
+        "event_id": 4672,
+        "severity": "Critical",
+        "source": "Windows",
+        "message": "Privileged logon detected"
+    }
+]
+
+
+=== ARQUIVO: ./dashboard-app/agents/oracle-cloud/oci-audit.json ===
+{
+  "eventType": "CreateUser",
+  "severity": "HIGH"
+}
+
+
+=== ARQUIVO: ./dashboard-app/agents/ibm-cloud/activity-tracker.json ===
+{
+  "action": "iam.user.login",
+  "status": "failed"
+}
+
+
+=== ARQUIVO: ./dashboard-app/agents/gcp/audit-logs.json ===
+{
+  "methodName": "v1.compute.instances.insert",
+  "severity": "WARNING"
+}
+
+
+=== ARQUIVO: ./dashboard-app/parsers/identity_review_engine.py ===
+def create_review_campaign():
+
+    return {
+
+        "campaign":
+
+        "Quarterly Access Review",
+
+        "identities":
+
+        [
+
+            "root",
+            "oracle",
+            "svc_backup",
+            "Administrator"
+
+        ]
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/access_certification_engine.py ===
+from datetime import datetime
+
+def generate_access_review(users):
+
+    results = []
+
+    for user in users:
+
+        results.append({
+
+            "username":
+                user.get(
+                    "username"
+                ),
+
+            "last_review":
+                datetime.now().strftime(
+                    "%Y-%m-%d"
+                ),
+
+            "review_status":
+                "Pending"
+
+        })
+
+    return results
+
+
+=== ARQUIVO: ./dashboard-app/parsers/detection_engine.py ===
+import json
+
+from pathlib import Path
+
+# ---------------------------
+# BASE PATHS
+# ---------------------------
+
+CURRENT_FILE = Path(__file__).resolve()
+
+PARSERS_DIR = CURRENT_FILE.parent
+
+DASHBOARD_DIR = PARSERS_DIR.parent
+
+PROJECT_ROOT = DASHBOARD_DIR.parent
+
+RULE_FILE = (
+    PROJECT_ROOT
+    / "rules"
+    / "detection_rules.json"
+)
+
+# ---------------------------
+# LOAD RULES
+# ---------------------------
+
+def load_rules():
+
+    if not RULE_FILE.exists():
+
+        return []
+
+    with open(
+        RULE_FILE,
+        "r",
+        encoding="utf-8"
+    ) as file:
+
+        return json.load(file)
+
+# ---------------------------
+# DETECTION ENGINE
+# ---------------------------
+
+def run_detections(logs):
+
+    rules = load_rules()
+
+    findings = []
+
+    for log in logs:
+
+        for rule in rules:
+
+            keyword = rule.get(
+                "keyword",
+                ""
+            )
+
+            if keyword.lower() in log.lower():
+
+                findings.append({
+                    "rule": rule.get("name"),
+                    "severity": rule.get("severity"),
+                    "log": log
+                })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/identity_correlation.py ===
+from parsers.iam_engine import (
+    get_local_users
+)
+
+from parsers.ldap_engine import (
+    get_ldap_users
+)
+
+from parsers.ad_engine import (
+    get_ad_users
+)
+
+# ---------------------------
+# IDENTITY SEARCH
+# ---------------------------
+
+def correlate_identity(username):
+
+    results = {
+
+        "local": [],
+        "ldap": [],
+        "ad": []
+
+    }
+
+    for user in get_local_users():
+
+        if user.get(
+            "username"
+        ) == username:
+
+            results["local"].append(user)
+
+    for user in get_ldap_users():
+
+        if user.get(
+            "username"
+        ) == username:
+
+            results["ldap"].append(user)
+
+    for user in get_ad_users():
+
+        if user.get(
+            "username"
+        ) == username:
+
+            results["ad"].append(user)
+
+    return results
+
+
+=== ARQUIVO: ./dashboard-app/parsers/ldap_engine.py ===
+def get_ldap_users():
+
+    return [
+
+        {
+            "username": "ldap-user01",
+            "source": "LDAP"
+        },
+
+        {
+            "username": "ldap-admin",
+            "source": "LDAP"
+        }
+
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/baseline_compare.py ===
+def compare_lists(old, new):
+
+    return {
+
+        "added":
+            list(set(new) - set(old)),
+
+        "removed":
+            list(set(old) - set(new))
+
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/auth_engine.py ===
+USERS = {
+
+    "admin": {
+        "password": "admin123",
+        "role": "admin"
+    },
+
+    "soc": {
+        "password": "soc123",
+        "role": "soc_analyst"
+    },
+
+    "manager": {
+        "password": "manager123",
+        "role": "manager"
+    },
+
+    "exe": {
+        "password": "exec123",
+        "role": "executive"
+    }
+}
+
+
+def authenticate(
+    username,
+    password
+):
+
+    user = USERS.get(username)
+
+    if not user:
+
+        return None
+
+    if user["password"] != password:
+
+        return None
+
+    return user["role"]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/compliance_score_engine.py ===
+def calculate_compliance_score(audit):
+
+    score = 100
+
+    if audit.get("sudo_users"):
+
+        score -= 5
+
+    if audit.get("service_accounts"):
+
+        score -= 5
+
+    if len(audit.get("local_users", [])) > 50:
+
+        score -= 10
+
+    if score < 0:
+
+        score = 0
+
+    return {
+
+        "score": score
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/pam_audit_engine.py ===
+# ---------------------------
+# PRIVILEGED ACCESS AUDIT
+# ---------------------------
+
+from parsers.iam_engine import (
+
+    get_sudo_users,
+    get_groups
+
+)
+
+# ---------------------------
+# DISCOVER PRIVILEGED
+# ---------------------------
+
+def discover_privileged_access():
+
+    findings = []
+
+    # ---------------------------
+    # SUDO
+    # ---------------------------
+
+    for entry in get_sudo_users():
+
+        findings.append({
+
+            "platform": "Linux/AIX",
+            "type": "SUDO",
+            "entry": entry
+
+        })
+
+    # ---------------------------
+    # GROUPS
+    # ---------------------------
+
+    privileged_groups = [
+
+        "sudo",
+        "wheel",
+        "root",
+        "adm",
+        "system"
+
+    ]
+
+    for group in get_groups():
+
+        if group.get(
+
+            "group"
+
+        ) in privileged_groups:
+
+            findings.append({
+
+                "platform": "Unix",
+                "type": "PRIVILEGED_GROUP",
+                "group": group["group"],
+                "members": group["members"]
+
+            })
+
+    return findings
+
+# ---------------------------
+# RISK SUMMARY
+# ---------------------------
+
+def privileged_summary():
+
+    findings = discover_privileged_access()
+
+    return {
+
+        "total_privileged_findings": len(findings),
+
+        "risk": (
+
+            "Critical"
+
+            if len(findings) > 10
+
+            else "Medium"
+
+        )
+
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/rbac_engine.py ===
+# ---------------------------
+# RBAC DEFINITIONS
+# ---------------------------
+
+ROLE_PERMISSIONS = {
+
+    "admin": [
+        "dashboard",
+        "detections",
+        "incidents",
+        "threat_intelligence",
+        "compliance",
+        "soar",
+        "executive"
+    ],
+
+    "analyst": [
+        "dashboard",
+        "detections",
+        "incidents",
+        "threat_intelligence"
+    ],
+
+    "readonly": [
+        "dashboard"
+    ],
+
+    "manager": [
+        "dashboard",
+        "executive",
+        "compliance"
+    ]
+}
+
+
+# ---------------------------
+# PERMISSION CHECK
+# ---------------------------
+
+def has_permission(
+    role,
+    permission
+):
+
+    permissions = ROLE_PERMISSIONS.get(
+        role,
+        []
+    )
+
+    return permission in permissions
+
+
+=== ARQUIVO: ./dashboard-app/parsers/rule_engine.py ===
+import yaml
+
+def load_rule(path):
+
+    with open(path, "r") as file:
+
+        return yaml.safe_load(file)
+
+
+=== ARQUIVO: ./dashboard-app/parsers/attack_chain.py ===
+def build_attack_chain(
+    failed_auth,
+    cloud_findings,
+    ioc_matches,
+    critical_alerts
+):
+
+    chain = []
+
+    if failed_auth > 3:
+
+        chain.append(
+            "Initial Access - SSH Brute Force"
+        )
+
+    if cloud_findings:
+
+        chain.append(
+            "Valid Accounts - Cloud Login"
+        )
+
+    if critical_alerts > 0:
+
+        chain.append(
+            "Privilege Escalation"
+        )
+
+    if ioc_matches:
+
+        chain.append(
+            "Command and Control Activity"
+        )
+
+    return chain
+
+
+=== ARQUIVO: ./dashboard-app/parsers/ioc_matcher.py ===
+from parsers.ioc_auto_ingest import (
+    load_remote_iocs
+)
+
+# ---------------------------
+# STATIC IOCS
+# ---------------------------
+
+STATIC_IOCS = [
+
+    "185.220.101.1",
+    "malicious-domain.com"
+]
+
+# ---------------------------
+# LOAD IOCS
+# ---------------------------
+
+def load_all_iocs():
+
+    remote_iocs = load_remote_iocs()
+
+    return list(
+
+        set(
+
+            STATIC_IOCS +
+            remote_iocs
+        )
+    )
+
+# ---------------------------
+# MATCH IOCS
+# ---------------------------
+
+def match_ioc(
+    log_lines
+):
+
+    matches = []
+
+    indicators = load_all_iocs()
+
+    for line in log_lines:
+
+        for indicator in indicators:
+
+            if indicator in line:
+
+                matches.append({
+
+                    "ioc": indicator,
+                    "log": line,
+                    "severity": "Critical"
+                })
+
+    return matches
+
+
+=== ARQUIVO: ./dashboard-app/parsers/analytics_engine.py ===
+import pandas as pd
+
+from parsers.database_engine import (
+    load_detections,
+    load_incidents
+)
+
+
+# ---------------------------
+# DETECTION ANALYTICS
+# ---------------------------
+
+def detection_analytics():
+
+    detections = load_detections()
+
+    if not detections:
+
+        return pd.DataFrame()
+
+    detection_df = pd.DataFrame(
+        detections,
+        columns=[
+            "ID",
+            "Detection Type",
+            "Severity",
+            "Details"
+        ]
+    )
+
+    analytics = (
+        detection_df["Severity"]
+        .value_counts()
+        .reset_index()
+    )
+
+    analytics.columns = [
+        "Severity",
+        "Count"
+    ]
+
+    return analytics
+
+
+# ---------------------------
+# INCIDENT ANALYTICS
+# ---------------------------
+
+def incident_analytics():
+
+    incidents = load_incidents()
+
+    if not incidents:
+
+        return pd.DataFrame()
+
+    incident_df = pd.DataFrame(
+        incidents,
+        columns=[
+            "ID",
+            "Severity",
+            "Source",
+            "Description",
+            "Status",
+            "Created At"
+        ]
+    )
+
+    analytics = (
+        incident_df["Severity"]
+        .value_counts()
+        .reset_index()
+    )
+
+    analytics.columns = [
+        "Severity",
+        "Count"
+    ]
+
+    return analytics
+
+
+=== ARQUIVO: ./dashboard-app/parsers/attack_path_engine.py ===
+def build_attack_paths():
+
+    return [
+
+        {
+
+            "identity":
+                "socuser",
+
+            "path":
+
+                "sudo -> root -> AWS Admin -> K8s Cluster Admin",
+
+            "risk":
+                "Critical"
+
+        }
+
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/timeline_engine.py ===
+from datetime import datetime
+
+# ---------------------------
+# BUILD TIMELINE
+# ---------------------------
+
+def build_timeline(
+    events
+):
+
+    timeline = []
+
+    for event in events:
+
+        timeline.append({
+
+            "timestamp": datetime.utcnow().isoformat(),
+            "event": str(event)
+        })
+
+    return timeline
+
+
+=== ARQUIVO: ./dashboard-app/parsers/mitre_mapper.py ===
+MITRE_MAPPINGS = {
+    "failed ssh": {
+        "technique": "T1110",
+        "name": "Brute Force"
+    },
+
+    "sudo": {
+        "technique": "T1548",
+        "name": "Abuse Elevation Control Mechanism"
+    },
+
+    "privileged": {
+        "technique": "T1068",
+        "name": "Privilege Escalation"
+    },
+
+    "createuser": {
+        "technique": "T1136",
+        "name": "Create Account"
+    },
+
+    "kubectl exec": {
+        "technique": "T1059",
+        "name": "Command Execution"
+    }
+}
+
+
+def map_to_mitre(events):
+
+    mapped = []
+
+    for event in events:
+
+        event_str = str(event).lower()
+
+        for keyword, mitre_data in MITRE_MAPPINGS.items():
+
+            if keyword in event_str:
+
+                mapped.append({
+                    "event": event,
+                    "technique": mitre_data["technique"],
+                    "name": mitre_data["name"]
+                })
+
+    return mapped
+
+
+=== ARQUIVO: ./dashboard-app/parsers/incident_manager.py ===
+def generate_incidents():
+
+    return [
+
+        {
+            "Incident": "INC-5001",
+            "Title": "SSH Brute Force",
+            "Priority": "Critical",
+            "Owner": "Tier 2",
+            "Status": "Investigating",
+            "SLA": "15 min",
+            "Environment": "Linux"
+        },
+
+        {
+            "Incident": "INC-5002",
+            "Title": "Kubernetes Runtime Alert",
+            "Priority": "High",
+            "Owner": "Threat Hunting",
+            "Status": "Escalated",
+            "SLA": "30 min",
+            "Environment": "Kubernetes"
+        },
+
+        {
+            "Incident": "INC-5003",
+            "Title": "Suspicious Cloud Login",
+            "Priority": "Medium",
+            "Owner": "Cloud SOC",
+            "Status": "Open",
+            "SLA": "1 hour",
+            "Environment": "AWS"
+        }
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/pam_governance_engine.py ===
+from parsers.iam_engine import (
+    get_sudo_users
+)
+
+# ---------------------------
+# PAM FINDINGS
+# ---------------------------
+
+def get_privileged_accounts():
+
+    findings = []
+
+    sudo_entries = get_sudo_users()
+
+    for entry in sudo_entries:
+
+        findings.append({
+
+            "account": entry,
+            "source": "sudoers",
+            "risk": "High"
+
+        })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/jwt_engine.py ===
+import jwt
+import datetime
+
+SECRET_KEY = "enterprise-security-platform"
+
+
+# ---------------------------
+# GENERATE TOKEN
+# ---------------------------
+
+def generate_token(
+    username,
+    role
+):
+
+    payload = {
+
+        "username": username,
+        "role": role,
+
+        "exp": (
+            datetime.datetime.utcnow()
+            + datetime.timedelta(hours=8)
+        )
+    }
+
+    token = jwt.encode(
+        payload,
+        SECRET_KEY,
+        algorithm="HS256"
+    )
+
+    return token
+
+
+# ---------------------------
+# VALIDATE TOKEN
+# ---------------------------
+
+def validate_token(
+    token
+):
+
+    try:
+
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+
+        return payload
+
+    except Exception:
+
+        return None
+
+
+=== ARQUIVO: ./dashboard-app/parsers/mitre_heatmap.py ===
+from collections import Counter
+
+# ---------------------------
+# MITRE HEATMAP
+# ---------------------------
+
+def build_mitre_heatmap(
+    mitre_events
+):
+
+    techniques = []
+
+    for event in mitre_events:
+
+        technique = event.get(
+            "technique",
+            "Unknown"
+        )
+
+        techniques.append(
+            technique
+        )
+
+    counts = Counter(
+        techniques
+    )
+
+    return [
+
+        {
+            "Technique": k,
+            "Count": v
+        }
+
+        for k, v in counts.items()
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/cmdb_engine.py ===
+from pathlib import Path
+import json
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+CMDB_FILE = (
+    BASE_DIR /
+    "inventory" /
+    "cmdb.json"
+)
+
+# ---------------------------
+# LOAD CMDB
+# ---------------------------
+
+def load_cmdb():
+
+    try:
+
+        with open(
+            "inventory/cmdb.json",
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            return json.load(file)
+
+    except:
+
+        return []
+
+# ---------------------------
+# SEARCH
+# ---------------------------
+
+def get_asset_relationships(hostname):
+
+    cmdb = load_cmdb()
+
+    return [
+
+        item
+
+        for item in cmdb
+
+        if item.get(
+            "hostname"
+        ) == hostname
+
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/ad_engine.py ===
+def get_ad_users():
+
+    return [
+
+        {
+            "username": "administrator",
+            "source": "Active Directory"
+        },
+
+        {
+            "username": "svc_backup",
+            "source": "Active Directory"
+        }
+
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/identity_governance.py ===
+from datetime import datetime
+from collections import Counter
+
+from parsers.iam_engine import (
+    get_local_users,
+    get_groups,
+    get_sudo_users,
+    get_service_accounts
+)
+
+# ---------------------------
+# DORMANT ACCOUNTS
+# ---------------------------
+
+def find_dormant_accounts(users):
+
+    findings = []
+
+    for user in users:
+
+        if user.get(
+            "last_login_days",
+            0
+        ) > 90:
+
+            findings.append({
+
+                "username":
+                    user["username"],
+
+                "issue":
+                    "Dormant Account",
+
+                "severity":
+                    "High"
+
+            })
+
+    return findings
+
+# ---------------------------
+# SERVICE ACCOUNTS
+# ---------------------------
+
+def find_service_accounts():
+
+    findings = []
+
+    for account in get_service_accounts():
+
+        findings.append({
+
+            "username":
+                account,
+
+            "issue":
+                "Service Account",
+
+            "severity":
+                "Medium"
+
+        })
+
+    return findings
+
+# ---------------------------
+# PRIVILEGED ACCOUNTS
+# ---------------------------
+
+def find_privileged_accounts():
+
+    findings = []
+
+    sudo_entries = get_sudo_users()
+
+    for entry in sudo_entries:
+
+        findings.append({
+
+            "entry":
+                entry,
+
+            "issue":
+                "Privileged Access",
+
+            "severity":
+                "Critical"
+
+        })
+
+    return findings
+
+# ---------------------------
+# DUPLICATE ACCOUNTS
+# ---------------------------
+
+def find_duplicate_accounts(users):
+
+    usernames = [
+
+        user["username"]
+
+        for user in users
+
+    ]
+
+    duplicates = [
+
+        name
+
+        for name, count
+
+        in Counter(
+            usernames
+        ).items()
+
+        if count > 1
+
+    ]
+
+    return duplicates
+
+# ---------------------------
+# EMPTY GROUPS
+# ---------------------------
+
+def find_empty_groups():
+
+    findings = []
+
+    for group in get_groups():
+
+        if len(
+
+            group.get(
+                "members",
+                []
+            )
+
+        ) == 0:
+
+            findings.append({
+
+                "group":
+                    group["group"],
+
+                "issue":
+                    "Empty Group"
+
+            })
+
+    return findings
+
+# ---------------------------
+# FULL GOVERNANCE AUDIT
+# ---------------------------
+
+def run_identity_governance():
+
+    users = get_local_users()
+
+    return {
+
+        "dormant_accounts":
+            find_dormant_accounts(users),
+
+        "service_accounts":
+            find_service_accounts(),
+
+        "privileged_accounts":
+            find_privileged_users(),
+
+        "duplicate_accounts":
+            find_duplicate_accounts(users),
+
+        "empty_groups":
+            find_empty_groups()
+
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/falco_parser.py ===
+log_file = "../logs/falco-events.log"
+
+with open(log_file, "r") as file:
+
+    logs = file.readlines()
+
+for line in logs:
+
+    if "Critical" in line:
+        print("[HIGH] Runtime security incident detected")
+
+    elif "Warning" in line:
+        print("[MEDIUM] Suspicious runtime activity")
+
+
+=== ARQUIVO: ./dashboard-app/parsers/identity_risk_engine.py ===
+from datetime import datetime
+
+# ---------------------------
+# IDENTITY RISK SCORE
+# ---------------------------
+
+def calculate_identity_risk(identity):
+
+    score = 0
+
+    # ---------------------------
+    # PRIVILEGED
+    # ---------------------------
+
+    if identity.get(
+        "privileged",
+        False
+    ):
+
+        score += 40
+
+    # ---------------------------
+    # SUDO
+    # ---------------------------
+
+    if identity.get(
+        "sudo",
+        False
+    ):
+
+        score += 25
+
+    # ---------------------------
+    # FAILED LOGINS
+    # ---------------------------
+
+    failed_logins = identity.get(
+        "failed_logins",
+        0
+    )
+
+    score += min(
+        failed_logins * 2,
+        20
+    )
+
+    # ---------------------------
+    # DORMANT
+    # ---------------------------
+
+    if identity.get(
+        "dormant",
+        False
+    ):
+
+        score += 15
+
+    # ---------------------------
+    # SERVICE ACCOUNT
+    # ---------------------------
+
+    if identity.get(
+        "service_account",
+        False
+    ):
+
+        score += 10
+
+    # ---------------------------
+    # MFA
+    # ---------------------------
+
+    if identity.get(
+        "mfa_disabled",
+        False
+    ):
+
+        score += 30
+
+    # ---------------------------
+    # SHARED ACCOUNT
+    # ---------------------------
+
+    if identity.get(
+        "shared_account",
+        False
+    ):
+
+        score += 25
+
+    # ---------------------------
+    # ORPHAN ACCOUNT
+    # ---------------------------
+
+    if identity.get(
+        "orphan_account",
+        False
+    ):
+
+        score += 35
+
+    # ---------------------------
+    # EXCESSIVE PRIVILEGES
+    # ---------------------------
+
+    if identity.get(
+        "excessive_privileges",
+        False
+    ):
+
+        score += 40
+    
+    # ---------------------------
+    # RISK LEVEL
+    # ---------------------------
+
+    if score >= 80:
+
+        level = "Critical"
+
+    elif score >= 60:
+
+        level = "High"
+
+    elif score >= 30:
+
+        level = "Medium"
+
+    else:
+
+        level = "Low"
+
+    return {
+
+        "score": score,
+        "level": level
+
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/aws_iam_engine.py ===
+import boto3
+
+def get_aws_users():
+
+    try:
+        iam = boto3.client("iam")
+        
+        response = iam.list_users()
+        
+        return response["Users"]
+        
+    except Exception:
+
+        return [
+
+            {
+                "UserName": "aws-admin-simulated"
+            },
+
+            {
+                "UserName": "aws-readonly-simulated"
+            }
+
+        ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/gcp_iam_engine.py ===
+def get_gcp_users():
+
+    return [
+
+        {
+            "username": "gcp-admin",
+            "source": "GCP IAM"
+        }
+
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/database_engine.py ===
+import sqlite3
+import json
+
+from pathlib import Path
+from datetime import datetime
+
+# ---------------------------
+# BASE PATHS
+# ---------------------------
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+DATABASE_DIR = Path("/app/database")
+
+DB_PATH = DATABASE_DIR / "security.db"
+
+# ---------------------------
+# CREATE DATABASE DIRECTORY
+# ---------------------------
+
+DATABASE_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+# ---------------------------
+# CONNECT
+# ---------------------------
+
+def connect_db():
+
+    connection = sqlite3.connect(
+        DB_PATH,
+        check_same_thread=False
+    )
+
+    return connection
+    
+# ---------------------------
+# CREATE TABLES
+# ---------------------------
+
+def create_tables():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    # ---------------------------
+    # SECURITY EVENTS
+    # ---------------------------
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS security_events (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        timestamp TEXT,
+
+        event_type TEXT,
+
+        severity TEXT,
+
+        source TEXT,
+
+        details TEXT,
+
+        created_at TEXT
+    )
+    """)
+
+    # ---------------------------
+    # INCIDENTS
+    # ---------------------------
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS incidents (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        severity TEXT,
+
+        source TEXT,
+
+        description TEXT,
+
+        status TEXT,
+
+        created_at TEXT
+    )
+    """)
+
+    # ---------------------------
+    # DETECTIONS
+    # ---------------------------
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS detections (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        detection_type TEXT,
+
+        severity TEXT,
+
+        details TEXT,
+
+        created_at TEXT
+    )
+    """)
+
+    # ---------------------------
+    # IOC MATCHES
+    # ---------------------------
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS ioc_matches (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        indicator TEXT,
+
+        source TEXT,
+
+        severity TEXT,
+
+        created_at TEXT
+    )
+    """)
+
+    # ---------------------------
+    # THREAT HUNTING
+    # ---------------------------
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS hunting_queries (
+
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+        query TEXT,
+
+        analyst TEXT,
+
+        created_at TEXT
+    )
+    """)
+
+    connection.commit()
+
+    connection.close()
+
+
+# ---------------------------
+# SAVE SECURITY EVENT
+# ---------------------------
+
+def save_security_event(
+    event_type,
+    severity,
+    source,
+    raw_log
+):
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    INSERT INTO security_events (
+
+        timestamp,
+        event_type,
+        severity,
+        source,
+        details,
+        created_at
+
+    )
+    VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+
+        datetime.utcnow().isoformat(),
+        event_type,
+        severity,
+        source,
+        raw_log,
+        datetime.utcnow().isoformat()
+
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+
+# ---------------------------
+# LOAD SECURITY EVENTS
+# ---------------------------
+
+def load_security_events():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM security_events
+    ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows
+
+
+# ---------------------------
+# SAVE INCIDENT
+# ---------------------------
+
+def save_incident(
+    severity,
+    source,
+    description,
+    status
+):
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    INSERT INTO incidents (
+
+        severity,
+        source,
+        description,
+        status,
+        created_at
+
+    )
+    VALUES (?, ?, ?, ?, ?)
+    """, (
+
+        severity,
+        source,
+        description,
+        status,
+        datetime.utcnow().isoformat()
+
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+
+# ---------------------------
+# LOAD INCIDENTS
+# ---------------------------
+
+def load_incidents():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM incidents
+    ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows
+
+
+# ---------------------------
+# SAVE DETECTION
+# ---------------------------
+
+def save_detection(
+    detection_type,
+    severity,
+    details
+):
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    INSERT INTO detections (
+
+        detection_type,
+        severity,
+        details,
+        created_at
+
+    )
+    VALUES (?, ?, ?, ?)
+    """, (
+
+        detection_type,
+        severity,
+        details,
+        datetime.utcnow().isoformat()
+
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+
+# ---------------------------
+# LOAD DETECTIONS
+# ---------------------------
+
+def load_detections():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM detections
+    ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows
+
+
+# ---------------------------
+# SAVE IOC MATCH
+# ---------------------------
+
+def save_ioc_match(
+    indicator,
+    source,
+    severity
+):
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    INSERT INTO ioc_matches (
+
+        indicator,
+        source,
+        severity,
+        created_at
+
+    )
+    VALUES (?, ?, ?, ?)
+    """, (
+
+        indicator,
+        source,
+        severity,
+        datetime.utcnow().isoformat()
+
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+
+# ---------------------------
+# LOAD IOC MATCHES
+# ---------------------------
+
+def load_ioc_matches():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM ioc_matches
+    ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows
+
+
+# ---------------------------
+# SAVE HUNT QUERY
+# ---------------------------
+
+def save_hunting_query(
+    query,
+    analyst="SOC Analyst"
+):
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    INSERT INTO hunting_queries (
+
+        query,
+        analyst,
+        created_at
+
+    )
+    VALUES (?, ?, ?)
+    """, (
+
+        query,
+        analyst,
+        datetime.utcnow().isoformat()
+
+    ))
+
+    connection.commit()
+
+    connection.close()
+
+
+# ---------------------------
+# LOAD HUNT QUERIES
+# ---------------------------
+
+def load_hunting_queries():
+
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM hunting_queries
+    ORDER BY id DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    connection.close()
+
+    return rows
+
+
+=== ARQUIVO: ./dashboard-app/parsers/risk_engine.py ===
+# ---------------------------
+# RISK ENGINE
+# ---------------------------
+
+SEVERITY_WEIGHTS = {
+
+    "Low": 5,
+    "Medium": 20,
+    "High": 50,
+    "Critical": 80
+}
+
+# ---------------------------
+# CALCULATE RISK
+# ---------------------------
+
+def calculate_risk_score(
+
+    detections,
+
+    threat_intel=False,
+
+    privileged_activity=False,
+
+    lateral_movement=False,
+
+    baseline_drift=False,
+
+    suspicious_user=False,
+
+    cloud_event=False
+
+    identity_risk=False
+
+):
+
+    score = 0
+
+    # ---------------------------
+    # DETECTIONS
+    # ---------------------------
+
+    for detection in detections:
+
+        severity = detection.get(
+            "severity",
+            "Low"
+        )
+
+        score += SEVERITY_WEIGHTS.get(
+            severity,
+            0
+        )
+
+    # ---------------------------
+    # THREAT INTEL
+    # ---------------------------
+
+    if threat_intel:
+
+        score += 30
+
+    # ---------------------------
+    # PRIVILEGED ACTIVITY
+    # ---------------------------
+
+    if privileged_activity:
+
+        score += 25
+
+    # ---------------------------
+    # LATERAL MOVEMENT
+    # ---------------------------
+
+    if lateral_movement:
+
+        score += 40
+
+    # ---------------------------
+    # BASELINE DRIFT
+    # ---------------------------
+
+    if baseline_drift:
+
+        score += 35
+
+    # ---------------------------
+    # UEBA
+    # ---------------------------
+
+    if suspicious_user:
+
+        score += 30
+
+    # ---------------------------
+    # CLOUD
+    # ---------------------------
+
+    if cloud_event:
+
+        score += 20
+        
+    # ---------------------------
+    # IAM
+    # ---------------------------
+
+    if identity_risk:
+
+        score += 30
+    
+    # ---------------------------
+    # LIMIT
+    # ---------------------------
+
+    if score > 100:
+
+        score = 100
+
+    # ---------------------------
+    # LEVEL
+    # ---------------------------
+
+    if score >= 90:
+
+        level = "Critical"
+
+    elif score >= 70:
+
+        level = "High"
+
+    elif score >= 40:
+
+        level = "Medium"
+
+    else:
+
+        level = "Low"
+
+    return {
+
+        "score":
+            score,
+        "level":
+            level
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/__init__.py ===
+
+
+=== ARQUIVO: ./dashboard-app/parsers/threat_scoring.py ===
+def calculate_threat_score(
+    critical_alerts,
+    failed_auth,
+    cloud_findings_count,
+    ioc_matches_count
+):
+
+    score = 0
+
+    score += critical_alerts * 25
+    score += failed_auth * 5
+    score += cloud_findings_count * 20
+    score += ioc_matches_count * 30
+
+    if score >= 100:
+        severity = "Critical"
+
+    elif score >= 60:
+        severity = "High"
+
+    elif score >= 30:
+        severity = "Medium"
+
+    else:
+        severity = "Low"
+
+    return score, severity
+
+
+=== ARQUIVO: ./dashboard-app/parsers/azure_iam_engine.py ===
+def get_entra_users():
+
+    return [
+
+        {
+            "username": "azure-admin",
+            "source": "Entra ID"
+        }
+
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/asset_inventory.py ===
+import json
+
+# ---------------------------
+# INVENTORY
+# ---------------------------
+
+def load_inventory():
+
+    try:
+
+        with open(
+            "inventory/assets.json",
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            return json.load(file)
+
+    except:
+
+        return []
+
+# ---------------------------
+# SEARCH HOST
+# ---------------------------
+
+def get_asset(hostname):
+
+    inventory = load_inventory()
+
+    for asset in inventory:
+
+        if asset.get(
+            "hostname"
+        ) == hostname:
+
+            return asset
+
+    return None
+
+# ---------------------------
+# FILTER BY OS
+# ---------------------------
+
+def get_assets_by_os(os_type):
+
+    inventory = load_inventory()
+
+    return [
+
+        asset
+
+        for asset in inventory
+
+        if asset.get(
+            "os",
+            ""
+        ).lower() == os_type.lower()
+
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/correlation_engine.py ===
+def correlate_security_events(
+    failed_auth,
+    critical_alerts,
+    cloud_findings,
+    ioc_matches
+):
+
+    correlations = []
+
+    # Multi-stage attack simulation
+
+    if failed_auth >= 5 and critical_alerts >= 1:
+
+        correlations.append({
+            "Correlation": "Possible Initial Access + Execution",
+            "Severity": "Critical",
+            "MITRE": "T1110 + T1059"
+        })
+
+    if len(cloud_findings) >= 1 and len(ioc_matches) >= 1:
+
+        correlations.append({
+            "Correlation": "Cloud Compromise + IOC Activity",
+            "Severity": "High",
+            "MITRE": "T1078"
+        })
+
+    if failed_auth >= 10:
+
+        correlations.append({
+            "Correlation": "SSH Brute Force Campaign",
+            "Severity": "Critical",
+            "MITRE": "T1110"
+        })
+
+    return correlations
+
+
+=== ARQUIVO: ./dashboard-app/parsers/compliance_baseline_engine.py ===
+# ---------------------------
+# CIS BASELINE CHECKS
+# ---------------------------
+
+def evaluate_baseline(data):
+
+    findings = []
+
+    # ---------------------------
+    # ROOT LOGIN
+    # ---------------------------
+
+    if data.get(
+        "permit_root_login",
+        True
+    ):
+
+        findings.append({
+
+            "control":
+                "SSH Root Login",
+
+            "framework":
+                "CIS",
+
+            "severity":
+                "High",
+
+            "status":
+                "Fail"
+
+        })
+
+    # ---------------------------
+    # PASSWORD AUTH
+    # ---------------------------
+
+    if data.get(
+        "password_authentication",
+        True
+    ):
+
+        findings.append({
+
+            "control":
+                "Password Authentication",
+
+            "framework":
+                "CIS",
+
+            "severity":
+                "Medium",
+
+            "status":
+                "Fail"
+
+        })
+
+    # ---------------------------
+    # MFA
+    # ---------------------------
+
+    if not data.get(
+        "mfa_enabled",
+        False
+    ):
+
+        findings.append({
+
+            "control":
+                "MFA",
+
+            "framework":
+                "NIST",
+
+            "severity":
+                "High",
+
+            "status":
+                "Fail"
+
+        })
+
+    # ---------------------------
+    # DORMANT USERS
+    # ---------------------------
+
+    if data.get(
+        "dormant_accounts",
+        0
+    ) > 0:
+
+        findings.append({
+
+            "control":
+                "Dormant Accounts",
+
+            "framework":
+                "ISO27001",
+
+            "severity":
+                "Medium",
+
+            "status":
+                "Fail"
+
+        })
+
+    return findings
+
+    # ---------------------------
+    # Compliance Score
+    # ---------------------------
+    
+    def calculate_compliance_score(findings):
+
+        total_controls = 20
+
+        failed_controls = len(findings)
+
+        passed = (
+
+            total_controls -
+            failed_controls
+
+        )
+
+        score = int(
+
+            (passed / total_controls)
+            * 100
+
+        )
+
+        return score
+
+
+=== ARQUIVO: ./dashboard-app/parsers/privilege_detection.py ===
+CRITICAL_PATTERNS = [
+
+    "ALL=(ALL)",
+    "NOPASSWD",
+    "wheel",
+    "root"
+]
+
+# ---------------------------
+# DETECT PRIVILEGE RISK
+# ---------------------------
+
+def detect_privilege_escalation(
+    logs
+):
+
+    findings = []
+
+    for log in logs:
+
+        for pattern in CRITICAL_PATTERNS:
+
+            if pattern.lower() in log.lower():
+
+                findings.append({
+
+                    "severity": "Critical",
+                    "pattern": pattern,
+                    "log": log
+                })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/compliance_engine.py ===
+CIS_CONTROLS = [
+
+    "Password Policy",
+    "Privileged Access",
+    "Audit Logging",
+    "MFA Enforcement",
+    "Least Privilege"
+]
+
+# ---------------------------
+# RUN COMPLIANCE
+# ---------------------------
+
+def run_compliance():
+
+    findings = []
+
+    for control in CIS_CONTROLS:
+
+        findings.append({
+
+            "control": control,
+            "status": "Compliant"
+        })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/normalization_engine.py ===
+def normalize_event(
+
+    source,
+    raw_log
+
+):
+
+    log = raw_log.lower()
+
+    severity = "Low"
+
+    event_type = "Informational"
+
+    # ---------------------------
+    # FAILED AUTH
+    # ---------------------------
+
+    if "failed" in log:
+
+        severity = "High"
+
+        event_type = "Failed Authentication"
+
+    # ---------------------------
+    # SUDO
+    # ---------------------------
+
+    elif "sudo" in log:
+
+        severity = "Medium"
+
+        event_type = "Privileged Command"
+
+    # ---------------------------
+    # ROOT
+    # ---------------------------
+
+    elif "root" in log:
+
+        severity = "Critical"
+
+        event_type = "Root Activity"
+
+    # ---------------------------
+    # NETWORK
+    # ---------------------------
+
+    elif "curl" in log or "wget" in log:
+
+        severity = "Critical"
+
+        event_type = "Suspicious Network Activity"
+
+    return {
+
+        "source": source,
+
+        "event_type": event_type,
+
+        "severity": severity,
+
+        "raw_log": raw_log
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/reporting_engine.py ===
+from fpdf import FPDF
+
+from configs.settings import (
+    REPORTS_DIR
+)
+
+report_path = (
+    REPORTS_DIR /
+    "executive_security_report.pdf"
+)
+
+def generate_executive_report(
+    threat_score,
+    risk_level,
+    incidents,
+    critical_alerts
+):
+
+    REPORTS_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    pdf = FPDF()
+
+    pdf.add_page()
+
+    pdf.set_font(
+        "Arial",
+        "B",
+        16
+    )
+
+    pdf.cell(
+        200,
+        10,
+        txt="Executive Security Report",
+        ln=True,
+        align="C"
+    )
+
+    pdf.ln(10)
+
+    pdf.set_font(
+        "Arial",
+        size=12
+    )
+
+    pdf.cell(
+        200,
+        10,
+        txt=f"Threat Score: {threat_score}",
+        ln=True
+    )
+
+    pdf.cell(
+        200,
+        10,
+        txt=f"Enterprise Risk Level: {risk_level}",
+        ln=True
+    )
+
+    pdf.cell(
+        200,
+        10,
+        txt=f"Open Incidents: {incidents}",
+        ln=True
+    )
+
+    pdf.cell(
+        200,
+        10,
+        txt=f"Critical Alerts: {critical_alerts}",
+        ln=True
+    )
+
+    pdf.ln(10)
+
+    pdf.multi_cell(
+        0,
+        10,
+        txt="""
+Unified SOC monitoring platform operational.
+
+Security telemetry active across:
+- Linux
+- AIX
+- Windows
+- AWS
+- Azure
+- GCP
+- OCI
+- Kubernetes
+
+MITRE ATT&CK correlation active.
+
+Threat intelligence enrichment operational.
+
+SOAR workflows simulated successfully.
+"""
+    )
+
+    pdf.output(
+        str(report_path)
+    )
+
+    return str(report_path)
+
+
+=== ARQUIVO: ./dashboard-app/parsers/realtime_engine.py ===
+import random
+
+def generate_realtime_event():
+
+    events = [
+
+        {
+            "severity": "Critical",
+            "event": "Falco detected container escape"
+        },
+
+        {
+            "severity": "High",
+            "event": "AWS root login detected"
+        },
+
+        {
+            "severity": "Medium",
+            "event": "Multiple failed SSH attempts"
+        },
+
+        {
+            "severity": "Low",
+            "event": "New Kubernetes pod created"
+        }
+    ]
+
+    return random.choice(events)
+
+
+=== ARQUIVO: ./dashboard-app/parsers/cve_mapper.py ===
+def enrich_cves(iocs):
+
+    findings = []
+
+    simulated_mapping = {
+
+        "185.220.101.1": {
+            "cve": "CVE-2024-3094",
+            "threat_actor": "UNC5221",
+            "malware": "XZ Backdoor",
+            "severity": "Critical"
+        },
+
+        "malicious-domain.com": {
+            "cve": "CVE-2023-23397",
+            "threat_actor": "APT29",
+            "malware": "Outlook NTLM Leak",
+            "severity": "High"
+        }
+    }
+
+    for ioc in iocs:
+
+        if ioc in simulated_mapping:
+
+            item = simulated_mapping[ioc]
+
+            findings.append({
+                "IOC": ioc,
+                "CVE": item["cve"],
+                "Threat Actor": item["threat_actor"],
+                "Malware": item["malware"],
+                "Severity": item["severity"]
+            })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/identity_analytics_engine.py ===
+from parsers.identity_risk_engine import (
+    calculate_identity_risk
+)
+
+def analyze_identities(users):
+
+    results = []
+
+    for user in users:
+
+        risk = calculate_identity_risk(user)
+
+        results.append({
+
+            "username":
+                user.get(
+                    "username"
+                ),
+
+            "risk":
+                risk["level"],
+
+            "score":
+                risk["score"]
+
+        })
+
+    return results
+
+
+=== ARQUIVO: ./dashboard-app/parsers/session_auth.py ===
+import streamlit as st
+
+from datetime import (
+    datetime,
+    timedelta
+)
+
+SESSION_TIMEOUT_MINUTES = 30
+
+# ---------------------------
+# VALIDATE SESSION
+# ---------------------------
+
+def validate_session():
+
+    authenticated = st.session_state.get(
+        "authenticated",
+        False
+    )
+
+    if not authenticated:
+
+        return False
+
+    last_activity = st.session_state.get(
+        "last_activity"
+    )
+
+    if not last_activity:
+
+        return False
+
+    now = datetime.utcnow()
+
+    session_age = now - last_activity
+
+    if session_age > timedelta(
+        minutes=SESSION_TIMEOUT_MINUTES
+    ):
+
+        logout()
+
+        return False
+
+    st.session_state[
+        "last_activity"
+    ] = now
+
+    return True
+
+# ---------------------------
+# REQUIRE AUTH
+# ---------------------------
+
+def require_auth():
+
+    if not validate_session():
+
+        st.warning(
+            "Session expired. Please login again."
+        )
+
+        st.stop()
+
+# ---------------------------
+# LOGIN USER
+# ---------------------------
+
+def login_user(role):
+
+    st.session_state[
+        "authenticated"
+    ] = True
+
+    st.session_state[
+        "role"
+    ] = role
+
+    st.session_state[
+        "last_activity"
+    ] = datetime.utcnow()
+
+# ---------------------------
+# LOGOUT
+# ---------------------------
+
+def logout():
+
+    for key in list(
+        st.session_state.keys()
+    ):
+
+        del st.session_state[key]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/log_parser.py ===
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+
+def read_log(file_path):
+
+    full_path = BASE_DIR / file_path
+
+    if not full_path.exists():
+        return []
+
+    with open(full_path, "r") as file:
+        return file.readlines()
+
+
+def count_failed_auth(lines):
+
+    return sum(
+        1 for line in lines
+        if "Failed" in line
+        or "failure" in line
+    )
+
+
+def count_critical(lines):
+
+    return sum(
+        1 for line in lines
+        if "Critical" in line
+        or "HIGH" in line
+    )
+
+
+def detect_bruteforce(lines):
+
+    failed = count_failed_auth(lines)
+
+    if failed >= 2:
+        return True
+
+    return False
+
+
+=== ARQUIVO: ./dashboard-app/parsers/privilege_graph.py ===
+from parsers.iam_engine import (
+    get_groups,
+    get_sudo_users
+)
+
+# ---------------------------
+# PRIVILEGE GRAPH
+# ---------------------------
+
+def build_privilege_graph(username):
+
+    graph = []
+
+    graph.append(
+
+        f"User -> {username}"
+
+    )
+
+    for group in get_groups():
+
+        if username in group.get(
+            "members",
+            []
+        ):
+
+            graph.append(
+
+                f"{username} -> {group['group']}"
+
+            )
+
+    for sudo in get_sudo_users():
+
+        if username in sudo:
+
+            graph.append(
+
+                f"{username} -> SUDO"
+
+            )
+
+    return graph
+
+
+=== ARQUIVO: ./dashboard-app/parsers/auth_parser.py ===
+import re
+
+log_file = "../logs/auth.log"
+
+with open(log_file, "r") as file:
+
+    logs = file.readlines()
+
+for line in logs:
+
+    if "Failed password" in line:
+
+        ip = re.findall(r'\d+\.\d+\.\d+\.\d+', line)
+
+        print(f"[ALERT] Failed authentication detected from {ip[0]}")
+
+
+=== ARQUIVO: ./dashboard-app/parsers/cloud_identity_engine.py ===
+from parsers.aws_iam_engine import (
+    get_aws_users
+)
+
+from parsers.azure_iam_engine import (
+    get_entra_users
+)
+
+from parsers.gcp_iam_engine import (
+    get_gcp_users
+)
+
+# ---------------------------
+# CLOUD IDENTITIES
+# ---------------------------
+
+def get_all_cloud_identities():
+
+    return {
+
+        "aws":
+            get_aws_users(),
+
+        "azure":
+            get_entra_users(),
+
+        "gcp":
+            get_gcp_users()
+
+    }
+
+# ---------------------------
+# SEARCH
+# ---------------------------
+
+def search_cloud_identity(
+    username
+):
+
+    findings = []
+
+    for user in get_aws_users():
+
+        if username.lower() in str(user).lower():
+
+            findings.append({
+
+                "provider": "AWS",
+                "details": user
+
+            })
+
+    for user in get_entra_users():
+
+        if username.lower() in str(user).lower():
+
+            findings.append({
+
+                "provider": "Azure",
+                "details": user
+
+            })
+
+    for user in get_gcp_users():
+
+        if username.lower() in str(user).lower():
+
+            findings.append({
+
+                "provider": "GCP",
+                "details": user
+
+            })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/threat_intelligence.py ===
+def enrich_iocs(iocs):
+
+    enriched = []
+
+    malicious_iocs = {
+        "185.220.101.1": {
+            "type": "TOR Exit Node",
+            "risk": "Critical",
+            "country": "Unknown"
+        },
+
+        "192.168.1.200": {
+            "type": "Internal Recon",
+            "risk": "Medium",
+            "country": "Internal"
+        },
+
+        "evil-admin.com": {
+            "type": "Malicious Domain",
+            "risk": "High",
+            "country": "RU"
+        }
+    }
+
+    for ioc in iocs:
+
+        if ioc in malicious_iocs:
+
+            data = malicious_iocs[ioc]
+
+            enriched.append({
+                "ioc": ioc,
+                "type": data["type"],
+                "risk": data["risk"],
+                "country": data["country"]
+            })
+
+    return enriched
+
+
+=== ARQUIVO: ./dashboard-app/parsers/identity_lifecycle_engine.py ===
+from parsers.iam_engine import (
+    get_local_users
+)
+
+# ---------------------------
+# DORMANT ACCOUNTS
+# ---------------------------
+
+def find_dormant_accounts():
+
+    findings = []
+
+    for user in get_local_users():
+
+        findings.append({
+
+            "username":
+                user["username"],
+
+            "status":
+                "Dormant"
+
+        })
+
+    return findings
+
+# ---------------------------
+# ORPHAN ACCOUNTS
+# ---------------------------
+
+def find_orphan_accounts():
+
+    findings = []
+
+    for user in get_local_users():
+
+        if user.get(
+            "manager"
+        ) is None:
+
+            findings.append({
+
+                "username":
+                    user["username"],
+
+                "risk":
+                    "Orphan Account"
+
+            })
+
+    return findings
+
+# ---------------------------
+# NO MFA
+# ---------------------------
+
+def find_no_mfa_accounts():
+
+    findings = []
+
+    for user in get_local_users():
+
+        findings.append({
+
+            "username":
+                user["username"],
+
+            "mfa":
+                False
+
+        })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/yaml_detection_engine.py ===
+import yaml
+from pathlib import Path
+
+RULES_DIR = (
+    Path(__file__)
+    .resolve()
+    .parent.parent.parent
+    / "detections"
+    / "rules"
+)
+
+def load_rules():
+
+    rules = []
+
+    for file in RULES_DIR.glob("*.yml"):
+
+        with open(file, "r") as stream:
+
+            rule = yaml.safe_load(stream)
+
+            rules.append(rule)
+
+    return rules
+
+def run_yaml_detections(logs):
+
+    detections = []
+
+    rules = load_rules()
+
+    for rule in rules:
+
+        for log in logs:
+
+            for pattern in rule["patterns"]:
+
+                if pattern.lower() in log.lower():
+
+                    detections.append({
+
+                        "title": rule["title"],
+                        "severity": rule["severity"],
+                        "pattern": pattern,
+                        "log": log,
+                        "mitre": ", ".join(rule["mitre"])
+                    })
+
+    return detections
+
+
+=== ARQUIVO: ./dashboard-app/parsers/linux_audit_engine.py ===
+import os
+import pwd
+import grp
+import subprocess
+
+# ---------------------------
+# USERS
+# ---------------------------
+
+def get_linux_users():
+
+    users = []
+
+    for user in pwd.getpwall():
+
+        users.append({
+
+            "username": user.pw_name,
+            "uid": user.pw_uid,
+            "gid": user.pw_gid,
+            "shell": user.pw_shell,
+            "source": "Linux"
+
+        })
+
+    return users
+
+# ---------------------------
+# GROUPS
+# ---------------------------
+
+def get_linux_groups():
+
+    groups = []
+
+    for group in grp.getgrall():
+
+        groups.append({
+
+            "group": group.gr_name,
+            "gid": group.gr_gid,
+            "members": group.gr_mem
+
+        })
+
+    return groups
+
+# ---------------------------
+# SUDO
+# ---------------------------
+
+def get_linux_sudo():
+
+    entries = []
+
+    sudo_files = [
+
+        "/etc/sudoers"
+
+    ]
+
+    sudoers_d = "/etc/sudoers.d"
+
+    if os.path.exists(sudoers_d):
+
+        for file in os.listdir(sudoers_d):
+
+            sudo_files.append(
+                f"{sudoers_d}/{file}"
+            )
+
+    for path in sudo_files:
+
+        if not os.path.exists(path):
+
+            continue
+
+        try:
+
+            with open(path) as file:
+
+                for line in file:
+
+                    line = line.strip()
+
+                    if (
+
+                        line
+                        and not line.startswith("#")
+
+                    ):
+
+                        entries.append(line)
+
+        except:
+
+            pass
+
+    return entries
+
+# ---------------------------
+# LAST LOGINS
+# ---------------------------
+
+def get_last_logins():
+
+    try:
+
+        result = subprocess.run(
+
+            ["last", "-n", "20"],
+
+            capture_output=True,
+            text=True
+
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        return []
+
+# ---------------------------
+# SERVICES
+# ---------------------------
+
+def get_running_services():
+
+    try:
+
+        result = subprocess.run(
+
+            [
+                "systemctl",
+                "list-units",
+                "--type=service",
+                "--state=running"
+            ],
+
+            capture_output=True,
+            text=True
+
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        return []
+
+# ---------------------------
+# AUDIT
+# ---------------------------
+
+def run_linux_audit():
+
+    return {
+
+        "users": get_linux_users(),
+        "groups": get_linux_groups(),
+        "sudo": get_linux_sudo(),
+        "last_logins": get_last_logins(),
+        "services": get_running_services()
+
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/entra_engine.py ===
+msgraph-sdk
+
+
+=== ARQUIVO: ./dashboard-app/parsers/k8s_rbac_engine.py ===
+def get_k8s_roles():
+
+    return [
+
+        {
+            "role": "cluster-admin",
+            "namespace": "default"
+        },
+
+        {
+            "role": "view",
+            "namespace": "dev"
+        }
+
+    ]
+
+
+=== ARQUIVO: ./dashboard-app/parsers/identity_governance_engine.py ===
+from parsers.iam_engine import (
+    get_local_users,
+    get_groups,
+    get_sudo_users
+)
+
+from parsers.identity_risk_engine import (
+    calculate_identity_risk
+)
+
+# ---------------------------
+# GOVERNANCE ANALYSIS
+# ---------------------------
+
+def analyze_identity_governance():
+
+    users = get_local_users()
+
+    sudo_users = get_sudo_users()
+
+    findings = []
+
+    for user in users:
+
+        username = user.get(
+            "username"
+        )
+
+        privileged = False
+
+        for entry in sudo_users:
+
+            if username in str(entry):
+
+                privileged = True
+
+                break
+
+        risk = calculate_identity_risk({
+
+            "privileged": privileged,
+
+            "sudo": privileged,
+
+            "failed_logins": 0,
+
+            "mfa_enabled": False
+
+        })
+
+        findings.append({
+
+            "username": username,
+
+            "privileged": privileged,
+
+            "risk_score": risk["score"],
+
+            "risk_level": risk["level"]
+
+        })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/live_metrics.py ===
+import random
+
+def generate_live_metrics():
+
+    return {
+
+        "critical_alerts": random.randint(1, 20),
+
+        "runtime_threats": random.randint(5, 40),
+
+        "failed_auth": random.randint(10, 100),
+
+        "incidents": random.randint(1, 15)
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/windows_audit_engine.py ===
+import json
+import subprocess
+
+from configs.settings import (
+    WINDOWS_LOG
+)
+
+# ---------------------------
+# USERS
+# ---------------------------
+
+def get_windows_users():
+
+    try:
+
+        result = subprocess.run(
+
+            [
+
+                "powershell",
+                "-Command",
+                "Get-LocalUser | Select Name"
+
+            ],
+
+            capture_output=True,
+            text=True
+
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        return []
+
+# ---------------------------
+# LOCAL ADMINS
+# ---------------------------
+
+def get_local_admins():
+
+    try:
+
+        result = subprocess.run(
+
+            [
+
+                "powershell",
+                "-Command",
+                "Get-LocalGroupMember Administrators"
+
+            ],
+
+            capture_output=True,
+            text=True
+
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        return []
+
+# ---------------------------
+# EVENTS
+# ---------------------------
+
+def get_windows_events():
+
+    try:
+
+        with open(
+            WINDOWS_LOG,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            return json.load(file)
+
+    except:
+
+        return []
+
+# ---------------------------
+# AUDIT
+# ---------------------------
+
+def run_windows_audit():
+
+    return {
+
+        "users": get_windows_users(),
+        "local_admins": get_local_admins(),
+        "events": get_windows_events()
+
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/iam_engine.py ===
+import os
+import pwd
+import grp
+import platform
+
+# ---------------------------
+# PLATFORM OS
+# ---------------------------
+
+OS_TYPE = platform.system().lower()
+
+# ---------------------------
+# LOCAL USERS
+# ---------------------------
+
+def get_local_users():
+
+    if OS_TYPE == "windows":
+
+        return get_windows_users()
+
+    return get_unix_users()
+
+# ---------------------------
+# UNIX USERS
+# ---------------------------
+
+def get_unix_users():
+
+    users = []
+
+    for user in pwd.getpwall():
+
+        users.append({
+
+            "username": user.pw_name,
+            "uid": user.pw_uid,
+            "gid": user.pw_gid,
+            "shell": user.pw_shell,
+            "source": "Local"
+
+        })
+
+    return users
+
+# ---------------------------
+# WINDOWS USERS
+# ---------------------------
+
+def get_windows_users():
+
+    return [
+
+        {
+            "username": "Administrator",
+            "source": "Local"
+        }
+
+    ]
+
+# ---------------------------
+# GROUPS
+# ---------------------------
+
+def get_groups():
+    
+    if OS_TYPE == "windows":
+
+        return []
+
+    groups = []
+
+    for group in grp.getgrall():
+
+        groups.append({
+
+            "group": group.gr_name,
+            "gid": group.gr_gid,
+            "members": group.gr_mem
+        })
+
+    return groups
+
+# ---------------------------
+# SUDO USERS
+# ---------------------------
+
+def get_sudo_users():
+
+    sudo_users = []
+
+    sudo_files = [
+
+        "/etc/sudoers"
+
+    ]
+
+    for file_path in sudo_files:
+
+        if not os.path.exists(file_path):
+
+            continue
+
+        try:
+
+            with open(file_path) as file:
+
+                for line in file:
+
+                    line = line.strip()
+
+                    if (
+
+                        line
+                        and not line.startswith("#")
+
+                    ):
+
+                        sudo_users.append(line)
+
+        except:
+
+            pass
+
+    return sudo_users
+
+# ---------------------------
+# Melhoria - teste
+# ---------------------------
+
+def get_service_accounts():
+
+    accounts = []
+
+    users = get_local_users()
+
+    for user in users:
+
+        username = user.get(
+            "username",
+            ""
+        )
+
+        if (
+
+            username.startswith("svc")
+            or username.startswith("oracle")
+            or username.startswith("db2")
+
+        ):
+
+            accounts.append(
+
+                username
+
+            )
+
+    return accounts
+
+
+=== ARQUIVO: ./dashboard-app/parsers/ioc_auto_ingest.py ===
+import requests
+
+# ---------------------------
+# LOAD REMOTE IOCS
+# ---------------------------
+
+def load_remote_iocs():
+
+    urls = [
+
+        "https://feodotracker.abuse.ch/downloads/ipblocklist.txt"
+    ]
+
+    indicators = []
+
+    for url in urls:
+
+        try:
+
+            response = requests.get(
+                url,
+                timeout=10
+            )
+
+            if response.status_code == 200:
+
+                indicators.extend(
+                    response.text.splitlines()
+                )
+
+        except Exception:
+
+            pass
+
+    return indicators
+
+
+=== ARQUIVO: ./dashboard-app/parsers/aix_audit_engine.py ===
+import os
+import pwd
+import grp
+import subprocess
+
+# ---------------------------
+# USERS
+# ---------------------------
+
+def get_aix_users():
+
+    users = []
+
+    for user in pwd.getpwall():
+
+        users.append({
+
+            "username": user.pw_name,
+            "uid": user.pw_uid,
+            "gid": user.pw_gid,
+            "shell": user.pw_shell,
+            "source": "AIX"
+
+        })
+
+    return users
+
+# ---------------------------
+# GROUPS
+# ---------------------------
+
+def get_aix_groups():
+
+    groups = []
+
+    for group in grp.getgrall():
+
+        groups.append({
+
+            "group": group.gr_name,
+            "gid": group.gr_gid,
+            "members": group.gr_mem
+
+        })
+
+    return groups
+
+# ---------------------------
+# ROLES
+# ---------------------------
+
+def get_aix_roles():
+
+    try:
+
+        result = subprocess.run(
+
+            ["lsrole"],
+
+            capture_output=True,
+            text=True
+
+        )
+
+        return result.stdout.splitlines()
+
+    except:
+
+        role_file = "/etc/security/roles"
+
+        if os.path.exists(role_file):
+
+            return [role_file]
+
+        return []
+
+# ---------------------------
+# SUDO
+# ---------------------------
+
+def get_aix_sudo():
+
+    sudo_file = "/etc/sudoers"
+
+    if not os.path.exists(sudo_file):
+
+        return []
+
+    entries = []
+
+    with open(sudo_file) as file:
+
+        for line in file:
+
+            line = line.strip()
+
+            if line and not line.startswith("#"):
+
+                entries.append(line)
+
+    return entries
+
+# ---------------------------
+# AUDIT
+# ---------------------------
+
+def run_aix_audit():
+
+    return {
+
+        "users": get_aix_users(),
+        "groups": get_aix_groups(),
+        "roles": get_aix_roles()
+
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/threat_feed.py ===
+import json
+
+# ---------------------------
+# LOAD THREAT FEED
+# ---------------------------
+
+def load_threat_feed(path):
+
+    with open(path, "r") as file:
+
+        return json.load(file)
+
+# ---------------------------
+# CORRELATE THREAT FEED
+# ---------------------------
+
+def correlate_threat_feed(
+    ioc_matches,
+    threat_feed
+):
+
+    correlations = []
+
+    for ioc in ioc_matches:
+
+        for item in threat_feed:
+
+            if ioc == item.get("ioc"):
+
+                correlations.append({
+
+                    "IOC": item.get(
+                        "ioc",
+                        "Unknown"
+                    ),
+
+                    "Type": item.get(
+                        "type",
+                        "Unknown"
+                    ),
+
+                    "Threat": item.get(
+                        "threat",
+                        "Unknown"
+                    ),
+
+                    "Threat Actor": item.get(
+                        "threat_actor",
+                        "Unknown"
+                    ),
+
+                    "Severity": item.get(
+                        "severity",
+                        item.get(
+                            "reputation",
+                            "Medium"
+                        )
+                    ),
+
+                    "Campaign": item.get(
+                        "campaign",
+                        "Unknown"
+                    )
+                })
+
+    return correlations
+
+
+=== ARQUIVO: ./dashboard-app/parsers/ueba_engine.py ===
+from collections import Counter
+
+# ---------------------------
+# UEBA ENGINE
+# ---------------------------
+
+SUSPICIOUS_COMMANDS = [
+
+    "curl",
+    "wget",
+    "nc ",
+    "nmap",
+    "scp",
+    "psexec",
+    "wmic"
+]
+
+PRIVILEGED_KEYWORDS = [
+
+    "sudo",
+    "root",
+    "admin",
+    "wheel"
+]
+
+# ---------------------------
+# ANALYZE USER BEHAVIOR
+# ---------------------------
+
+def analyze_user_behavior(
+    events
+):
+
+    findings = []
+
+    failed_logins = 0
+
+    privileged_actions = 0
+
+    suspicious_commands = 0
+
+    user_activity = []
+
+    # ---------------------------
+    # PROCESS EVENTS
+    # ---------------------------
+
+    for event in events:
+
+        log = str(event).lower()
+
+        # failed auth
+
+        if (
+
+            "failed" in log
+            or "authentication failure" in log
+
+        ):
+
+            failed_logins += 1
+
+        # privileged actions
+
+        for keyword in PRIVILEGED_KEYWORDS:
+
+            if keyword in log:
+
+                privileged_actions += 1
+
+        # suspicious commands
+
+        for command in SUSPICIOUS_COMMANDS:
+
+            if command in log:
+
+                suspicious_commands += 1
+
+        # track users
+
+        words = log.split()
+
+        for word in words:
+
+            if "user" in word:
+
+                user_activity.append(word)
+
+    # ---------------------------
+    # USER FREQUENCY
+    # ---------------------------
+
+    counter = Counter(
+        user_activity
+    )
+
+    anomalous_users = []
+
+    for user, count in counter.items():
+
+        if count > 10:
+
+            anomalous_users.append({
+
+                "user": user,
+                "count": count
+            })
+
+    # ---------------------------
+    # UEBA RULES
+    # ---------------------------
+
+    if failed_logins >= 5:
+
+        findings.append({
+
+            "type": "Brute Force Behavior",
+            "severity": "High"
+        })
+
+    if privileged_actions >= 3:
+
+        findings.append({
+
+            "type": "Suspicious Privileged Activity",
+            "severity": "Critical"
+        })
+
+    if suspicious_commands >= 2:
+
+        findings.append({
+
+            "type": "Potential Lateral Movement",
+            "severity": "Critical"
+        })
+
+    if anomalous_users:
+
+        findings.append({
+
+            "type": "Anomalous User Activity",
+            "severity": "High",
+            "users": anomalous_users
+        })
+
+    # ---------------------------
+    # NORMAL
+    # ---------------------------
+
+    if not findings:
+
+        findings.append({
+
+            "type": "Normal Behavior",
+            "severity": "Low"
+        })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/baseline_engine.py ===
+import hashlib
+import json
+
+from pathlib import Path
+from datetime import datetime
+
+# ---------------------------
+# BASELINE DIRECTORY
+# ---------------------------
+
+BASELINE_DIR = (
+    Path(__file__).resolve().parent.parent /
+    "baseline"
+)
+
+BASELINE_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+# ---------------------------
+# HASH
+# ---------------------------
+
+def calculate_hash(content):
+
+    if isinstance(content, (dict, list)):
+
+        content = json.dumps(
+            content,
+            sort_keys=True
+        )
+
+    return hashlib.sha256(
+        str(content).encode()
+    ).hexdigest()
+
+# ---------------------------
+# SAVE BASELINE
+# ---------------------------
+
+def save_baseline(name, content):
+
+    baseline_file = (
+        BASELINE_DIR /
+        f"{name}.json"
+    )
+
+    data = {
+
+        "timestamp":
+            datetime.utcnow().isoformat(),
+
+        "hash":
+            calculate_hash(content),
+
+        "content":
+            content
+    }
+
+    with open(
+        baseline_file,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        json.dump(
+            data,
+            file,
+            indent=4,
+            default=str
+        )
+
+# ---------------------------
+# SAVE SNAPSHOT
+# ---------------------------
+
+def save_baseline_snapshot(
+    name,
+    content
+):
+
+    timestamp = datetime.utcnow().strftime(
+        "%Y%m%d_%H%M%S"
+    )
+
+    snapshot_file = (
+        BASELINE_DIR /
+        f"{name}_{timestamp}.json"
+    )
+
+    data = {
+
+        "timestamp":
+            datetime.utcnow().isoformat(),
+
+        "hash":
+            calculate_hash(content),
+
+        "content":
+            content
+    }
+
+    with open(
+        snapshot_file,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
+        json.dump(
+            data,
+            file,
+            indent=4,
+            default=str
+        )
+
+# ---------------------------
+# COMPARE BASELINE
+# ---------------------------
+
+def compare_baseline(
+    name,
+    content
+):
+
+    baseline_file = (
+        BASELINE_DIR /
+        f"{name}.json"
+    )
+
+    if not baseline_file.exists():
+
+        return {
+
+            "status":
+                "NEW_BASELINE",
+
+            "drift":
+                False
+        }
+
+    with open(
+        baseline_file,
+        "r",
+        encoding="utf-8"
+    ) as file:
+
+        baseline = json.load(file)
+
+    current_hash = calculate_hash(
+        content
+    )
+
+    drift = (
+        current_hash !=
+        baseline["hash"]
+    )
+
+    return {
+
+        "status":
+            "DRIFT_DETECTED"
+            if drift
+            else "UNCHANGED",
+
+        "drift":
+            drift,
+
+        "baseline_hash":
+            baseline["hash"],
+
+        "current_hash":
+            current_hash
+    }
+
+
+=== ARQUIVO: ./dashboard-app/parsers/lateral_movement.py ===
+# ---------------------------
+# DETECT LATERAL MOVEMENT
+# ---------------------------
+
+def detect_lateral_movement(
+    logs
+):
+
+    findings = []
+
+    keywords = [
+
+        "psexec",
+        "wmic",
+        "ssh",
+        "scp",
+        "winrm"
+    ]
+
+    for log in logs:
+
+        for keyword in keywords:
+
+            if keyword.lower() in log.lower():
+
+                findings.append({
+
+                    "technique": keyword,
+                    "severity": "High",
+                    "log": log
+                })
+
+    return findings
+
+
+=== ARQUIVO: ./dashboard-app/parsers/audit_engine.py ===
+from parsers.iam_engine import (
+    get_local_users,
+    get_groups,
+    get_sudo_users,
+    get_service_accounts
+)
+
+from parsers.ldap_engine import (
+    get_ldap_users
+)
+
+from parsers.ad_engine import (
+    get_ad_users
+)
+
+from parsers.aws_iam_engine import (
+    get_aws_users
+)
+
+from parsers.azure_iam_engine import (
+    get_entra_users
+)
+
+from parsers.gcp_iam_engine import (
+    get_gcp_users
+)
+
+from parsers.k8s_rbac_engine import (
+    get_k8s_roles
+)
+
+from parsers.linux_audit_engine import (
+    run_linux_audit
+)
+
+from parsers.aix_audit_engine import (
+    run_aix_audit
+)
+
+from parsers.windows_audit_engine import (
+    run_windows_audit
+)
+
+# ---------------------------
+# COMPLETE AUDIT
+# ---------------------------
+
+def run_full_audit():
+
+    return {
+
+        "linux":
+            run_linux_audit(),
+
+        "aix":
+            run_aix_audit(),
+
+        "windows":
+            run_windows_audit(),
+
+        "local_users":
+            get_local_users(),
+
+        "groups":
+            get_groups(),
+
+        "sudo_users":
+            get_sudo_users(),
+
+        "service_accounts":
+            get_service_accounts(),
+
+        "ldap_users":
+            get_ldap_users(),
+
+        "ad_users":
+            get_ad_users(),
+
+        "aws_users":
+            get_aws_users(),
+
+        "entra_users":
+            get_entra_users(),
+
+        "gcp_users":
+            get_gcp_users(),
+
+        "kubernetes_roles":
+            get_k8s_roles()
+
+    }
+
+# ---------------------------
+# AUDIT BY USER
+# ---------------------------
+
+def audit_user(username):
+
+    findings = []
+
+    # ---------------------------
+    # LOCAL USERS
+    # ---------------------------
+
+    for user in get_local_users():
+
+        if user.get(
+            "username"
+        ) == username:
+
+            findings.append({
+
+                "source": "Local",
+                "details": user
+
+            })
+
+    # ---------------------------
+    # LDAP
+    # ---------------------------
+
+    for user in get_ldap_users():
+
+        if user.get(
+            "username"
+        ) == username:
+
+            findings.append({
+
+                "source": "LDAP",
+                "details": user
+
+            })
+
+    # ---------------------------
+    # AD
+    # ---------------------------
+
+    for user in get_ad_users():
+
+        if user.get(
+            "username"
+        ) == username:
+
+            findings.append({
+
+                "source": "AD",
+                "details": user
+
+            })
+
+    return findings
+
+# ---------------------------
+# AUDIT BY GROUP
+# ---------------------------
+
+def audit_group(group_name):
+
+    results = []
+
+    for group in get_groups():
+
+        if group.get(
+            "group"
+        ) == group_name:
+
+            results.append(
+                group
+            )
+
+    return results
+
+# ---------------------------
+# AUDIT OF SUDO
+# ---------------------------
+
+def audit_sudo():
+
+    return get_sudo_users()
+
+# ---------------------------
+# AUDIT OF SERVICE ACCOUNTS
+# ---------------------------
+
+def audit_service_accounts():
+
+    return get_service_accounts()
+
+
+=== ARQUIVO: ./dashboard-app/parsers/cloud_parser.py ===
+import json
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+
+def load_json_log(file_path):
+
+    full_path = BASE_DIR / file_path
+
+    if not full_path.exists():
+        return None
+
+    try:
+
+        with open(full_path, "r") as file:
+            data = json.load(file)
+
+        return data
+
+    except Exception:
+        return None
+
+
+def detect_failed_cloud_login(event):
+
+    event_str = str(event)
+
+    keywords = [
+        "Failed authentication",
+        "failure",
+        "failed",
+        "Unauthorized"
+    ]
+
+    return any(
+        keyword.lower() in event_str.lower()
+        for keyword in keywords
+    )
+
+
+def detect_privileged_activity(event):
+
+    event_str = str(event)
+
+    keywords = [
+        "CreateUser",
+        "system:admin",
+        "privileged",
+        "Administrator"
+    ]
+
+    return any(
+        keyword.lower() in event_str.lower()
+        for keyword in keywords
+    )
+
+
+def calculate_severity(event):
+
+    event_str = str(event).lower()
+
+    if "createuser" in event_str:
+        return "Critical"
+
+    if "failed" in event_str:
+        return "High"
+
+    return "Medium"
+
+
+=== ARQUIVO: ./dashboard-app/configs/falco-config.yml ===
+falco:
+
+  runtime_detection: enabled
+
+  monitored_events:
+    - shell_execution
+    - privileged_container
+    - suspicious_process
+
+  output:
+    format: json
+
+
+=== ARQUIVO: ./dashboard-app/configs/__init__.py ===
+
+
+
+=== ARQUIVO: ./dashboard-app/configs/siem-config.yml ===
+siem:
+
+  ingestion:
+    - auth.log
+    - falco-events.log
+    - kubernetes-audit.log
+
+  correlation:
+    enabled: true
+
+  mitre_mapping:
+    enabled: true
+
+  severity:
+    critical: privileged
+    high: shell
+    medium: failed_password
+
+
+=== ARQUIVO: ./dashboard-app/configs/settings.py ===
+from pathlib import Path
+
+# ---------------------------
+# BASE DIRECTORIES
+# ---------------------------
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# ---------------------------
+# AGENTS
+# ---------------------------
+
+AGENTS_DIR = BASE_DIR / "agents"
+
+LINUX_LOG = AGENTS_DIR / "linux" / "auth.log"
+
+AIX_LOG = AGENTS_DIR / "aix" / "sudo.log"
+
+# ---------------------------
+# THREAT INTELLIGENCE
+# ---------------------------
+
+THREAT_INTEL_DIR = BASE_DIR / "threat-intelligence"
+
+THREAT_FEED = THREAT_INTEL_DIR / "threat-feed.json"
+
+IOC_FEED = THREAT_INTEL_DIR / "ioc-feed.json"
+
+# ---------------------------
+# DATABASE
+# ---------------------------
+
+DATABASE_DIR = BASE_DIR / "database"
+
+DATABASE_PATH = DATABASE_DIR / "security.db"
+
+# ---------------------------
+# DETECTIONS
+# ---------------------------
+
+DETECTIONS_DIR = BASE_DIR / "detections"
+
+SIGMA_RULES_DIR = DETECTIONS_DIR / "sigma"
+
+FALCO_RULES = DETECTIONS_DIR / "falco-rules.yaml"
+
+# ---------------------------
+# REPORTS
+# ---------------------------
+
+REPORTS_DIR = BASE_DIR / "reports"
+
+# ---------------------------
+# LOGS
+# ---------------------------
+
+LOGS_DIR = BASE_DIR / "logs"
+
+# ---------------------------
+# CREATE REQUIRED DIRECTORIES
+# ---------------------------
+
+DATABASE_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+LOGS_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+# ---------------------------
+# APPLICATION MODES
+# ---------------------------
+
+SIMULATION_MODE = True
+
+REALTIME_MONITORING = True
+
+ENABLE_THREAT_INTEL = True
+
+ENABLE_CLOUD_MONITORING = True
+
+ENABLE_SOAR = True
+
+ENABLE_REAL_LINUX = False
+
+ENABLE_REAL_AIX = False
+
+ENABLE_WINDOWS_MONITORING = False
+
+ENABLE_CLOUD_REALTIME = False
+
+# ---------------------------
+# COLLECTOR SETTINGS
+# ---------------------------
+
+LINUX_LOG_PATH = "/var/log/auth.log"
+
+AIX_LOG_PATH = "/var/log/auth.log"
+
+COLLECT_INTERVAL_SECONDS = 30
+
+# ---------------------------
+# SSH COLLECTION
+# ---------------------------
+
+SSH_TIMEOUT = 10
+
+SSH_PORT = 22
+
+# ---------------------------
+# WINDOWS
+# ---------------------------
+
+WINDOWS_LOG = AGENTS_DIR / "windows" / "security-events.json"
+
+REAL_WINDOWS_LOG = WINDOWS_LOG
+
+# ---------------------------
+# WINDOWS COLLECTION
+# ---------------------------
+
+WINDOWS_LOG = AGENTS_DIR / "windows" / "security-events.json"
+
+WINDOWS_EVENT_LOG = "Security"
+
+WINDOWS_HOST = "192.168.1.100"
+
+WINDOWS_USERNAME = "Administrator"
+
+WINDOWS_PASSWORD = "ChangeMe"
+
+# ---------------------------
+# CLOUD COLLECTION
+# ---------------------------
+
+AWS_REALTIME = False
+
+AZURE_REALTIME = False
+
+GCP_REALTIME = False
+
+OCI_REALTIME = False
+
+IBM_REALTIME = False
+
+# ---------------------------
+# AWS
+# ---------------------------
+
+AWS_REGION = "us-east-1"
+
+# ---------------------------
+# AZURE
+# ---------------------------
+
+AZURE_TENANT_ID = ""
+
+AZURE_CLIENT_ID = ""
+
+AZURE_CLIENT_SECRET = ""
+
+# ---------------------------
+# GCP
+# ---------------------------
+
+GCP_PROJECT_ID = ""
+
+GCP_CREDENTIALS_FILE = ""
+
+# ---------------------------
+# STREAMLIT
+# ---------------------------
+
+PAGE_TITLE = "Enterprise Security Operations Platform"
+
+PAGE_ICON = "🛡️"
+
+LAYOUT = "wide"
+
+
+=== ARQUIVO: ./dashboard-app/pages/18_Identity_Analytics.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.iam_engine import (
+    get_local_users
+)
+
+from parsers.identity_analytics_engine import (
+    analyze_identities
+)
+
+require_auth()
+
+st.title(
+    "Identity Analytics"
+)
+
+analytics = analyze_identities(
+    get_local_users()
+)
+
+st.dataframe(
+    pd.DataFrame(analytics),
+    use_container_width=True
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/9_Compliance_Audit.py ===
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+
+st.set_page_config(
+    page_title="Compliance Dashboard",
+    page_icon="📋",
+    layout="wide"
+)
+
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
+st.title("📋 Compliance Dashboard")
+
+# ---------------------------
+# COMPLIANCE OVERVIEW
+# ---------------------------
+
+compliance_df = pd.DataFrame({
+
+    "Framework": [
+        "ISO 27001",
+        "NIST",
+        "PCI-DSS",
+        "CIS Controls",
+        "SOC2"
+    ],
+
+    "Status": [
+        "Compliant",
+        "Partial",
+        "In Review",
+        "Compliant",
+        "Partial"
+    ],
+
+    "Coverage": [
+        92,
+        81,
+        74,
+        89,
+        78
+    ]
+})
+
+st.dataframe(
+    compliance_df,
+    use_container_width=True
+)
+
+# ---------------------------
+# COMPLIANCE HEATMAP
+# ---------------------------
+
+st.subheader("Compliance Coverage")
+
+fig = px.bar(
+    compliance_df,
+    x="Framework",
+    y="Coverage",
+    title="Compliance Framework Coverage"
+)
+
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
+
+# ---------------------------
+# EXECUTIVE RISK OVERVIEW
+# ---------------------------
+
+st.subheader("Executive Risk Overview")
+
+risk_df = pd.DataFrame({
+
+    "Area": [
+        "Cloud Security",
+        "IAM",
+        "Endpoint Security",
+        "Kubernetes",
+        "Threat Detection"
+    ],
+
+    "Risk": [
+        "Medium",
+        "High",
+        "Low",
+        "Critical",
+        "Medium"
+    ]
+})
+
+st.dataframe(
+    risk_df,
+    use_container_width=True
+)
+
+# ---------------------------
+# AUDIT STATUS
+# ---------------------------
+
+st.subheader("Audit Readiness")
+
+audit_df = pd.DataFrame({
+
+    "Audit": [
+        "Internal Audit",
+        "External Audit",
+        "PCI Assessment",
+        "SOC2 Review"
+    ],
+
+    "Status": [
+        "Ready",
+        "In Progress",
+        "Scheduled",
+        "Ready"
+    ]
+})
+
+st.dataframe(
+    audit_df,
+    use_container_width=True
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/12_Executive_Reports.py ===
+import streamlit as st
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.audit_engine import (
+    run_full_audit
+)
+
+from parsers.risk_engine import (
+    calculate_risk_score
+)
+
+from parsers.compliance_score_engine import (
+    calculate_compliance_score
+)
+
+require_auth()
+
+role = st.sidebar.selectbox(
+    "Role Validation",
+    [
+        "Executive",
+        "SOC Analyst",
+        "Threat Hunter",
+        "Administrator"
+    ]
+)
+
+if role not in [
+    "Executive",
+    "Administrator"
+]:
+
+    st.error(
+        "Access denied"
+    )
+
+    st.stop()
+
+st.set_page_config(
+    page_title="Executive Reports",
+    page_icon="📄",
+    layout="wide"
+)
+
+st.title("📄 Executive Reporting")
+
+st.success("""
+
+Board-Level Security Reporting Available
+
+Capabilities:
+
+- Enterprise Risk Reporting
+- Compliance Reporting
+- Threat Intelligence Summaries
+- Incident Metrics
+- SOC Performance Metrics
+- Executive Security KPIs
+
+""")
+
+st.subheader("Executive KPIs")
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric(
+    "MTTD",
+    "4 min"
+)
+
+col2.metric(
+    "MTTR",
+    "11 min"
+)
+
+col3.metric(
+    "Detection Coverage",
+    "91%"
+)
+
+audit = run_full_audit()
+
+compliance = calculate_compliance_score(
+    audit
+)
+
+st.metric(
+
+    "Compliance Score",
+
+    f"{compliance['score']}%"
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/3_Threat_Intelligence.py ===
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
+import streamlit as st
+import pandas as pd
+import json
+
+from pathlib import Path
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from configs.settings import (
+    THREAT_FEED
+)
+
+st.set_page_config(
+    page_title="Threat Intelligence",
+    page_icon="🧠",
+    layout="wide"
+)
+
+st.title("🧠 Threat Intelligence")
+
+from configs.settings import (
+    THREAT_FEED
+)
+
+with open(
+    THREAT_FEED,
+    "r"
+) as file:
+
+    threat_feed = json.load(file)
+
+feed_df = pd.DataFrame(threat_feed)
+
+st.dataframe(
+    feed_df,
+    use_container_width=True
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/2_Detection_Engineering.py ===
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
+import streamlit as st
+
+from collectors.linux_collector import (
+    collect_linux_logs
+)
+
+from collectors.aix_collector import (
+    collect_aix_logs
+)
+
+from parsers.detection_engine import (
+    run_detections
+)
+
+from parsers.yaml_detection_engine import (
+    run_yaml_detections
+)
+
+from parsers.mitre_mapper import (
+    map_to_mitre
+)
+
+from sections.detections import (
+    render_detections
+)
+
+from sections.mitre_heatmap import (
+    render_mitre_heatmap
+)
+
+st.title(
+    "Detection Engineering"
+)
+
+events = (
+    collect_linux_logs() +
+    collect_aix_logs()
+)
+
+detections = run_detections(
+    events
+)
+
+yaml_detections = run_yaml_detections(
+    events
+)
+
+mitre_events = map_to_mitre(
+    events
+)
+
+render_detections(
+    detections,
+    yaml_detections,
+    mitre_events
+)
+
+render_mitre_heatmap(
+    mitre_events
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/17_Access_Certification.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.iam_engine import (
+    get_local_users
+)
+
+from parsers.access_certification_engine import (
+    generate_access_review
+)
+
+require_auth()
+
+st.title(
+    "Access Certification"
+)
+
+reviews = generate_access_review(
+    get_local_users()
+)
+
+st.dataframe(
+    pd.DataFrame(reviews),
+    use_container_width=True
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/19_Identity_Correlation.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.identity_correlation import (
+    correlate_identity
+)
+
+require_auth()
+
+st.title(
+    "Identity Correlation"
+)
+
+username = st.text_input(
+    "Username"
+)
+
+if st.button(
+    "Search Identity"
+):
+
+    results = correlate_identity(
+        username
+    )
+
+    for source, data in results.items():
+
+        st.subheader(
+            source.upper()
+        )
+
+        if data:
+
+            st.dataframe(
+                pd.DataFrame(data)
+            )
+
+        else:
+
+            st.info(
+                "No records found"
+            )
+
+
+=== ARQUIVO: ./dashboard-app/pages/15_Identity_Lifecycle.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.identity_lifecycle_engine import (
+
+    find_dormant_accounts,
+
+    find_orphan_accounts,
+
+    find_no_mfa_accounts
+
+)
+
+require_auth()
+
+st.title(
+    "Identity Lifecycle Management"
+)
+
+tab1, tab2, tab3 = st.tabs([
+
+    "Dormant",
+
+    "Orphan",
+
+    "MFA"
+
+])
+
+with tab1:
+
+    st.dataframe(
+
+        pd.DataFrame(
+            find_dormant_accounts()
+        )
+
+    )
+
+with tab2:
+
+    st.dataframe(
+
+        pd.DataFrame(
+            find_orphan_accounts()
+        )
+
+    )
+
+with tab3:
+
+    st.dataframe(
+
+        pd.DataFrame(
+            find_no_mfa_accounts()
+        )
+
+    )
+
+
+=== ARQUIVO: ./dashboard-app/pages/10_SOAR_Automation.py ===
+import streamlit as st
+
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
+from sections.soar import (
+    render_soar
+)
+
+from sections.automation import (
+    render_automation
+)
+
+st.set_page_config(
+    page_title="SOAR Automation",
+    page_icon="⚡",
+    layout="wide"
+)
+
+st.title(
+    "⚡ SOAR Automation"
+)
+
+tab1, tab2 = st.tabs(
+    [
+        "SOAR Playbooks",
+        "Ansible Automation"
+    ]
+)
+
+with tab1:
+
+    render_soar()
+
+with tab2:
+
+    render_automation()
+
+
+=== ARQUIVO: ./dashboard-app/pages/11_Identity_Governance.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.identity_governance import (
+    run_identity_governance
+)
+
+from parsers.identity_risk_engine import (
+    calculate_identity_risk
+)
+
+require_auth()
+
+st.set_page_config(
+    page_title="Identity Governance",
+    page_icon="👤",
+    layout="wide"
+)
+
+st.title(
+    "Identity Governance"
+)
+
+results = run_identity_governance()
+
+for section, data in results.items():
+
+    st.subheader(
+
+        section.replace(
+            "_",
+            " "
+        ).title()
+
+    )
+
+    if isinstance(data, list):
+
+        df = pd.DataFrame(data)
+
+        if (
+            section == "privileged_accounts"
+            and not df.empty
+        ):
+
+            risk_results = []
+
+            for _, row in df.iterrows():
+
+                risk = calculate_identity_risk({
+
+                    "privileged": True,
+                    "sudo": True,
+                    "failed_logins": 0,
+                    "mfa_enabled": False
+
+                })
+
+                risk_results.append({
+
+                    "account": row.iloc[0],
+                    "risk_score": risk["score"],
+                    "risk_level": risk["level"]
+
+                })
+
+            st.dataframe(
+                pd.DataFrame(risk_results),
+                use_container_width=True
+            )
+
+        else:
+
+            st.dataframe(
+                df,
+                use_container_width=True
+            )
+
+
+=== ARQUIVO: ./dashboard-app/pages/__init__.py ===
+
+
+=== ARQUIVO: ./dashboard-app/pages/16_Attack_Path_Analysis.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.attack_path_engine import (
+    build_attack_paths
+)
+
+require_auth()
+
+st.title(
+    "Attack Path Analysis"
+)
+
+paths = build_attack_paths()
+
+st.dataframe(
+    pd.DataFrame(paths),
+    use_container_width=True
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/6_Cloud_Security.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
+st.set_page_config(
+    page_title="Cloud Security",
+    page_icon="☁️",
+    layout="wide"
+)
+
+st.title("☁️ Cloud Security Monitoring")
+
+cloud_df = pd.DataFrame({
+
+    "Cloud": [
+        "AWS",
+        "Azure",
+        "GCP",
+        "OCI",
+        "IBM Cloud"
+    ],
+
+    "Threats": [
+        4,
+        2,
+        1,
+        3,
+        0
+    ],
+
+    "Risk Level": [
+        "High",
+        "Medium",
+        "Low",
+        "High",
+        "Low"
+    ]
+})
+
+st.dataframe(
+    cloud_df,
+    use_container_width=True
+)
+
+st.subheader("Cloud IAM Risks")
+
+iam_df = pd.DataFrame({
+
+    "Cloud": [
+        "AWS",
+        "Azure",
+        "OCI"
+    ],
+
+    "Issue": [
+        "Excessive IAM Permissions",
+        "Legacy Authentication",
+        "Privileged Policy Drift"
+    ],
+
+    "Severity": [
+        "Critical",
+        "High",
+        "High"
+    ]
+})
+
+st.dataframe(
+    iam_df,
+    use_container_width=True
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/8_Enterprise_Audit.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.audit_engine import (
+    run_full_audit,
+    audit_user,
+    audit_group,
+    audit_sudo,
+    audit_service_accounts
+)
+
+from parsers.identity_governance import (
+    identity_governance_summary
+)
+
+require_auth()
+
+st.title(
+    "Enterprise Audit Engine"
+)
+
+audit_type = st.selectbox(
+
+    "Audit Type",
+
+    [
+
+        "Full Audit",
+        
+        "User Audit",
+        
+        "Group Audit",
+        
+        "Sudo Audit",
+        
+        "Service Accounts",
+
+        "Identity Governance"
+
+    ]
+)
+
+# ---------------------------
+# FULL AUDIT
+# ---------------------------
+
+if audit_type == "Full Audit":
+
+    results = run_full_audit()
+
+    for section, data in results.items():
+
+        st.subheader(
+            section.replace("_", " ").title()
+        )
+
+        try:
+
+            st.dataframe(
+                pd.DataFrame(data)
+            )
+
+        except:
+
+            st.write(data)
+            
+# ---------------------------
+# USER AUDIT
+# ---------------------------
+
+elif audit_type == "User Audit":
+
+    username = st.text_input(
+        "Username"
+    )
+
+    if st.button(
+        "Run User Audit",
+        key="audit_user_btn"
+    ):
+
+        st.dataframe(
+            pd.DataFrame(
+                audit_user(username)
+            )
+        )
+
+# ---------------------------
+# GROUP AUDIT
+# ---------------------------
+
+elif audit_type == "Group Audit":
+
+    group_name = st.text_input(
+        "Group",
+        key="audit_group"
+    )
+
+    if st.button(
+        "Run Group Audit",
+        key="audit_group_btn"
+    ):
+
+        st.dataframe(
+            pd.DataFrame(
+                audit_group(group_name)
+            )
+        )
+
+# ---------------------------
+# SUDO AUDIT
+# ---------------------------
+
+elif audit_type == "Sudo Audit":
+
+    st.dataframe(
+        pd.DataFrame(
+            audit_sudo(),
+            columns=["sudo_entry"]
+        )
+    )
+
+# ---------------------------
+# SERVICE ACCOUNTS
+# ---------------------------
+
+elif audit_type == "Service Accounts":
+
+    st.dataframe(
+        pd.DataFrame(
+            audit_service_accounts()
+        )
+    )
+
+# ---------------------------
+# GOVERNANCE
+# ---------------------------
+
+elif audit_type == "Identity Governance":
+
+    results = identity_governance_summary()
+
+    for section, data in results.items():
+
+        st.subheader(
+            section.replace(
+                "_",
+                " "
+            ).title()
+        )
+
+        st.dataframe(
+            pd.DataFrame(data)
+        )
+
+
+=== ARQUIVO: ./dashboard-app/pages/7_IAM_Governance.py ===
+import streamlit as st
+import pandas as pd
+
+
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
+from parsers.iam_engine import (
+    get_local_users,
+    get_privileged_users,
+    get_groups
+)
+
+from parsers.ldap_engine import (
+    get_ldap_users
+)
+
+from parsers.ad_engine import (
+    get_ad_users
+)
+
+from parsers.aws_iam_engine import (
+    get_aws_users
+)
+
+from parsers.azure_iam_engine import (
+    get_entra_users
+)
+
+from parsers.gcp_iam_engine import (
+    get_gcp_users
+)
+
+from parsers.k8s_rbac_engine import (
+    get_k8s_roles
+)
+
+st.title(
+    "IAM Governance"
+)
+
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+
+    "Local",
+    "LDAP",
+    "AD",
+    "Cloud",
+    "Kubernetes"
+
+])
+
+with tab1:
+
+    st.subheader(
+        "Local Users"
+    )
+
+    users = get_local_users()
+
+    st.dataframe(
+        pd.DataFrame(
+            users
+        ),
+        use_container_width=True
+    )
+
+    st.subheader(
+        "Privileged Accounts"
+    )
+
+    privileged = get_privileged_users()
+
+    st.write(
+        privileged
+    )
+
+    st.subheader(
+        "Groups"
+    )
+
+    groups = get_groups()
+
+    st.dataframe(
+        pd.DataFrame(
+            groups
+        ),
+        use_container_width=True
+    )
+
+with tab2:
+
+    st.dataframe(
+        pd.DataFrame(
+            get_ldap_users()
+        )
+    )
+
+with tab3:
+
+    st.dataframe(
+        pd.DataFrame(
+            get_ad_users()
+        )
+    )
+
+with tab4:
+
+    cloud_users = (
+
+        get_aws_users()
+        +
+        get_entra_users()
+        +
+        get_gcp_users()
+
+    )
+
+    st.dataframe(
+        pd.DataFrame(
+            cloud_users
+        )
+    )
+
+with tab5:
+
+    st.dataframe(
+        pd.DataFrame(
+            get_k8s_roles()
+        )
+    )
+
+with tab6:
+
+    st.subheader(
+        "Service Accounts"
+    )
+
+    st.write(
+        get_service_accounts()
+    )
+
+
+=== ARQUIVO: ./dashboard-app/pages/5_Live_Monitoring.py ===
+import streamlit as st
+import sqlite3
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
+st.title(
+    "Live Security Monitoring"
+)
+
+connection = sqlite3.connect(
+    "database/security.db"
+)
+
+query = """
+SELECT *
+FROM security_events
+ORDER BY id DESC
+LIMIT 50
+"""
+
+df = pd.read_sql_query(
+    query,
+    connection
+)
+
+st.dataframe(
+    df,
+    use_container_width=True
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/13_Baseline_Compliance.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.compliance_baseline_engine import (
+    evaluate_baseline,
+    calculate_compliance_score
+)
+
+require_auth()
+
+st.title(
+    "Baseline Compliance"
+)
+
+sample_data = {
+
+    "permit_root_login": True,
+    "password_authentication": True,
+    "mfa_enabled": False,
+    "dormant_accounts": 5
+
+}
+
+findings = evaluate_baseline(
+    sample_data
+)
+
+score = calculate_compliance_score(
+    findings
+)
+
+st.metric(
+    "Compliance Score",
+    f"{score}%"
+)
+
+st.dataframe(
+    pd.DataFrame(
+        findings
+    )
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/4_Threat_Hunting.py ===
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
+import streamlit as st
+
+role = st.sidebar.selectbox(
+    "Role Validation",
+    [
+        "SOC Analyst",
+        "Threat Hunter",
+        "Executive",
+        "Administrator"
+    ]
+)
+
+if role not in [
+    "Threat Hunter",
+    "Administrator"
+]:
+
+    st.error(
+        "Access denied"
+    )
+
+    st.stop()
+
+st.set_page_config(
+    page_title="Threat Hunting",
+    page_icon="🎯",
+    layout="wide"
+)
+
+st.title("🎯 Threat Hunting Console")
+
+hunt_term = st.text_input(
+    "Search indicators, IPs, users or commands"
+)
+
+sample_logs = [
+
+    "Failed SSH login from 185.220.101.1",
+    "sudo privilege escalation detected",
+    "Falco container escape attempt",
+    "AWS root login detected",
+    "OCI IAM policy modified"
+]
+
+results = []
+
+if hunt_term:
+
+    for log in sample_logs:
+
+        if hunt_term.lower() in log.lower():
+
+            results.append(log)
+
+if results:
+
+    st.success(
+        f"{len(results)} matching events identified"
+    )
+
+    for result in results:
+
+        st.code(result)
+
+else:
+
+    st.info(
+        "No threat hunting matches identified"
+    )
+
+
+=== ARQUIVO: ./dashboard-app/pages/1_SOC_Operations.py ===
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
+import streamlit as st
+
+from collectors.linux_collector import (
+    collect_linux_logs
+)
+
+from collectors.aix_collector import (
+    collect_aix_logs
+)
+
+from parsers.detection_engine import (
+    run_detections
+)
+
+from parsers.analytics_engine import (
+    detection_analytics,
+    incident_analytics
+)
+
+from sections.dashboard import (
+    render_dashboard
+)
+
+from sections.analytics import (
+    render_analytics
+)
+
+st.title(
+    "SOC Operations"
+)
+
+linux_logs = collect_linux_logs()
+
+aix_logs = collect_aix_logs()
+
+events = linux_logs + aix_logs
+
+detections = run_detections(
+    events
+)
+
+detection_stats = detection_analytics()
+
+incident_stats = incident_analytics()
+
+render_dashboard()
+
+render_analytics(
+    detection_stats,
+    incident_stats
+)
+
+
+=== ARQUIVO: ./dashboard-app/pages/14_PAM_Governance.py ===
+import streamlit as st
+import pandas as pd
+
+from parsers.session_auth import (
+    require_auth
+)
+
+from parsers.pam_governance_engine import (
+    get_privileged_accounts
+)
+
+require_auth()
+
+st.title(
+    "PAM Governance"
+)
+
+accounts = get_privileged_accounts()
+
+st.metric(
+    "Privileged Accounts",
+    len(accounts)
+)
+
+st.dataframe(
+    pd.DataFrame(accounts),
+    use_container_width=True
+)
+
+
+=== ARQUIVO: ./dashboard-app/__init__.py ===
+
+
+=== ARQUIVO: ./dashboard-app/inventory/cmdb.json ===
+[
+  {
+    "hostname": "linux01",
+    "application": "SAP",
+    "database": "HANA",
+    "owner": "ERP Team",
+    "criticality": "Critical"
+  },
+
+  {
+    "hostname": "aix01",
+    "application": "Oracle ERP",
+    "database": "Oracle",
+    "owner": "ERP Team",
+    "criticality": "Critical"
+  }
+]
+
+
+=== ARQUIVO: ./dashboard-app/inventory/assets.json ===
+[
+  {
+    "hostname": "linux01",
+    "ip": "10.10.10.10",
+    "os": "Linux",
+    "environment": "Production",
+    "owner": "Unix Team",
+    "criticality": "High"
+  },
+
+  {
+    "hostname": "aix01",
+    "ip": "10.10.20.10",
+    "os": "AIX",
+    "environment": "Production",
+    "owner": "Unix Team",
+    "criticality": "Critical"
+  },
+
+  {
+    "hostname": "win01",
+    "ip": "10.10.30.10",
+    "os": "Windows",
+    "environment": "Production",
+    "owner": "Windows Team",
+    "criticality": "High"
+  }
+]
+
+
+=== ARQUIVO: ./dashboard-app/collectors/aix_collector.py ===
+from configs.settings import (
+    SIMULATION_MODE,
+    AIX_LOG,
+    AIX_LOG_PATH
+)
+
+# ---------------------------
+# COLLECT AIX LOGS
+# ---------------------------
+
+def collect_aix_logs():
+
+    log_file = (
+        AIX_LOG
+        if SIMULATION_MODE
+        else AIX_LOG_PATH
+    )
+
+    try:
+
+        with open(
+            log_file,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            logs = file.readlines()
+
+        return [
+            log.strip()
+            for log in logs
+            if log.strip()
+        ]
+
+    except Exception as error:
+
+        return [
+            f"aix_collector_error: {error}"
+        ]
+
+
+=== ARQUIVO: ./dashboard-app/collectors/syslog_collector.py ===
+import socket
+
+# ---------------------------
+# SYSLOG SERVER
+# ---------------------------
+
+SYSLOG_PORT = 5140
+
+# ---------------------------
+# START SYSLOG LISTENER
+# ---------------------------
+
+def start_syslog_listener():
+
+    sock = socket.socket(
+        socket.AF_INET,
+        socket.SOCK_DGRAM
+    )
+
+    sock.bind(
+        ("0.0.0.0", SYSLOG_PORT)
+    )
+
+    return sock
+
+# ---------------------------
+# RECEIVE EVENTS
+# ---------------------------
+
+def receive_syslog_event(
+    sock
+):
+
+    try:
+
+        data, addr = sock.recvfrom(
+            65535
+        )
+
+        return {
+
+            "source_ip": addr[0],
+            "event": data.decode(
+                errors="ignore"
+            )
+        }
+
+    except Exception as error:
+
+        return {
+
+            "error": str(error)
+        }
+
+
+=== ARQUIVO: ./dashboard-app/collectors/aix_real_collector.py ===
+from pathlib import Path
+
+AIX_LOGS = [
+
+    "/var/adm/sulog",
+    "/var/adm/ras/syslog.caa",
+    "/var/adm/messages"
+
+]
+
+def collect_aix_real_logs():
+
+    collected = []
+
+    for log_path in AIX_LOGS:
+
+        path = Path(log_path)
+
+        if path.exists():
+
+            try:
+
+                with open(
+                    path,
+                    "r",
+                    encoding="utf-8",
+                    errors="ignore"
+                ) as file:
+
+                    lines = file.readlines()[-100:]
+
+                    collected.extend([
+                        line.strip()
+                        for line in lines
+                        if line.strip()
+                    ])
+
+            except Exception as error:
+
+                collected.append(
+                    f"aix_real_collector_error: {error}"
+                )
+
+    return collected
+
+
+=== ARQUIVO: ./dashboard-app/collectors/linux_collector.py ===
+from configs.settings import (
+    SIMULATION_MODE,
+    LINUX_LOG,
+    LINUX_LOG_PATH
+)
+
+# ---------------------------
+# COLLECT LINUX LOGS
+# ---------------------------
+
+def collect_linux_logs():
+
+    log_file = (
+        LINUX_LOG
+        if SIMULATION_MODE
+        else LINUX_LOG_PATH
+    )
+
+    try:
+
+        with open(
+            log_file,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            logs = file.readlines()
+
+        return [
+            log.strip()
+            for log in logs
+            if log.strip()
+        ]
+
+    except Exception as error:
+
+        return [
+            f"collector_error: {error}"
+        ]
+
+
+=== ARQUIVO: ./dashboard-app/collectors/cloud_collector.py ===
+from configs.settings import (
+    SIMULATION_MODE
+)
+
+from parsers.cloud_parser import (
+    load_json_log
+)
+
+# ---------------------------
+# CLOUD COLLECTOR
+# ---------------------------
+
+def collect_cloud_logs():
+
+    if SIMULATION_MODE:
+
+        return {
+
+            "aws": load_json_log(
+                "agents/aws/cloudtrail.json"
+            ),
+
+            "azure": load_json_log(
+                "agents/azure/entra-signins.json"
+            ),
+
+            "gcp": load_json_log(
+                "agents/gcp/audit-logs.json"
+            ),
+
+            "oci": load_json_log(
+                "agents/oracle-cloud/oci-audit.json"
+            ),
+
+            "ibm": load_json_log(
+                "agents/ibm-cloud/activity-tracker.json"
+            )
+        }
+
+    # ---------------------------
+    # REAL CLOUD COLLECTION
+    # ---------------------------
+
+    return {
+
+        "aws": [],
+        "azure": [],
+        "gcp": [],
+        "oci": [],
+        "ibm": []
+    }
+
+
+=== ARQUIVO: ./dashboard-app/collectors/windows_collector.py ===
+import json
+
+from configs.settings import (
+    SIMULATION_MODE,
+    WINDOWS_LOG,
+    REAL_WINDOWS_LOG
+)
+
+# ---------------------------
+# WINDOWS COLLECTOR
+# ---------------------------
+
+def collect_windows_logs():
+
+    log_source = (
+        WINDOWS_LOG
+        if SIMULATION_MODE
+        else REAL_WINDOWS_LOG
+    )
+
+    try:
+
+        path = Path(log_source)
+
+        if not path.exists():
+
+            return [
+                {
+                    "error": f"log_not_found: {log_source}"
+                }
+            ]
+
+        with open(
+            path,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            events = json.load(file)
+
+        return events
+
+    except Exception as error:
+
+        return [
+            {
+                "error": str(error)
+            }
+        ]
+
+
+=== ARQUIVO: ./dashboard-app/collectors/linux_real_collector.py ===
+from pathlib import Path
+
+REAL_LOGS = [
+
+    "/var/log/auth.log",
+    "/var/log/secure",
+    "/var/log/messages"
+
+]
+
+def collect_linux_real_logs():
+
+    collected = []
+
+    for log_path in REAL_LOGS:
+
+        path = Path(log_path)
+
+        if path.exists():
+
+            try:
+
+                with open(
+                    path,
+                    "r",
+                    encoding="utf-8",
+                    errors="ignore"
+                ) as file:
+
+                    lines = file.readlines()[-100:]
+
+                    collected.extend([
+                        line.strip()
+                        for line in lines
+                        if line.strip()
+                    ])
+
+            except Exception as error:
+
+                collected.append(
+                    f"linux_real_collector_error: {error}"
+                )
+
+    return collected
+
+
+=== ARQUIVO: ./dashboard-app/app.py ===
+import streamlit as st
+
+from parsers.database_engine import (
+    create_tables
+)
+
+from security.auth import (
+    login
+)
+
+from security.session import (
+    create_session,
+    logout,
+    is_authenticated
+)
+
+# ---------------------------
+# INITIALIZE DATABASE
+# ---------------------------
+
+create_tables()
+
+# ---------------------------
+# PAGE CONFIG
+# ---------------------------
+
+st.set_page_config(
+    page_title="Enterprise Security Operations Platform",
+    page_icon="🛡️",
+    layout="wide"
+)
+
+# ---------------------------
+# SESSION INIT
+# ---------------------------
+
+if "authenticated" not in st.session_state:
+
+    st.session_state["authenticated"] = False
+
+# ---------------------------
+# LOGIN
+# ---------------------------
+
+if not is_authenticated():
+
+    st.title(
+        "🛡️ Enterprise Security Operations Platform"
+    )
+
+    st.subheader(
+        "Authentication Required"
+    )
+
+    username = st.text_input(
+        "Username",
+        key="login_username"
+    )
+
+    password = st.text_input(
+        "Password",
+        type="password",
+        key="login_password"
+    )
+
+    if st.button(
+        "Login",
+        key="login_button"
+    ):
+
+        role = login(
+            username,
+            password
+        )
+
+        if role:
+
+            create_session(
+                username,
+                role
+            )
+
+            st.success(
+                f"Authenticated as {role}"
+            )
+
+            st.rerun()
+
+        else:
+
+            st.error(
+                "Invalid credentials"
+            )
+
+    st.stop()
+
+# ---------------------------
+# SIDEBAR
+# ---------------------------
+
+st.sidebar.title(
+    "SOC Navigation"
+)
+
+st.sidebar.success(
+    f"Authenticated as: {st.session_state['role']}"
+)
+
+if st.sidebar.button(
+    "Logout",
+    key="logout_button"
+):
+
+    logout()
+
+    st.rerun()
+
+# ---------------------------
+# LANDING
+# ---------------------------
+
+st.title(
+    "🛡️ Enterprise Security Operations Platform"
+)
+
+st.markdown("""
+
+Select a module from the left sidebar.
+
+Available capabilities:
+
+- SOC Operations
+- Threat Intelligence
+- Detection Engineering
+- Threat Hunting
+- Cloud Security
+- IAM Governance
+- Compliance & Audit
+- SOAR Automation
+- Live Monitoring
+- Executive Reporting
+
+""")
+
+
+=== ARQUIVO: ./dashboard-app/api/main.py ===
+from fastapi import FastAPI
+
+app = FastAPI(
+    title="Enterprise Security Operations API"
+)
+
+# ---------------------------
+# ROOT
+# ---------------------------
+
+@app.get("/")
+
+def root():
+
+    return {
+        "message": "Enterprise Security Operations API"
+    }
+
+# ---------------------------
+# TOKEN
+# ---------------------------
+
+from security.jwt_handler import (
+    generate_token,
+    validate_token
+)
+
+from parsers.auth_engine import (
+    authenticate
+)
+
+# ---------------------------
+# IOC FEED
+# ---------------------------
+
+@app.get("/ioc-feed")
+
+def ioc_feed():
+
+    return {
+
+        "iocs": [
+
+            "185.220.101.1",
+            "malicious-domain.com",
+            "45.133.1.22"
+        ]
+    }
+
+# ---------------------------
+# INCIDENTS
+# ---------------------------
+
+@app.get("/incidents")
+
+def incidents():
+
+    return {
+
+        "incidents": [
+
+            {
+                "id": "INC-1001",
+                "severity": "Critical",
+                "status": "Open"
+            },
+
+            {
+                "id": "INC-1002",
+                "severity": "High",
+                "status": "Investigating"
+            }
+        ]
+    }
+
+# ---------------------------
+# THREAT FEED
+# ---------------------------
+
+@app.get("/threat-feed")
+
+def threat_feed():
+
+    return {
+
+        "threats": [
+
+            {
+                "type": "C2",
+                "indicator": "malicious-domain.com"
+            },
+
+            {
+                "type": "Brute Force",
+                "indicator": "185.220.101.1"
+            }
+        ]
+    }
+
+# ---------------------------
+# LOGIN
+# ---------------------------
+
+@app.post("/login")
+
+def login(
+    credentials: dict
+):
+
+    username = credentials.get(
+        "username"
+    )
+
+    password = credentials.get(
+        "password"
+    )
+
+    role = authenticate(
+        username,
+        password
+    )
+
+    if not role:
+
+        return {
+            "error": "Invalid credentials"
+        }
+
+    token = generate_token({
+
+        "username": username,
+        "role": role
+
+    })
+
+    return {
+        "token": token,
+        "role": role
+    }
+
+# ---------------------------
+# PROTECTED ENDPOINT
+# ---------------------------
+
+@app.get("/protected")
+
+def protected(
+    token: str
+):
+
+    payload = validate_token(
+        token
+    )
+
+    if not payload:
+
+        return {
+            "error": "Invalid token"
+        }
+
+    return {
+        "message": "Authorized",
+        "user": payload
+    }
+
+# ---------------------------
+# DATABASE
+# ---------------------------
+
+from parsers.database_engine import (
+    load_security_events,
+    load_incidents,
+    load_detections
+)
+
+# ---------------------------
+# SECURITY EVENTS
+# ---------------------------
+
+@app.get("/security-events")
+
+def security_events():
+
+    events = load_security_events()
+
+    return {
+        "events": events
+    }
+
+# ---------------------------
+# DETECTIONS
+# ---------------------------
+
+@app.get("/detections")
+
+def detections():
+
+    detections = load_detections()
+
+    return {
+        "detections": detections
+    }
+
+# ---------------------------
+# INCIDENTS DATABASE
+# ---------------------------
+
+@app.get("/incidents-db")
+
+def incidents_db():
+
+    incidents = load_incidents()
+
+    return {
+        "incidents": incidents
+    }
+
+
+=== ARQUIVO: ./dashboard-app/api/__init__.py ===
+
+
+
+=== ARQUIVO: ./dashboard-app/api/ingestion.py ===
+from fastapi import APIRouter
+
+router = APIRouter()
+
+@router.get("/health")
+
+def health():
+
+    return {
+        "status": "online"
+    }
+
+
+=== ARQUIVO: ./dashboard-app/detections/detection-rules.json ===
+[
+  {
+    "id": "DET-001",
+    "name": "Container Shell Execution",
+    "severity": "high",
+    "mitre": "T1059",
+    "source": "Falco"
+  },
+  {
+    "id": "DET-002",
+    "name": "Privilege Escalation Attempt",
+    "severity": "critical",
+    "mitre": "T1611",
+    "source": "Kubernetes"
+  }
+]
+
+
+=== ARQUIVO: ./dashboard-app/detections/sigma-rules.yml ===
+title: Suspicious SSH Authentication Failures
+
+logsource:
+  product: linux
+
+detection:
+  selection:
+    message|contains:
+      - "Failed password"
+
+condition: selection
+
+level: high
+
+
+=== ARQUIVO: ./dashboard-app/detections/sigma/linux_bruteforce.yml ===
+title: Linux SSH Brute Force
+
+id: DET-1001
+
+description: Detects multiple failed SSH logins
+
+logsource:
+  product: linux
+  service: ssh
+
+detection:
+  keywords:
+    - "Failed password"
+    - "authentication failure"
+
+condition: keywords
+
+level: high
+
+mitre:
+  - T1110
+
+
+=== ARQUIVO: ./dashboard-app/detections/rules/linux_bruteforce.yml ===
+title: Linux SSH Bruteforce
+severity: High
+
+patterns:
+  - "Failed password"
+  - "authentication failure"
+
+mitre:
+  - "T1110"
+
+description: >
+  Detects repeated failed SSH authentication attempts
+
+
+=== ARQUIVO: ./dashboard-app/detections/rules/privileged_access.yml ===
+title: Privileged Access Activity
+severity: Critical
+
+patterns:
+  - "sudo su"
+  - "root access"
+  - "admin login"
+
+mitre:
+  - "T1078"
+
+description: >
+  Detects privileged access attempts
+
+
+=== ARQUIVO: ./dashboard-app/detections/falco-rules.yaml ===
+- rule: Container Shell Detection
+  desc: Detect shell spawned inside container
+
+  condition: >
+    container and shell_procs
+
+  output: >
+    Shell execution detected inside container
+    (user=%user.name container=%container.id)
+
+  priority: WARNING
+
+
+=== ARQUIVO: ./dashboard-app/simulations/k8s-runtime.json ===
+[
+    {
+        "namespace": "production",
+        "pod": "payment-api",
+        "alert": "Container privilege escalation attempt",
+        "severity": "Critical"
+    },
+    {
+        "namespace": "dev",
+        "pod": "internal-api",
+        "alert": "Unexpected shell execution",
+        "severity": "High"
+    }
+]
+
+
+=== ARQUIVO: ./dashboard-app/simulations/assets.json ===
+[
+  {
+    "asset": "prod-k8s-cluster",
+    "criticality": "Critical",
+    "owner": "Platform Team"
+  },
+  {
+    "asset": "finance-linux-server",
+    "criticality": "High",
+    "owner": "Finance"
+  },
+  {
+    "asset": "aws-iam-admin",
+    "criticality": "Critical",
+    "owner": "Cloud Team"
+  }
+]
+
+
+=== ARQUIVO: ./dashboard-app/simulations/realtime-events.json ===
+[
+    {
+        "severity": "Critical",
+        "event": "Runtime container escape attempt detected"
+    },
+    {
+        "severity": "High",
+        "event": "Excessive failed cloud authentications"
+    },
+    {
+        "severity": "Medium",
+        "event": "Suspicious outbound network activity"
+    }
+]
+
+
+=== ARQUIVO: ./dashboard-app/simulations/security-events.json ===
+[
+    {
+        "timestamp": "2026-03-30 10:15:22",
+        "severity": "Critical",
+        "source": "Falco",
+        "event": "Container privilege escalation detected",
+        "environment": "Kubernetes"
+    },
+    {
+        "timestamp": "2026-03-30 10:17:01",
+        "severity": "High",
+        "source": "AWS CloudTrail",
+        "event": "Unauthorized IAM policy modification",
+        "environment": "AWS"
+    },
+    {
+        "timestamp": "2026-03-30 10:20:11",
+        "severity": "Medium",
+        "source": "Linux Auth",
+        "event": "Multiple failed SSH logins",
+        "environment": "Linux"
+    },
+    {
+        "timestamp": "2026-03-30 10:22:54",
+        "severity": "Critical",
+        "source": "Azure Entra ID",
+        "event": "Suspicious admin login",
+        "environment": "Azure"
+    },
+    {
+        "timestamp": "2026-03-30 10:25:33",
+        "severity": "High",
+        "source": "AIX Audit",
+        "event": "Unauthorized sudo execution",
+        "environment": "AIX"
+    }
+]
+
+
+=== ARQUIVO: ./dashboard-app/simulations/attack-simulation.json ===
+[
+    {
+        "attack": "SSH Brute Force",
+        "technique": "T1110",
+        "status": "Detected"
+    },
+    {
+        "attack": "Privilege Escalation",
+        "technique": "T1068",
+        "status": "Contained"
+    },
+    {
+        "attack": "Suspicious PowerShell",
+        "technique": "T1059",
+        "status": "Investigating"
+    }
+]
+
+
+=== ARQUIVO: ./dashboard-app/rules/detection_rules.json ===
+
+[
+  {
+    "name": "SSH Brute Force",
+    "keyword": "failed password",
+    "severity": "High",
+    "mitre": "T1110"
+  },
+
+  {
+    "name": "Privilege Escalation",
+    "keyword": "sudo",
+    "severity": "Critical",
+    "mitre": "T1548"
+  },
+
+  {
+    "name": "Kubernetes Privileged Container",
+    "keyword": "privileged",
+    "severity": "Critical",
+    "mitre": "T1611"
+  },
+
+  {
+    "name": "Cloud Unauthorized Access",
+    "keyword": "unauthorized",
+    "severity": "High",
+    "mitre": "T1078"
+  }
+]
+
+
+=== ARQUIVO: ./dashboard-app/utils/paths.py ===
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SIMULATIONS_DIR = (
+    BASE_DIR / "simulations"
+)
+
+THREAT_INTEL_DIR = (
+    BASE_DIR / "threat-intelligence"
+)
+
+
+=== ARQUIVO: ./dashboard-app/utils/file_loader.py ===
+import json
+
+def load_json(path):
+
+    with open(path, "r") as file:
+
+        return json.load(file)
+
+
+=== ARQUIVO: ./dashboard-app/utils/time_utils.py ===
+from datetime import datetime
+
+def now():
+
+    return datetime.utcnow().isoformat()
+
+
+=== ARQUIVO: ./dashboard-app/utils/__init__.py ===
+
+
+
+=== ARQUIVO: ./dashboard-app/utils/logger.py ===
+import logging
+
+logging.basicConfig(
+    level=logging.INFO
+)
+
+logger = logging.getLogger(
+    "enterprise-soc"
+)
+
+
+=== ARQUIVO: ./dashboard-app/threat-intelligence/enrichment.md ===
+# Threat Enrichment Concepts
+
+This project simulates enrichment workflows commonly used in Security Operations platforms.
+
+## Enrichment Areas
+
+- MITRE ATT&CK mapping
+- IOC correlation
+- Threat prioritization
+- Severity classification
+
+## Objectives
+
+- Improve analyst visibility
+- Accelerate investigations
+- Support incident response
+
+
+=== ARQUIVO: ./dashboard-app/threat-intelligence/ioc-feed.json ===
+[
+  {
+    "type": "ip",
+    "value": "185.220.101.1",
+    "reputation": "malicious"
+  },
+  {
+    "type": "domain",
+    "value": "suspicious-runtime.example",
+    "reputation": "suspicious"
+  }
+]
+
+
+=== ARQUIVO: ./dashboard-app/threat-intelligence/enrichment.py ===
+ioc_feed = [
+    "185.220.101.1",
+    "suspicious-runtime.example"
+]
+
+event_ip = "185.220.101.1"
+
+if event_ip in ioc_feed:
+
+    print("[ENRICHMENT] Malicious IOC matched")
+
+
+=== ARQUIVO: ./dashboard-app/threat-intelligence/threat-feed.json ===
+[
+    {
+        "ioc": "185.220.101.1",
+        "threat": "TOR Exit Node",
+        "severity": "High"
+    },
+    {
+        "ioc": "malicious-domain.com",
+        "threat": "Known C2 Domain",
+        "severity": "Critical"
+    },
+    {
+        "ioc": "185.220.101.1",
+        "type": "Malicious IP",
+        "threat_actor": "APT29",
+        "reputation": "Critical",
+        "campaign": "Credential Harvesting"
+    },
+    {
+        "ioc": "malicious-domain.com",
+        "type": "Malicious Domain",
+        "threat_actor": "LockBit",
+        "reputation": "High",
+        "campaign": "Ransomware Delivery"
+    },
+    {
+        "ioc": "evil-hash-123",
+        "type": "Malware Hash",
+        "threat_actor": "UNC5221",
+        "reputation": "Critical",
+        "campaign": "XZ Backdoor"
+    }
+]
+
+
+=== ARQUIVO: ./dashboard-app/threat-intelligence/indicators.md ===
+# Threat Intelligence Indicators
+
+## Example Indicators
+
+| Type | Value |
+|---|---|
+| IP Address | 185.220.101.1 |
+| Domain | suspicious-runtime.example |
+| Hash | e3b0c44298fc1c149afbf4c8996fb924 |
+
+## Use Cases
+
+- Threat enrichment
+- IOC validation
+- Incident investigation
+
+
+=== ARQUIVO: ./governance/policy-as-code.md ===
+# Policy as Code
+
+The platform simulates governance controls using Policy as Code concepts.
+
+## Examples
+
+- Restrict public exposure
+- Enforce least privilege
+- Secure-by-default deployments
+
+
+=== ARQUIVO: ./reports/executive-report.md ===
+# Executive Security Report
+
+## Summary
+
+The platform detected multiple suspicious runtime and authentication events.
+
+## High-Level Findings
+
+- Privileged container execution
+- Failed authentication spikes
+- Runtime shell execution
+
+## Security Recommendations
+
+- Improve RBAC restrictions
+- Harden container runtime
+- Enable advanced monitoring
+
+
+=== ARQUIVO: ./reports/technical-report.md ===
+# Technical Investigation Report
+
+## Events
+
+- Shell spawned inside container
+- Multiple failed SSH authentications
+- Privileged container detected
+
+## MITRE Mapping
+
+| Event | Technique |
+|---|---|
+| Shell execution | T1059 |
+| Brute force | T1110 |
+| Privilege escalation | T1611 |
+
+
