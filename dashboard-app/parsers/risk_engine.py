@@ -28,7 +28,7 @@ def calculate_risk_score(
 
     suspicious_user=False,
 
-    cloud_event=False
+    cloud_event=False,
 
     identity_risk=False
 
