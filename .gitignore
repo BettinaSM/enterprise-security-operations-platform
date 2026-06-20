@@ -6,3 +6,5 @@ __pycache__/
 .env
 .venv/
 .streamlit/
+dashboard-app/configs/secrets/*
+!dashboard-app/configs/secrets/.gitkeep
