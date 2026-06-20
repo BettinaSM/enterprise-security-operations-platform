@@ -1,0 +1,19 @@
+[
+    {
+        "host": "web01",
+        "port": 443,
+        "service": "HTTPS"
+    },
+
+    {
+        "host": "web01",
+        "port": 22,
+        "service": "SSH"
+    },
+
+    {
+        "host": "mail01",
+        "port": 25,
+        "service": "SMTP"
+    }
+]
