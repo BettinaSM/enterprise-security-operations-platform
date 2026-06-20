@@ -1,21 +1,10 @@
-from ldap3 import Server, Connection
+import platform
 
-def ad_connect():
+IS_WINDOWS = platform.system().lower() == "windows"
 
-    server = Server(
-        "ad.company.local"
-    )
-
-    conn = Connection(
-
-        server,
-
-        user="administrator@company.local",
-
-        password="password",
-
-        auto_bind=True
-
-    )
-
-    return conn
+if IS_WINDOWS:
+    try:
+        import win32net
+        import win32security
+    except:
+        pass
