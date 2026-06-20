@@ -1,28 +1,54 @@
 [
     {
         "hostname": "linux01",
-        "ip": "192.168.1.10",
-        "environment": "Production",
-        "os": "Linux",
-        "owner": "Infrastructure",
-        "criticality": "High"
+        "ip": "10.10.1.10",
+        "environment": "production",
+        "os": "RHEL 9",
+        "criticality": "High",
+        "owner": "Linux Team",
+        "business_service": "ERP",
+        "location": "Datacenter-SP",
+        "cloud": "onprem",
+        "status": "active",
+        "tags": [
+            "linux",
+            "production",
+            "pci"
+        ]
     },
 
     {
         "hostname": "aix01",
-        "ip": "192.168.1.20",
-        "environment": "Production",
-        "os": "AIX",
+        "ip": "10.10.1.20",
+        "environment": "production",
+        "os": "AIX 7.3",
+        "criticality": "Critical",
         "owner": "Unix Team",
-        "criticality": "Critical"
+        "business_service": "SAP",
+        "location": "Datacenter-SP",
+        "cloud": "onprem",
+        "status": "active",
+        "tags": [
+            "aix",
+            "production",
+            "sox"
+        ]
     },
 
     {
         "hostname": "win01",
-        "ip": "192.168.1.30",
-        "environment": "Production",
-        "os": "Windows",
+        "ip": "10.10.2.15",
+        "environment": "production",
+        "os": "Windows Server 2022",
+        "criticality": "Critical",
         "owner": "Windows Team",
-        "criticality": "High"
+        "business_service": "AD",
+        "location": "Azure-BrazilSouth",
+        "cloud": "azure",
+        "status": "active",
+        "tags": [
+            "windows",
+            "ad"
+        ]
     }
 ]
