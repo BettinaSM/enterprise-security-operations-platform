@@ -1,0 +1,16 @@
+[
+    {
+        "domain": "empresa.com.br",
+        "status": "Active"
+    },
+
+    {
+        "domain": "corp.empresa.com.br",
+        "status": "Active"
+    },
+
+    {
+        "domain": "legacy.empresa.com.br",
+        "status": "Deprecated"
+    }
+]
