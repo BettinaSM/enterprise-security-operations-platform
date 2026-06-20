@@ -17,6 +17,10 @@ from parsers.identity_governance import (
     identity_governance_summary
 )
 
+from parsers.cmdb_engine import (
+    get_asset_by_hostname
+)
+
 require_auth()
 
 st.title(
@@ -156,3 +160,19 @@ elif audit_type == "Identity Governance":
         st.dataframe(
             pd.DataFrame(data)
         )
+
+# ---------------------------
+# TARGET HOSTNAME
+# ---------------------------
+
+target = st.text_input(
+    "Target Hostname"
+)
+
+if target:
+
+    asset = get_asset_by_hostname(
+        target
+    )
+
+    st.write(asset)
