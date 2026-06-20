@@ -1,0 +1,11 @@
+[
+    {
+        "domain": "empresa.com.br",
+        "expires": "2026-12-15"
+    },
+
+    {
+        "domain": "legacy.empresa.com.br",
+        "expires": "2025-01-10"
+    }
+]
