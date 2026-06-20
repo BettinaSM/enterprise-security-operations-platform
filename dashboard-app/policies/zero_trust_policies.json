@@ -1,0 +1,18 @@
+[
+    {
+        "policy": "MFA Required",
+        "enabled": true
+    },
+    {
+        "policy": "Block Dormant Accounts",
+        "enabled": true
+    },
+    {
+        "policy": "Require Managed Device",
+        "enabled": true
+    },
+    {
+        "policy": "Privileged Access Requires PAM",
+        "enabled": true
+    }
+]
