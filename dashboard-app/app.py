@@ -16,6 +16,14 @@ from security.session import (
 
 from scheduler.scheduler_engine import scheduler
 
+if "scheduler_started" not in st.session_state:
+
+    scheduler.start()
+
+    st.session_state[
+        "scheduler_started"
+    ] = True
+    
 # ---------------------------
 # DATABASE
 # ---------------------------
@@ -29,12 +37,6 @@ from database.database import (
 Base.metadata.create_all(
     bind=engine
 )
-
-# ---------------------------
-# INITIALIZE DATABASE
-# ---------------------------
-
-create_tables()
 
 # ---------------------------
 # PAGE CONFIG
@@ -91,6 +93,17 @@ if not is_authenticated():
 
         if role:
 
+            from services.audit_trail_service import (
+                register_action
+            )
+
+            register_action(
+
+                username,
+
+                "User Login"
+            )
+            
             create_session(
                 username,
                 role
@@ -126,6 +139,13 @@ if st.sidebar.button(
     "Logout",
     key="logout_button"
 ):
+
+    register_action(
+
+        st.session_state["username"],
+
+        "User Logout"
+    )
 
     logout()
 
