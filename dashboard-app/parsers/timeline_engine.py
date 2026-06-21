@@ -1,8 +1,8 @@
 from datetime import datetime
 
-# ---------------------------
+# --------------------------------
 # GENERIC TIMELINE
-# ---------------------------
+# --------------------------------
 
 def build_timeline(events):
 
@@ -19,59 +19,12 @@ def build_timeline(events):
                     datetime.utcnow().isoformat()
                 ),
 
-            "event":
-
-                str(event)
+            "event": str(event)
 
         })
 
     return timeline
 
-# --------------------------------
-# USER TIMELINE
-# --------------------------------
-
-def get_user_timeline(
-
-    events,
-    username
-
-):
-
-    return [
-
-        event
-
-        for event in events
-
-        if event.get(
-            "username"
-        ) == username
-
-    ]
-
-# --------------------------------
-# HOST TIMELINE
-# --------------------------------
-
-def get_host_timeline(
-
-    events,
-    hostname
-
-):
-
-    return [
-
-        event
-
-        for event in events
-
-        if event.get(
-            "hostname"
-        ) == hostname
-
-    ]
 
 # --------------------------------
 # USER TIMELINE
@@ -104,6 +57,43 @@ def get_user_timeline(username):
 
             "activity":
                 "Sudo Command"
+
+        }
+
+    ]
+
+
+# --------------------------------
+# HOST TIMELINE
+# --------------------------------
+
+def get_host_timeline(hostname):
+
+    return [
+
+        {
+
+            "timestamp":
+                datetime.utcnow().isoformat(),
+
+            "hostname":
+                hostname,
+
+            "activity":
+                "Authentication"
+
+        },
+
+        {
+
+            "timestamp":
+                datetime.utcnow().isoformat(),
+
+            "hostname":
+                hostname,
+
+            "activity":
+                "Configuration Change"
 
         }
 
