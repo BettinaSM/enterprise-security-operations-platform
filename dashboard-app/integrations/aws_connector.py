@@ -1,5 +1,28 @@
-import boto3
+try:
 
-def aws_session():
+    import boto3
 
-    return boto3.Session()
+except:
+
+    boto3 = None
+
+
+def aws_connect():
+
+    if not boto3:
+
+        return None
+
+    try:
+
+        return boto3.client(
+
+            "iam",
+
+            region_name="us-east-1"
+
+        )
+
+    except:
+
+        return None
