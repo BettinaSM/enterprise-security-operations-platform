@@ -72,3 +72,39 @@ def get_host_timeline(
         ) == hostname
 
     ]
+
+# --------------------------------
+# USER TIMELINE
+# --------------------------------
+
+def get_user_timeline(username):
+
+    return [
+
+        {
+
+            "timestamp":
+                datetime.utcnow().isoformat(),
+
+            "username":
+                username,
+
+            "activity":
+                "User Login"
+
+        },
+
+        {
+
+            "timestamp":
+                datetime.utcnow().isoformat(),
+
+            "username":
+                username,
+
+            "activity":
+                "Sudo Command"
+
+        }
+
+    ]
