@@ -2,23 +2,54 @@ from parsers.backup_engine import (
     validate_backups
 )
 
+# --------------------------------
+# RESILIENCE SCORE
+# --------------------------------
 
-def evaluate_resilience():
+def calculate_resilience():
 
     backups = validate_backups()
 
-    results = []
+    total = len(backups)
 
-    for backup in backups:
+    successful = len([
 
-        results.append({
+        backup
 
-            "component":
-                backup["backup"],
+        for backup in backups
 
-            "status":
-                backup["status"]
+        if backup["status"] == "Success"
 
-        })
+    ])
 
-    return results
+    score = (
+
+        round(
+            successful / total * 100,
+            2
+        )
+
+        if total > 0
+
+        else 0
+
+    )
+
+    return {
+
+        "score": score,
+
+        "successful": successful,
+
+        "total": total
+
+    }
+
+
+# --------------------------------
+# RESILIENCE DETAILS
+# --------------------------------
+
+def evaluate_resilience():
+
+    return validate_backups()
