@@ -24,7 +24,10 @@ def recommend_patching():
             recommendations.append({
 
                 "hostname":
-                    vuln["hostname"],
+                    vuln.get(
+                        "hostname",
+                        "Unknown"
+                    ),
 
                 "package":
                     vuln.get(
@@ -33,7 +36,11 @@ def recommend_patching():
                     ),
 
                 "cve":
-                    vuln["cve"],
+                    vuln.get(
+                        "cve",
+                        "N/A"
+                    ),
+
 
                 "action":
                     "Immediate patch required"
