@@ -1,11 +1,11 @@
 import streamlit as st
 
-from parsers.session_auth import (
-    require_auth
-)
-
 from parsers.resilience_engine import (
     calculate_resilience
+)
+
+from parsers.session_auth import (
+    require_auth
 )
 
 require_auth()
