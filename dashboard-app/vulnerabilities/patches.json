@@ -1,0 +1,29 @@
+[
+    {
+        "cve": "CVE-2025-1001",
+        "vendor": "Microsoft",
+        "patch": "KB5034123",
+        "severity": "Critical"
+    },
+
+    {
+        "cve": "CVE-2025-1002",
+        "vendor": "RedHat",
+        "patch": "RHSA-2025:1234",
+        "severity": "High"
+    },
+
+    {
+        "cve": "CVE-2025-1003",
+        "vendor": "IBM",
+        "patch": "IJ56899",
+        "severity": "Critical"
+    },
+
+    {
+        "cve": "CVE-2025-1004",
+        "vendor": "Oracle",
+        "patch": "CPUJan2025",
+        "severity": "High"
+    }
+]
