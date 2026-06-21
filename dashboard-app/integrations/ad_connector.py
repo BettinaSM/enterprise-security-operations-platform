@@ -1,10 +1,42 @@
-import platform
+from ldap3 import Server
+from ldap3 import Connection
+from ldap3 import ALL
 
-IS_WINDOWS = platform.system().lower() == "windows"
+from utils.logger import log_error
 
-if IS_WINDOWS:
+
+def ad_connect():
+
     try:
-        import win32net
-        import win32security
-    except:
-        pass
+
+        server = Server(
+
+            "ldap.company.com",
+
+            get_info=ALL
+
+        )
+
+        connection = Connection(
+
+            server,
+
+            user="svc_soc",
+
+            password="password",
+
+            auto_bind=False
+
+        )
+
+        return connection
+
+    except Exception as error:
+
+        log_error(
+
+            f"AD Connection Error: {error}"
+
+        )
+
+        return None
