@@ -1,82 +1,53 @@
 from datetime import datetime
 
-# --------------------------------
-# BACKUP STATUS
-# --------------------------------
 
-def get_backup_status():
+def validate_backups():
 
     return [
 
         {
-
-            "asset":
-                "srv-ad01",
-
-            "status":
-                "Success",
-
-            "last_backup":
-                datetime.utcnow().isoformat()
-
+            "backup": "Linux Servers",
+            "status": "Success",
+            "last_execution": datetime.utcnow().isoformat()
         },
 
         {
-
-            "asset":
-                "srv-db01",
-
-            "status":
-                "Success",
-
-            "last_backup":
-                datetime.utcnow().isoformat()
-
+            "backup": "Database",
+            "status": "Success",
+            "last_execution": datetime.utcnow().isoformat()
         },
 
         {
-
-            "asset":
-                "srv-web01",
-
-            "status":
-                "Failed",
-
-            "last_backup":
-                datetime.utcnow().isoformat()
-
+            "backup": "Cloud Snapshots",
+            "status": "Warning",
+            "last_execution": datetime.utcnow().isoformat()
         }
 
     ]
 
-# --------------------------------
-# BACKUP COVERAGE
-# --------------------------------
 
-def backup_coverage():
+def backup_summary():
 
-    backups = get_backup_status()
+    backups = validate_backups()
 
-    protected = len(
+    success = len(
 
         [
 
-            x
+            b
 
-            for x in backups
+            for b in backups
 
-            if x["status"] == "Success"
+            if b["status"] == "Success"
 
         ]
 
     )
 
-    total = len(backups)
+    return {
 
-    return round(
+        "total": len(backups),
 
-        protected / total * 100,
+        "successful": success
 
-        2
-
-    )
+    }
