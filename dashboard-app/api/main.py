@@ -1,84 +1,71 @@
 from fastapi import FastAPI
 
-from api.routers import (
-    assets,
-    risk,
-    vulnerabilities,
-    identities,
-    auth,
-    incidents,
-    threat_intel,
-    detections
+# --------------------------------
+# ROUTERS
+# --------------------------------
+
+from api.routers.auth import (
+    router as auth_router
 )
-
-app = FastAPI(
-
-    title="Enterprise Security Operations API",
 
 from api.routers.assets import (
     router as assets_router
 )
 
+from api.routers.risk import (
+    router as risk_router
+)
+
 from api.routers.vulnerabilities import (
-    router as vulnerability_router
+    router as vulnerabilities_router
 )
 
-from api.routers.identity import (
-    router as identity_router
-)
-
-from api.routers.compliance import (
-    router as compliance_router
-)
-
-from api.routers.detections import (
-    router as detections_router
+from api.routers.identities import (
+    router as identities_router
 )
 
 from api.routers.incidents import (
     router as incidents_router
 )
 
-app.include_router(
-    assets_router
+from api.routers.threat_intel import (
+    router as threat_intel_router
 )
 
-app.include_router(
-    vulnerability_router
+from api.routers.detections import (
+    router as detections_router
 )
 
-app.include_router(
-    identity_router
+from api.routers.compliance import (
+    router as compliance_router
 )
 
-app.include_router(
-    compliance_router
-)
+# --------------------------------
+# FASTAPI
+# --------------------------------
 
-app.include_router(
-    detections_router
-)
+app = FastAPI(
 
-app.include_router(
-    incidents_router
-)
-    
+    title="Enterprise Security Operations API",
+
     version="1.0.0",
 
     description="""
 
-    Enterprise Security Operations Platform API
+Enterprise Security Operations Platform API
 
-    Capabilities:
+Capabilities:
 
-    - IAM
-    - Threat Intelligence
-    - Vulnerability Management
-    - Risk Management
-    - Incident Response
-    - SOC Operations
+- IAM Governance
+- Threat Intelligence
+- Vulnerability Management
+- Risk Management
+- Incident Response
+- SOC Operations
+- Compliance
+- Detection Engineering
 
-    """
+"""
 
 )
 
@@ -100,39 +87,42 @@ def root():
 
     }
 
-
 # --------------------------------
-# ROUTERS
+# ROUTERS REGISTRATION
 # --------------------------------
 
 app.include_router(
-    auth.router
+    auth_router
 )
 
 app.include_router(
-    incidents.router
+    incidents_router
 )
 
 app.include_router(
-    detections.router
+    detections_router
 )
 
 app.include_router(
-    threat_intel.router
+    threat_intel_router
 )
 
 app.include_router(
-    assets.router
+    assets_router
 )
 
 app.include_router(
-    risk.router
+    risk_router
 )
 
 app.include_router(
-    vulnerabilities.router
+    vulnerabilities_router
 )
 
 app.include_router(
-    identities.router
+    identities_router
+)
+
+app.include_router(
+    compliance_router
 )
