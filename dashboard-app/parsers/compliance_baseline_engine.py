@@ -108,28 +108,38 @@ def evaluate_baseline(data):
 
     return findings
 
-    # ---------------------------
-    # Compliance Score
-    # ---------------------------
-    
-    def calculate_compliance_score(findings):
+# --------------------------------
+# COMPLIANCE SCORE
+# --------------------------------
 
-        total_controls = 20
+def calculate_compliance_score(
 
-        failed_controls = len(findings)
+    findings
 
-        passed = (
+):
 
-            total_controls -
-            failed_controls
+    if not findings:
 
-        )
+        return 100
 
-        score = int(
+    compliant = len([
 
-            (passed / total_controls)
-            * 100
+        finding
 
-        )
+        for finding in findings
 
-        return score
+        if finding.get(
+
+            "status"
+
+        ) == "Compliant"
+
+    ])
+
+    return round(
+
+        (compliant / len(findings)) * 100,
+
+        2
+
+    )
