@@ -2,12 +2,12 @@ import streamlit as st
 
 import pandas as pd
 
-from parsers.session_auth import (
-    require_auth
-)
-
 from parsers.risk_register_engine import (
     enterprise_risk_register
+)
+
+from parsers.session_auth import (
+    require_auth
 )
 
 require_auth()
