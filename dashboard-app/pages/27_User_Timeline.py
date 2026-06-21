@@ -19,17 +19,15 @@ username = st.text_input(
     "Username"
 )
 
-if st.button(
-    "Search Timeline"
-):
+if username:
 
-    events = get_user_timeline(
+    timeline = get_user_timeline(
         username
     )
 
     st.dataframe(
 
-        pd.DataFrame(events),
+        pd.DataFrame(timeline),
 
         use_container_width=True
     )
