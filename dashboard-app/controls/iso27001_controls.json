@@ -1,0 +1,19 @@
+[
+    {
+        "control": "A.5.15",
+        "description": "Access Control",
+        "implemented": true
+    },
+
+    {
+        "control": "A.8.1",
+        "description": "Asset Inventory",
+        "implemented": true
+    },
+
+    {
+        "control": "A.8.15",
+        "description": "Logging",
+        "implemented": false
+    }
+]
