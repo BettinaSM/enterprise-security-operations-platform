@@ -1,9 +1,5 @@
 import streamlit as st
 
-from parsers.database_engine import (
-    create_tables
-)
-
 from security.auth import (
     login
 )
@@ -14,16 +10,14 @@ from security.session import (
     is_authenticated
 )
 
-from scheduler.scheduler_engine import scheduler
+from scheduler.scheduler_engine import (
+    scheduler
+)
 
-if "scheduler_started" not in st.session_state:
+from services.audit_trail_service import (
+    register_action
+)
 
-    scheduler.start()
-
-    st.session_state[
-        "scheduler_started"
-    ] = True
-    
 # ---------------------------
 # DATABASE
 # ---------------------------
@@ -33,18 +27,34 @@ from database.database import (
     engine
 )
 
-# cria tabelas automaticamente
 Base.metadata.create_all(
     bind=engine
 )
+
+# ---------------------------
+# SCHEDULER
+# ---------------------------
+
+try:
+
+    if not scheduler.running:
+
+        scheduler.start()
+
+except:
+
+    pass
 
 # ---------------------------
 # PAGE CONFIG
 # ---------------------------
 
 st.set_page_config(
+
     page_title="Enterprise Security Operations Platform",
+
     page_icon="🛡️",
+
     layout="wide"
 )
 
@@ -93,17 +103,11 @@ if not is_authenticated():
 
         if role:
 
-            from services.audit_trail_service import (
-                register_action
-            )
-
             register_action(
-
                 username,
-
                 "User Login"
             )
-            
+
             create_session(
                 username,
                 role
@@ -177,3 +181,25 @@ Available capabilities:
 - Executive Reporting
 
 """)
+
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric(
+    "Managed Assets",
+    "248"
+)
+
+col2.metric(
+    "Open Incidents",
+    "6"
+)
+
+col3.metric(
+    "Critical Findings",
+    "3"
+)
+
+col4.metric(
+    "Compliance Score",
+    "92%"
+)
