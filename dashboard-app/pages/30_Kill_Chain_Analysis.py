@@ -8,7 +8,7 @@ from parsers.datalake_engine import (
     load_events
 )
 
-from parsers.killchain_engine import (
+from parsers.kill_chain_engine import (
     reconstruct_killchain
 )
 
