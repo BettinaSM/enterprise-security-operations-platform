@@ -20,3 +20,34 @@ class InventoryException(SOCPlatformException):
 
 class BaselineException(SOCPlatformException):
     pass
+
+class AuthorizationException(SOCPlatformException):
+    pass
+
+
+class ThreatIntelException(SOCPlatformException):
+    pass
+
+
+class DetectionException(SOCPlatformException):
+    pass
+
+
+class RiskEngineException(SOCPlatformException):
+    pass
+
+
+class VulnerabilityException(SOCPlatformException):
+    pass
+
+
+class CloudIntegrationException(SOCPlatformException):
+    pass
+
+
+class DatabaseException(SOCPlatformException):
+    pass
+
+
+class SOARException(SOCPlatformException):
+    pass
