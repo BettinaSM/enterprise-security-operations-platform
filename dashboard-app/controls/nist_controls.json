@@ -1,0 +1,22 @@
+[
+    {
+        "control": "AC-1",
+        "description": "Access Control Policy and Procedures"
+    },
+    {
+        "control": "AC-2",
+        "description": "Account Management"
+    },
+    {
+        "control": "IA-2",
+        "description": "Identification and Authentication"
+    },
+    {
+        "control": "AU-6",
+        "description": "Audit Review, Analysis, and Reporting"
+    },
+    {
+        "control": "CM-2",
+        "description": "Baseline Configuration"
+    }
+]
