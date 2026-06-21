@@ -138,3 +138,11 @@ def run_compliance():
         )
 
     return results
+
+# ------------------------------------------------
+# LEGACY COMPATIBILITY
+# ------------------------------------------------
+
+def evaluate_controls():
+
+    return run_compliance()
