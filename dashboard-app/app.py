@@ -14,6 +14,8 @@ from security.session import (
     is_authenticated
 )
 
+from scheduler.scheduler_engine import scheduler
+
 # ---------------------------
 # INITIALIZE DATABASE
 # ---------------------------
