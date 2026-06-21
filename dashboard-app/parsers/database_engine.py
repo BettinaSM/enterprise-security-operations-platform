@@ -1,14 +1,12 @@
 import sqlite3
-import json
 
-from pathlib import Path
 from datetime import datetime
+
+from utils.paths import BASE_DIR
 
 # ---------------------------
 # BASE PATHS
 # ---------------------------
-
-from utils.paths import BASE_DIR
 
 DATABASE_DIR = BASE_DIR / "database"
 
@@ -17,7 +15,7 @@ DATABASE_DIR.mkdir(
     exist_ok=True
 )
 
-DATABASE_FILE = DATABASE_DIR / "security.db"
+DB_PATH = DATABASE_DIR / "security.db"
 
 # ---------------------------
 # CREATE DATABASE DIRECTORY
@@ -35,7 +33,7 @@ DATABASE_DIR.mkdir(
 def connect_db():
 
     connection = sqlite3.connect(
-        DB_PATH,
+        str(DB_PATH),
         check_same_thread=False
     )
 
