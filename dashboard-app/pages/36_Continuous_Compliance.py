@@ -1,5 +1,4 @@
 import streamlit as st
-
 import pandas as pd
 
 from parsers.session_auth import (
@@ -7,7 +6,7 @@ from parsers.session_auth import (
 )
 
 from parsers.compliance_engine import (
-    evaluate_controls
+    run_compliance
 )
 
 require_auth()
@@ -21,16 +20,27 @@ results = run_compliance()
 for framework in results:
 
     st.subheader(
+
         framework["framework"]
+
     )
 
     st.metric(
+
         "Score",
+
         f"{framework['score']}%"
+
     )
 
     st.dataframe(
+
         pd.DataFrame(
+
             framework["controls"]
-        )
+
+        ),
+
+        use_container_width=True
+
     )
