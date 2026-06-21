@@ -1,15 +1,15 @@
 import streamlit as st
 
+from parsers.session_auth import (
+    require_auth
+)
+
 from parsers.datalake_engine import (
     load_events
 )
 
-from parsers.kill_chain_engine import (
+from parsers.killchain_engine import (
     reconstruct_killchain
-)
-
-from parsers.session_auth import (
-    require_auth
 )
 
 require_auth()
@@ -20,16 +20,18 @@ st.title(
 
 events = load_events()
 
-if not events:
+chain = reconstruct_killchain(
+    events
+)
 
-    st.warning(
-        "No events found in Security Data Lake"
-    )
+if chain:
+
+    for stage in chain:
+
+        st.success(stage)
 
 else:
 
-    chain = reconstruct_killchain(
-        events
+    st.info(
+        "No kill chain identified."
     )
-
-    st.write(chain)
