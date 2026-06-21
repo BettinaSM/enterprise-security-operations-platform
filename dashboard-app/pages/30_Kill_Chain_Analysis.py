@@ -8,6 +8,12 @@ from parsers.killchain_engine import (
     reconstruct_killchain
 )
 
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
 st.title(
 
     "Kill Chain Analysis"
