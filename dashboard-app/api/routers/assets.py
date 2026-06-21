@@ -1,20 +1,31 @@
 from fastapi import APIRouter
 
-from parsers.cmdb_engine import (
-    load_cmdb
+from services.asset_service import (
+    get_all_assets,
+    find_asset
 )
 
 router = APIRouter(
-
     prefix="/assets",
-
     tags=["Assets"]
-
 )
 
+# ---------------------------
+# ALL ASSETS
+# ---------------------------
 
 @router.get("/")
 
-def get_assets():
+def all_assets():
 
-    return load_cmdb()
+    return get_all_assets()
+
+# ---------------------------
+# SEARCH
+# ---------------------------
+
+@router.get("/{keyword}")
+
+def search_asset(keyword: str):
+
+    return find_asset(keyword)
