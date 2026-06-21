@@ -1,25 +1,82 @@
-def backup_status():
+from datetime import datetime
+
+# --------------------------------
+# BACKUP STATUS
+# --------------------------------
+
+def get_backup_status():
 
     return [
 
         {
 
-            "asset": "srv-linux-01",
+            "asset":
+                "srv-ad01",
 
-            "last_backup": "2026-06-15",
+            "status":
+                "Success",
 
-            "status": "Success"
+            "last_backup":
+                datetime.utcnow().isoformat()
 
         },
 
         {
 
-            "asset": "srv-win-01",
+            "asset":
+                "srv-db01",
 
-            "last_backup": "2026-06-15",
+            "status":
+                "Success",
 
-            "status": "Success"
+            "last_backup":
+                datetime.utcnow().isoformat()
+
+        },
+
+        {
+
+            "asset":
+                "srv-web01",
+
+            "status":
+                "Failed",
+
+            "last_backup":
+                datetime.utcnow().isoformat()
 
         }
 
     ]
+
+# --------------------------------
+# BACKUP COVERAGE
+# --------------------------------
+
+def backup_coverage():
+
+    backups = get_backup_status()
+
+    protected = len(
+
+        [
+
+            x
+
+            for x in backups
+
+            if x["status"] == "Success"
+
+        ]
+
+    )
+
+    total = len(backups)
+
+    return round(
+
+        protected / total * 100,
+
+        2
+
+    )
