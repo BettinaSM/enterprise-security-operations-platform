@@ -16,6 +16,10 @@ from parsers.compliance_score_engine import (
     calculate_compliance_score
 )
 
+from services.audit_trail_service import (
+    register_action
+)
+
 require_auth()
 
 role = st.sidebar.selectbox(
@@ -92,4 +96,11 @@ st.metric(
     "Compliance Score",
 
     f"{compliance['score']}%"
+)
+
+register_action(
+
+    st.session_state["username"],
+
+    "Generated Executive Report"
 )
