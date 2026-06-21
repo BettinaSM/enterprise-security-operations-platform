@@ -1,3 +1,9 @@
+from datetime import datetime
+
+# --------------------------------
+# NORMALIZE EVENT
+# --------------------------------
+
 def normalize_event(
 
     source,
@@ -5,11 +11,17 @@ def normalize_event(
 
 ):
 
-    log = raw_log.lower()
+    log = str(raw_log).lower()
 
     severity = "Low"
 
     event_type = "Informational"
+
+    username = "unknown"
+
+    hostname = "unknown"
+
+    ip = "unknown"
 
     # ---------------------------
     # FAILED AUTH
@@ -45,19 +57,87 @@ def normalize_event(
     # NETWORK
     # ---------------------------
 
-    elif "curl" in log or "wget" in log:
+    elif (
+
+        "curl" in log
+        or "wget" in log
+        or "scp" in log
+        or "nc " in log
+
+    ):
 
         severity = "Critical"
 
         event_type = "Suspicious Network Activity"
 
+    # ---------------------------
+    # GENERIC FIELDS
+    # ---------------------------
+
+    if isinstance(raw_log, dict):
+
+        username = raw_log.get(
+
+            "username",
+
+            raw_log.get(
+                "user",
+                "unknown"
+            )
+        )
+
+        hostname = raw_log.get(
+
+            "hostname",
+
+            raw_log.get(
+                "host",
+                "unknown"
+            )
+        )
+
+        ip = raw_log.get(
+
+            "ip",
+
+            raw_log.get(
+                "source_ip",
+                "unknown"
+            )
+        )
+
     return {
 
-        "source": source,
+        "timestamp":
 
-        "event_type": event_type,
+            datetime.utcnow().isoformat(),
 
-        "severity": severity,
+        "source":
 
-        "raw_log": raw_log
+            source,
+
+        "username":
+
+            username,
+
+        "hostname":
+
+            hostname,
+
+        "ip":
+
+            ip,
+
+        "event_type":
+
+            event_type,
+
+        "severity":
+
+            severity,
+
+        "raw_log":
+
+            str(raw_log)
+
     }
