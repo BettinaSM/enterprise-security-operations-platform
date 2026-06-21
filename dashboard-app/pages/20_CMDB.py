@@ -7,6 +7,12 @@ from parsers.cmdb_engine import (
     count_assets
 )
 
+from parsers.session_auth import (
+    require_auth
+)
+
+require_auth()
+
 st.title(
     "Enterprise CMDB"
 )
