@@ -18,7 +18,7 @@ from services.audit_trail_service import (
     register_action
 )
 
-from models.audit_model import Audit
+from models.audit_model import AuditEvent
 from models.identity_model import Identity
 from models.asset_model import Asset
 from models.vulnerability_model import Vulnerability
