@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
 
-from parsers.session_auth import (
-    require_auth
-)
-
 from parsers.compliance_engine import (
     run_compliance
+)
+
+from parsers.session_auth import (
+    require_auth
 )
 
 require_auth()
