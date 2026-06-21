@@ -16,24 +16,21 @@ st.title(
     "Continuous Compliance"
 )
 
-results = evaluate_controls()
+results = run_compliance()
 
-df = pd.DataFrame(
-    results
-)
+for framework in results:
 
-st.dataframe(
-
-    df,
-
-    use_container_width=True
-)
-
-for item in results:
+    st.subheader(
+        framework["framework"]
+    )
 
     st.metric(
+        "Score",
+        f"{framework['score']}%"
+    )
 
-        item["framework"],
-
-        f"{item['score']}%"
+    st.dataframe(
+        pd.DataFrame(
+            framework["controls"]
+        )
     )
