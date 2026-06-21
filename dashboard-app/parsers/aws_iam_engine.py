@@ -1,37 +1,36 @@
 from integrations.aws_connector import (
-    aws_session
+    aws_connect
 )
+
 
 def get_aws_users():
 
-    session = aws_session()
+    client = aws_connect()
 
-    iam = session.client("iam")
+    if not client:
 
-    users = []
+        return []
 
-    paginator = iam.get_paginator(
-        "list_users"
-    )
+    try:
 
-    for page in paginator.paginate():
+        response = client.list_users()
 
-        for user in page["Users"]:
+        return [
 
-            users.append({
+            {
 
                 "username":
                     user["UserName"],
 
-                "arn":
-                    user["Arn"],
-
-                "created":
-                    str(user["CreateDate"]),
-
                 "source":
                     "AWS IAM"
 
-            })
+            }
 
-    return users
+            for user in response["Users"]
+
+        ]
+
+    except:
+
+        return []
