@@ -1,42 +1,46 @@
 import streamlit as st
-
-from parsers.resilience_engine import (
-    calculate_resilience
-)
+import pandas as pd
 
 from parsers.session_auth import (
     require_auth
 )
 
+from parsers.resilience_engine import (
+    calculate_resilience,
+    evaluate_resilience
+)
+
 require_auth()
 
 st.title(
-    "Cyber Resilience Dashboard"
+    "Cyber Resilience"
 )
 
-resilience = calculate_resilience()
+metrics = calculate_resilience()
 
-st.metric(
+col1, col2 = st.columns(2)
 
-    "Cyber Resilience Score",
-
-    f"{resilience['score']}%"
+col1.metric(
+    "Resilience Score",
+    f"{metrics['score']}%"
 )
 
-st.metric(
-
-    "Registered Incidents",
-
-    resilience["incidents"]
+col2.metric(
+    "Successful Backups",
+    f"{metrics['successful']}/{metrics['total']}"
 )
 
-st.metric(
+st.divider()
 
-    "Backup Status",
+st.subheader(
+    "Backup Validation"
+)
 
-    str(
+st.dataframe(
 
-        resilience["backup_status"]
+    pd.DataFrame(
+        evaluate_resilience()
+    ),
 
-    )
+    use_container_width=True
 )
