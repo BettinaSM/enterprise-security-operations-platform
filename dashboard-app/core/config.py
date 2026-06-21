@@ -1,46 +1,43 @@
 import os
 
+from dotenv import load_dotenv
 
-class Config:
+load_dotenv()
 
-    DEBUG = os.getenv(
+APP_NAME = os.getenv(
+    "APP_NAME",
+    "Enterprise Security Operations Platform"
+)
 
-        "DEBUG",
+ENVIRONMENT = os.getenv(
+    "ENVIRONMENT",
+    "development"
+)
 
-        "False"
+DEBUG = os.getenv(
+    "DEBUG",
+    "False"
+).lower() == "true"
 
-    ) == "True"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "sqlite:///security_platform.db"
+)
 
-    ENVIRONMENT = os.getenv(
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    "change-me"
+)
 
-        "ENVIRONMENT",
+JWT_SECRET = os.getenv(
+    "JWT_SECRET",
+    "change-me"
+)
 
-        "development"
+LDAP_SERVER = os.getenv(
+    "LDAP_SERVER"
+)
 
-    )
-
-    LDAP_ENABLED = os.getenv(
-
-        "LDAP_ENABLED",
-
-        "False"
-
-    ) == "True"
-
-    AD_ENABLED = os.getenv(
-
-        "AD_ENABLED",
-
-        "False"
-
-    ) == "True"
-
-    CLOUD_ENABLED = os.getenv(
-
-        "CLOUD_ENABLED",
-
-        "True"
-
-    ) == "True"
-
-    VERSION = "1.0.0"
+AD_SERVER = os.getenv(
+    "AD_SERVER"
+)
