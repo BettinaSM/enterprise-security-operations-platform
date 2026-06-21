@@ -4,7 +4,7 @@ from parsers.datalake_engine import (
     load_events
 )
 
-from parsers.killchain_engine import (
+from parsers.kill_chain_engine import (
     reconstruct_killchain
 )
 
@@ -15,15 +15,21 @@ from parsers.session_auth import (
 require_auth()
 
 st.title(
-
     "Kill Chain Analysis"
-
 )
 
 events = load_events()
 
-chain = reconstruct_killchain(
-    events
-)
+if not events:
 
-st.write(chain)
+    st.warning(
+        "No events found in Security Data Lake"
+    )
+
+else:
+
+    chain = reconstruct_killchain(
+        events
+    )
+
+    st.write(chain)
