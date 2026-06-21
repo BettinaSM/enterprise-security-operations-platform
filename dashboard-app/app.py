@@ -17,6 +17,20 @@ from security.session import (
 from scheduler.scheduler_engine import scheduler
 
 # ---------------------------
+# DATABASE
+# ---------------------------
+
+from database.database import (
+    Base,
+    engine
+)
+
+# cria tabelas automaticamente
+Base.metadata.create_all(
+    bind=engine
+)
+
+# ---------------------------
 # INITIALIZE DATABASE
 # ---------------------------
 
