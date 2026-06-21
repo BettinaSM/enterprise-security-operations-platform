@@ -2,12 +2,12 @@ import streamlit as st
 
 import pandas as pd
 
-from parsers.session_auth import (
-    require_auth
-)
-
 from services.audit_trail_service import (
     load_audit_events
+)
+
+from parsers.session_auth import (
+    require_auth
 )
 
 require_auth()
