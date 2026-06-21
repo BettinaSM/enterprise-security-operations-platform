@@ -1,11 +1,11 @@
 import streamlit as st
 
-from parsers.session_auth import (
-    require_auth
-)
-
 from parsers.posture_engine import (
     calculate_posture
+)
+
+from parsers.session_auth import (
+    require_auth
 )
 
 require_auth()
