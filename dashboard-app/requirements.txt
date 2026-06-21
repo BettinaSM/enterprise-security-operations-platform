@@ -10,3 +10,5 @@ PyJWT
 python-multipart
 reportlab
 paramiko
+pytest
+python-dotenv
