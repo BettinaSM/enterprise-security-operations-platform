@@ -181,3 +181,34 @@ def run_identity_governance():
             find_empty_groups()
 
     }
+
+# ---------------------------
+# GOVERNANCE SUMMARY
+# ---------------------------
+
+def identity_governance_summary():
+
+    results = run_identity_governance()
+
+    return {
+
+        "total":
+
+            len(results),
+
+        "privileged":
+
+            len([
+
+                x
+
+                for x in results
+
+                if x.get(
+                    "privileged",
+                    False
+                )
+
+            ])
+
+    }
