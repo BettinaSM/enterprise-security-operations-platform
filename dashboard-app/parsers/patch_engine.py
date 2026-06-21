@@ -27,7 +27,10 @@ def recommend_patching():
                     vuln["hostname"],
 
                 "package":
-                    vuln["package"],
+                    vuln.get(
+                        "package",
+                        "Unknown"
+                    ),
 
                 "cve":
                     vuln["cve"],
