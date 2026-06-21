@@ -124,6 +124,25 @@ def get_sudo_users():
 
     return sudo_users
 
+
+# ---------------------------
+# Privileged users
+# ---------------------------
+
+def get_privileged_users():
+
+    return [
+
+        user
+
+        for user in get_local_users()
+
+        if user.get(
+            "privileged",
+            False
+        )
+    ]
+
 # ---------------------------
 # Melhoria - teste
 # ---------------------------
