@@ -1,44 +1,24 @@
-from parsers.baseline_engine import (
-    compare_baseline
-)
-
 from parsers.backup_engine import (
     validate_backups
 )
 
-from parsers.incident_engine import (
-    load_incidents
-)
 
-
-def calculate_resilience():
-
-    incidents = len(
-
-        load_incidents()
-
-    )
+def evaluate_resilience():
 
     backups = validate_backups()
 
-    score = 100
+    results = []
 
-    score -= incidents * 2
+    for backup in backups:
 
-    if not backups:
+        results.append({
 
-        score -= 30
+            "component":
+                backup["backup"],
 
-    if score < 0:
+            "status":
+                backup["status"]
 
-        score = 0
+        })
 
-    return {
-
-        "score": score,
-
-        "incidents": incidents,
-
-        "backup_status": backups
-
-    }
+    return results
