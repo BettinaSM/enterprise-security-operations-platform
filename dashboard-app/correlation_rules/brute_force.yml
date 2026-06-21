@@ -1,0 +1,9 @@
+name: SSH Brute Force
+
+conditions:
+  failed_auth: 10
+
+severity: Critical
+
+mitre:
+  - T1110
