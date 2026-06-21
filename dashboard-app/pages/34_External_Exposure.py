@@ -18,7 +18,7 @@ from parsers.attack_surface_engine import (
 require_auth()
 
 st.title(
-    "Attack Surface Management"
+    "External Exposure Management"
 )
 
 summary = attack_surface_summary()
