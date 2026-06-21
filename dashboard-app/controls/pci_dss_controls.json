@@ -1,0 +1,26 @@
+[
+    {
+        "control": "PCI-1",
+        "description": "Install and maintain network security controls"
+    },
+
+    {
+        "control": "PCI-2",
+        "description": "Apply secure configurations"
+    },
+
+    {
+        "control": "PCI-7",
+        "description": "Restrict access by business need"
+    },
+
+    {
+        "control": "PCI-8",
+        "description": "Identify users and authenticate access"
+    },
+
+    {
+        "control": "PCI-10",
+        "description": "Log and monitor all access"
+    }
+]
