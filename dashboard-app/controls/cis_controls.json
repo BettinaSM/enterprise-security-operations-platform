@@ -1,0 +1,19 @@
+[
+    {
+        "control": "CIS-1",
+        "description": "Inventory and Control of Enterprise Assets",
+        "implemented": true
+    },
+
+    {
+        "control": "CIS-2",
+        "description": "Inventory and Control of Software Assets",
+        "implemented": true
+    },
+
+    {
+        "control": "CIS-5",
+        "description": "Account Management",
+        "implemented": false
+    }
+]
