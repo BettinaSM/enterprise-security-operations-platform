@@ -8,6 +8,10 @@ from parsers.iam_engine import (
     get_service_accounts
 )
 
+from parsers.iam_engine import (
+    get_privileged_users
+)
+
 # ---------------------------
 # DORMANT ACCOUNTS
 # ---------------------------
@@ -168,7 +172,7 @@ def run_identity_governance():
             find_service_accounts(),
 
         "privileged_accounts":
-            find_privileged_users(),
+            get_privileged_users(),
 
         "duplicate_accounts":
             find_duplicate_accounts(users),
