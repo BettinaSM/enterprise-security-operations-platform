@@ -5,16 +5,12 @@ from parsers.identity_governance import (
 )
 
 router = APIRouter(
-
-    prefix="/identities",
-
+    prefix="/identity",
     tags=["Identity"]
-
 )
-
 
 @router.get("/")
 
-def get_identities():
+def identity():
 
     return run_identity_governance()
