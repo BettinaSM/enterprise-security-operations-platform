@@ -15,6 +15,54 @@ app = FastAPI(
 
     title="Enterprise Security Operations API",
 
+from api.routers.assets import (
+    router as assets_router
+)
+
+from api.routers.vulnerabilities import (
+    router as vulnerability_router
+)
+
+from api.routers.identity import (
+    router as identity_router
+)
+
+from api.routers.compliance import (
+    router as compliance_router
+)
+
+from api.routers.detections import (
+    router as detections_router
+)
+
+from api.routers.incidents import (
+    router as incidents_router
+)
+
+app.include_router(
+    assets_router
+)
+
+app.include_router(
+    vulnerability_router
+)
+
+app.include_router(
+    identity_router
+)
+
+app.include_router(
+    compliance_router
+)
+
+app.include_router(
+    detections_router
+)
+
+app.include_router(
+    incidents_router
+)
+    
     version="1.0.0",
 
     description="""
