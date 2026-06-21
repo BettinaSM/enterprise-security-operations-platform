@@ -1,0 +1,26 @@
+[
+    {
+        "control": "LGPD-01",
+        "description": "Personal Data Inventory"
+    },
+
+    {
+        "control": "LGPD-02",
+        "description": "Consent Management"
+    },
+
+    {
+        "control": "LGPD-03",
+        "description": "Access Restriction"
+    },
+
+    {
+        "control": "LGPD-04",
+        "description": "Data Retention Policy"
+    },
+
+    {
+        "control": "LGPD-05",
+        "description": "Incident Notification"
+    }
+]
