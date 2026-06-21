@@ -1,26 +1,16 @@
 from fastapi import APIRouter
 
-from parsers.database_engine import (
-    load_incidents
+from parsers.identity_governance import (
+    run_identity_governance
 )
 
 router = APIRouter(
-
-    prefix="/incidents",
-
-    tags=["Incidents"]
-
+    prefix="/identity",
+    tags=["Identity"]
 )
-
 
 @router.get("/")
 
-def incidents():
+def identity():
 
-    return {
-
-        "incidents":
-
-            load_incidents()
-
-    }
+    return run_identity_governance()
