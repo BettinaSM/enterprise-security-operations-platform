@@ -1,15 +1,34 @@
 import json
 
+from pathlib import Path
+
 from datetime import datetime
 
-AUDIT_FILE = "audit/audit_trail.json"
+AUDIT_FILE = (
+    Path(__file__).resolve().parent.parent /
+    "audit" /
+    "audit_trail.json"
+)
+
+AUDIT_FILE.parent.mkdir(
+    exist_ok=True
+)
+
+if not AUDIT_FILE.exists():
+
+    with open(
+        AUDIT_FILE,
+        "w"
+    ) as file:
+
+        json.dump([], file)
 
 
 def register_action(
 
-    user,
-
-    action
+    username,
+    action,
+    source="SOC Platform"
 
 ):
 
@@ -18,37 +37,28 @@ def register_action(
         "timestamp":
             datetime.utcnow().isoformat(),
 
-        "user":
-            user,
+        "username":
+            username,
 
         "action":
-            action
+            action,
+
+        "source":
+            source
     }
 
-    try:
+    with open(
+        AUDIT_FILE,
+        "r"
+    ) as file:
 
-        with open(
-
-            AUDIT_FILE,
-
-            "r"
-
-        ) as file:
-
-            data = json.load(file)
-
-    except:
-
-        data = []
+        data = json.load(file)
 
     data.append(entry)
 
     with open(
-
         AUDIT_FILE,
-
         "w"
-
     ) as file:
 
         json.dump(
@@ -59,3 +69,13 @@ def register_action(
 
             indent=4
         )
+
+
+def load_audit_events():
+
+    with open(
+        AUDIT_FILE,
+        "r"
+    ) as file:
+
+        return json.load(file)
