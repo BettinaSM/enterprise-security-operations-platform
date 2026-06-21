@@ -8,11 +8,16 @@ from datetime import datetime
 # BASE PATHS
 # ---------------------------
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+from utils.paths import BASE_DIR
 
-DATABASE_DIR = Path("/app/database")
+DATABASE_DIR = BASE_DIR / "database"
 
-DB_PATH = DATABASE_DIR / "security.db"
+DATABASE_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+DATABASE_FILE = DATABASE_DIR / "security.db"
 
 # ---------------------------
 # CREATE DATABASE DIRECTORY
