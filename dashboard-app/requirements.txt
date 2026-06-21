@@ -12,3 +12,13 @@ reportlab
 paramiko
 pytest
 python-dotenv
+msal
+sqlalchemy
+networkx
+plotly
+boto3
+ldap3
+kubernetes
+azure-identity
+msgraph-sdk
+google-cloud-iam
