@@ -1,5 +1,10 @@
 from pathlib import Path
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # ---------------------------
 # BASE DIRECTORIES
 # ---------------------------
@@ -128,9 +133,15 @@ WINDOWS_EVENT_LOG = "Security"
 
 WINDOWS_HOST = "192.168.1.100"
 
-WINDOWS_USERNAME = "Administrator"
+WINDOWS_USERNAME = os.getenv(
+    "WINDOWS_USERNAME",
+    "Administrator"
+)
 
-WINDOWS_PASSWORD = "ChangeMe"
+WINDOWS_PASSWORD = os.getenv(
+    "WINDOWS_PASSWORD",
+    "ChangeMe"
+)
 
 # ---------------------------
 # CLOUD COLLECTION
