@@ -1,25 +1,22 @@
 [
-    {
-        "hostname": "linux01",
-        "cve": "CVE-2025-12345",
-        "cvss": 9.8,
-        "package": "openssl",
-        "status": "Open"
-    },
+  {
+    "hostname": "linux01",
+    "cve": "CVE-2025-1234",
+    "cvss": 9.8,
+    "status": "Open"
+  },
 
-    {
-        "hostname": "linux01",
-        "cve": "CVE-2024-44512",
-        "cvss": 6.5,
-        "package": "sudo",
-        "status": "Open"
-    },
+  {
+    "hostname": "aix01",
+    "cve": "CVE-2025-7777",
+    "cvss": 8.4,
+    "status": "Open"
+  },
 
-    {
-        "hostname": "aix01",
-        "cve": "CVE-2024-99999",
-        "cvss": 8.1,
-        "package": "openssl",
-        "status": "Open"
-    }
+  {
+    "hostname": "win01",
+    "cve": "CVE-2025-9000",
+    "cvss": 10,
+    "status": "Mitigated"
+  }
 ]
