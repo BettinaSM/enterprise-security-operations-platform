@@ -125,23 +125,41 @@ def get_sudo_users():
     return sudo_users
 
 
-# ---------------------------
-# Privileged users
-# ---------------------------
+# --------------------------------
+# PRIVILEGED USERS
+# --------------------------------
 
 def get_privileged_users():
 
-    return [
+    privileged = []
 
-        user
+    users = get_local_users()
 
-        for user in get_local_users()
+    for user in users:
 
-        if user.get(
-            "privileged",
-            False
-        )
-    ]
+        username = user.get(
+
+            "username",
+
+            ""
+
+        ).lower()
+
+        if (
+
+            username == "root"
+
+            or
+
+            username == "administrator"
+
+        ):
+
+            user["privileged"] = True
+
+            privileged.append(user)
+
+    return privileged
 
 # ---------------------------
 # Melhoria - teste
