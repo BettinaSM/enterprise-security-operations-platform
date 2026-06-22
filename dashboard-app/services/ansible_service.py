@@ -36,10 +36,7 @@ def execute_playbook(
     )
 
     return {
-        "stdout":
-            result.stdout,
-        "stderr":
-            result.stderr,
-        "returncode":
-            result.returncode
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+        "returncode": result.returncode
     }
