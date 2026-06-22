@@ -1,14 +1,10 @@
-from datetime import datetime
 from collections import Counter
 
 from parsers.iam_engine import (
     get_local_users,
     get_groups,
     get_sudo_users,
-    get_service_accounts
-)
-
-from parsers.iam_engine import (
+    get_service_accounts,
     get_privileged_users
 )
 
@@ -42,6 +38,7 @@ def find_dormant_accounts(users):
 
     return findings
 
+
 # ---------------------------
 # SERVICE ACCOUNTS
 # ---------------------------
@@ -67,6 +64,7 @@ def find_service_accounts():
 
     return findings
 
+
 # ---------------------------
 # PRIVILEGED ACCOUNTS
 # ---------------------------
@@ -75,17 +73,18 @@ def find_privileged_accounts():
 
     findings = []
 
-    sudo_entries = get_sudo_users()
-
-    for entry in sudo_entries:
+    for account in get_privileged_users():
 
         findings.append({
 
-            "entry":
-                entry,
+            "username":
+                account.get(
+                    "username",
+                    str(account)
+                ),
 
             "issue":
-                "Privileged Access",
+                "Privileged Account",
 
             "severity":
                 "Critical"
@@ -93,6 +92,7 @@ def find_privileged_accounts():
         })
 
     return findings
+
 
 # ---------------------------
 # DUPLICATE ACCOUNTS
@@ -105,6 +105,8 @@ def find_duplicate_accounts(users):
         user["username"]
 
         for user in users
+
+        if "username" in user
 
     ]
 
@@ -123,6 +125,7 @@ def find_duplicate_accounts(users):
     ]
 
     return duplicates
+
 
 # ---------------------------
 # EMPTY GROUPS
@@ -146,7 +149,10 @@ def find_empty_groups():
             findings.append({
 
                 "group":
-                    group["group"],
+                    group.get(
+                        "group",
+                        "Unknown"
+                    ),
 
                 "issue":
                     "Empty Group"
@@ -154,6 +160,7 @@ def find_empty_groups():
             })
 
     return findings
+
 
 # ---------------------------
 # FULL GOVERNANCE AUDIT
@@ -172,7 +179,7 @@ def run_identity_governance():
             find_service_accounts(),
 
         "privileged_accounts":
-            get_privileged_users(),
+            find_privileged_accounts(),
 
         "duplicate_accounts":
             find_duplicate_accounts(users),
@@ -181,6 +188,7 @@ def run_identity_governance():
             find_empty_groups()
 
     }
+
 
 # ---------------------------
 # GOVERNANCE SUMMARY
@@ -192,23 +200,34 @@ def identity_governance_summary():
 
     return {
 
-        "total":
+        "dormant_accounts":
 
-            len(results),
+            len(
+                results["dormant_accounts"]
+            ),
 
-        "privileged":
+        "service_accounts":
 
-            len([
+            len(
+                results["service_accounts"]
+            ),
 
-                x
+        "privileged_accounts":
 
-                for x in results
+            len(
+                results["privileged_accounts"]
+            ),
 
-                if x.get(
-                    "privileged",
-                    False
-                )
+        "duplicate_accounts":
 
-            ])
+            len(
+                results["duplicate_accounts"]
+            ),
+
+        "empty_groups":
+
+            len(
+                results["empty_groups"]
+            )
 
     }
