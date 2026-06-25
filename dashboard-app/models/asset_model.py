@@ -1,8 +1,12 @@
-from sqlalchemy import *
+from sqlalchemy import (
 
-from sqlalchemy.orm import declarative_base
+    Column,
+    Integer,
+    String
 
-Base = declarative_base()
+)
+
+from database.database import Base
 
 
 class Asset(Base):
@@ -11,15 +15,26 @@ class Asset(Base):
 
     id = Column(
         Integer,
-        primary_key=True
+        primary_key=True,
+        index=True
     )
 
-    hostname = Column(String)
+    hostname = Column(
+        String
+    )
 
-    ip = Column(String)
+    ip_address = Column(
+        String
+    )
 
-    os = Column(String)
+    operating_system = Column(
+        String
+    )
 
-    owner = Column(String)
+    owner = Column(
+        String
+    )
 
-    criticality = Column(String)
+    criticality = Column(
+        String
+    )
