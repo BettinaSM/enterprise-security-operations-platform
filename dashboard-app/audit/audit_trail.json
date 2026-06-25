@@ -16,5 +16,17 @@
         "username": "admin",
         "action": "User Login",
         "source": "SOC Platform"
+    },
+    {
+        "timestamp": "2026-06-25T05:32:28.266693",
+        "username": "admin",
+        "action": "User Login",
+        "source": "SOC Platform"
+    },
+    {
+        "timestamp": "2026-06-25T05:41:54.151129",
+        "username": "admin",
+        "action": "User Logout",
+        "source": "SOC Platform"
     }
 ]
