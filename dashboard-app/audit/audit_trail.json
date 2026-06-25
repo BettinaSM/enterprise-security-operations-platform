@@ -10,5 +10,11 @@
         "username": "admin",
         "action": "User Logout",
         "source": "SOC Platform"
+    },
+    {
+        "timestamp": "2026-06-22T00:44:23.499953",
+        "username": "admin",
+        "action": "User Login",
+        "source": "SOC Platform"
     }
 ]
